@@ -113,12 +113,12 @@ class IosIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget iconWidget = Icon(icon, size: 22);
+    Widget iconWidget = Icon(icon, size: 28);
     if (liquidGlass) {
       iconWidget = LiquidGlassContainer(
         padding: const EdgeInsets.all(8),
         borderRadius: circular ? 999.0 : 12.0,
-        child: Icon(icon, size: 18),
+        child: Icon(icon, size: 25),
       );
     }
     return Semantics(
