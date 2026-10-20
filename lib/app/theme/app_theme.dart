@@ -45,6 +45,7 @@ abstract final class AppTheme {
     final base = ThemeData(
       useMaterial3: true,
       fontFamily: fontFamily,
+      fontFamilyFallback: const ['NotoSansKhmer'],
       brightness: brightness,
       colorScheme: scheme,
     );
@@ -68,6 +69,7 @@ abstract final class AppTheme {
         textTheme: CupertinoTextThemeData(
           navTitleTextStyle: TextStyle(
             fontFamily: fontFamily,
+            fontFamilyFallback: const ['NotoSansKhmer'],
             fontSize: 17,
             fontWeight: FontWeight.w600,
             color: scheme.onSurface,
@@ -75,6 +77,7 @@ abstract final class AppTheme {
           ),
           navLargeTitleTextStyle: TextStyle(
             fontFamily: fontFamily,
+            fontFamilyFallback: const ['NotoSansKhmer'],
             fontSize: 34,
             fontWeight: FontWeight.w700,
             color: scheme.onSurface,
@@ -82,24 +85,28 @@ abstract final class AppTheme {
           ),
           navActionTextStyle: TextStyle(
             fontFamily: fontFamily,
+            fontFamilyFallback: const ['NotoSansKhmer'],
             fontSize: 17,
             color: scheme.primary,
             letterSpacing: -.3,
           ),
           actionTextStyle: TextStyle(
             fontFamily: fontFamily,
+            fontFamilyFallback: const ['NotoSansKhmer'],
             fontSize: 17,
             color: scheme.primary,
             letterSpacing: -.3,
           ),
           tabLabelTextStyle: TextStyle(
             fontFamily: fontFamily,
+            fontFamilyFallback: const ['NotoSansKhmer'],
             fontSize: 10,
             fontWeight: FontWeight.w500,
             color: scheme.onSurfaceVariant,
           ),
           textStyle: TextStyle(
             fontFamily: fontFamily,
+            fontFamilyFallback: const ['NotoSansKhmer'],
             fontSize: 17,
             color: scheme.onSurface,
             letterSpacing: -.3,
@@ -172,6 +179,7 @@ abstract final class AppTheme {
           )
           .apply(
             fontFamily: fontFamily,
+            fontFamilyFallback: const ['NotoSansKhmer'],
             bodyColor: scheme.onSurface,
             displayColor: scheme.onSurface,
           ),

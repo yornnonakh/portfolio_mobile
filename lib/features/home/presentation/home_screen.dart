@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/localization/app_localizations.dart';
 import '../../../core/design_system/components.dart';
 import '../../../core/utils/motion.dart';
 import '../../../core/widgets/profile_avatar.dart';
@@ -25,7 +27,7 @@ class HomeScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _TypewriterText(
-                  text: 'Mobile engineer',
+                  text: context.tr('Mobile engineer'),
                   style: wide
                       ? theme.textTheme.displayLarge
                       : theme.textTheme.displayMedium,
@@ -45,13 +47,13 @@ class HomeScreen extends ConsumerWidget {
                   children: [
                     IosButton.filled(
                       onPressed: () => context.go('/projects'),
-                      label: const Text('View projects'),
+                      label: const AppText('View projects'),
                       icon: const Icon(CupertinoIcons.arrow_up_right, size: 18),
                       iconAlignment: IconAlignment.end,
                     ),
                     IosButton.tinted(
                       onPressed: () => context.push('/resume'),
-                      label: const Text('View resume'),
+                      label: const AppText('View resume'),
                       icon: const Icon(CupertinoIcons.doc_text, size: 18),
                     ),
                   ],
@@ -61,7 +63,7 @@ class HomeScreen extends ConsumerWidget {
             final identity = Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
+                AppText(
                   profile.name,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.headlineMedium,
@@ -149,7 +151,7 @@ class HomeScreen extends ConsumerWidget {
               final introduction = Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  AppText(
                     'Learning by building.',
                     style: theme.textTheme.headlineMedium,
                   ),
@@ -158,7 +160,7 @@ class HomeScreen extends ConsumerWidget {
                   const SizedBox(height: 16),
                   IosButton.plain(
                     onPressed: () => context.go('/about'),
-                    label: const Text('More about me'),
+                    label: const AppText('More about me'),
                     icon: const Icon(CupertinoIcons.arrow_up_right, size: 17),
                     iconAlignment: IconAlignment.end,
                   ),
@@ -181,7 +183,7 @@ class HomeScreen extends ConsumerWidget {
                   const SizedBox(height: 12),
                   IosButton.plain(
                     onPressed: () => context.push('/skills'),
-                    child: const Text('Explore skills'),
+                    child: const AppText('Explore skills'),
                   ),
                 ],
               );
@@ -227,7 +229,7 @@ class _Fact extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              AppText(
                 value,
                 style: Theme.of(
                   context,
@@ -258,7 +260,7 @@ class DeploymentCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              AppText(
                 'From development to deployment',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
@@ -271,11 +273,9 @@ class DeploymentCard extends StatelessWidget {
     ),
   );
 }
+
 class _TypewriterText extends ConsumerStatefulWidget {
-  const _TypewriterText({
-    required this.text,
-    required this.style,
-  });
+  const _TypewriterText({required this.text, required this.style});
 
   final String text;
   final TextStyle? style;
@@ -290,13 +290,27 @@ class _TypewriterTextState extends ConsumerState<_TypewriterText>
   late final Animation<double> _animation;
 
   // Configurable timings
-  static const _typeDuration = Duration(milliseconds: 80);   // per character
+  static const _typeDuration = Duration(milliseconds: 80); // per character
   static const _deleteDuration = Duration(milliseconds: 50); // per character
   static const _pauseAfterType = Duration(milliseconds: 1800);
   static const _pauseAfterDelete = Duration(milliseconds: 400);
 
   bool _isDeleting = false;
   int _charIndex = 0;
+  Timer? _pauseTimer;
+  int get _characterCount => widget.text.characters.length;
+
+  @override
+  void didUpdateWidget(_TypewriterText oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.text != widget.text) {
+      _pauseTimer?.cancel();
+      _controller.stop();
+      _isDeleting = false;
+      _charIndex = motionEnabled(context, ref) ? 0 : _characterCount;
+      if (motionEnabled(context, ref)) _startTyping();
+    }
+  }
 
   @override
   void initState() {
@@ -315,7 +329,7 @@ class _TypewriterTextState extends ConsumerState<_TypewriterText>
       if (motionEnabled(context, ref)) {
         _startTyping();
       } else {
-        setState(() => _charIndex = widget.text.length);
+        setState(() => _charIndex = _characterCount);
       }
     });
   }
@@ -324,12 +338,13 @@ class _TypewriterTextState extends ConsumerState<_TypewriterText>
     if (!mounted) return;
 
     final progress = _animation.value;
-    final target = _isDeleting ? 0 : widget.text.length;
-    final start = _isDeleting ? widget.text.length : 0;
+    final target = _isDeleting ? 0 : _characterCount;
+    final start = _isDeleting ? _characterCount : 0;
 
-    final newIndex = (start + (target - start) * progress)
-        .round()
-        .clamp(0, widget.text.length);
+    final newIndex = (start + (target - start) * progress).round().clamp(
+      0,
+      _characterCount,
+    );
 
     if (newIndex != _charIndex) {
       setState(() => _charIndex = newIndex);
@@ -341,14 +356,14 @@ class _TypewriterTextState extends ConsumerState<_TypewriterText>
 
     if (!_isDeleting) {
       // Finished typing → pause → start deleting
-      Future.delayed(_pauseAfterType, () {
+      _pauseTimer = Timer(_pauseAfterType, () {
         if (!mounted || !motionEnabled(context, ref)) return;
         setState(() => _isDeleting = true);
         _startDeleting();
       });
     } else {
       // Finished deleting → short pause → start typing again
-      Future.delayed(_pauseAfterDelete, () {
+      _pauseTimer = Timer(_pauseAfterDelete, () {
         if (!mounted || !motionEnabled(context, ref)) return;
         setState(() => _isDeleting = false);
         _startTyping();
@@ -359,7 +374,7 @@ class _TypewriterTextState extends ConsumerState<_TypewriterText>
   void _startTyping() {
     if (!mounted || widget.text.isEmpty) return;
 
-    final duration = _typeDuration * widget.text.length;
+    final duration = _typeDuration * _characterCount;
     _controller
       ..duration = duration
       ..forward(from: 0);
@@ -368,7 +383,7 @@ class _TypewriterTextState extends ConsumerState<_TypewriterText>
   void _startDeleting() {
     if (!mounted) return;
 
-    final duration = _deleteDuration * widget.text.length;
+    final duration = _deleteDuration * _characterCount;
     _controller
       ..duration = duration
       ..forward(from: 0);
@@ -376,6 +391,7 @@ class _TypewriterTextState extends ConsumerState<_TypewriterText>
 
   @override
   void dispose() {
+    _pauseTimer?.cancel();
     _controller
       ..removeListener(_onTick)
       ..removeStatusListener(_onStatus)
@@ -387,18 +403,16 @@ class _TypewriterTextState extends ConsumerState<_TypewriterText>
   Widget build(BuildContext context) {
     // Live-check reduced motion
     final motionOn = motionEnabled(context, ref);
-    if (!motionOn && _charIndex != widget.text.length) {
+    if (!motionOn && _charIndex != _characterCount) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) setState(() => _charIndex = widget.text.length);
+        if (mounted) setState(() => _charIndex = _characterCount);
       });
     }
 
-    final displayText =
-    widget.text.substring(0, _charIndex.clamp(0, widget.text.length));
+    final displayText = widget.text.characters
+        .take(_charIndex.clamp(0, _characterCount))
+        .toString();
 
-    return Text(
-      displayText,
-      style: widget.style,
-    );
+    return AppText(displayText, style: widget.style);
   }
 }

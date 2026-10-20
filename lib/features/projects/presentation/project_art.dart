@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../../core/localization/app_localizations.dart';
 import '../../../shared/models/portfolio.dart';
 
 /// Decorative illustration, never presented as an actual project screenshot.
@@ -34,7 +35,7 @@ class ProjectArt extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          AppText(
                             project.number,
                             style: TextStyle(
                               fontSize: 11,
@@ -46,7 +47,7 @@ class ProjectArt extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 12),
-                          Text(
+                          AppText(
                             notes
                                 ? 'Capture.\nOrganize.'
                                 : 'Browse.\nDiscover.',
@@ -116,7 +117,7 @@ class _IllustratedPhone extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 17),
-              Text(
+              AppText(
                 notes ? 'Notes' : 'Discover',
                 style: const TextStyle(
                   color: Color(0xFF20242C),

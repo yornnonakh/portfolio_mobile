@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../localization/app_localizations.dart';
 import '../../shared/models/portfolio.dart';
 
 class ProfileAvatar extends StatelessWidget {
@@ -15,7 +16,7 @@ class ProfileAvatar extends StatelessWidget {
         color: Theme.of(context).colorScheme.surfaceContainerHighest,
         shape: BoxShape.circle,
       ),
-      child: Text(
+      child: AppText(
         'YN',
         style: TextStyle(
           fontSize: size * .33,
@@ -26,9 +27,11 @@ class ProfileAvatar extends StatelessWidget {
       ),
     );
     return Semantics(
-      label: profile.portraitAsset == null
-          ? '${profile.name} initials'
-          : '${profile.name} portrait',
+      label: context.tr(
+        profile.portraitAsset == null
+            ? '${profile.name} initials'
+            : '${profile.name} portrait',
+      ),
       image: true,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(size / 2),

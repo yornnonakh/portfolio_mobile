@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/localization/app_localizations.dart';
 import '../../../core/design_system/components.dart';
 import '../../../core/utils/motion.dart';
 import '../../../shared/providers/portfolio_providers.dart';
@@ -54,19 +55,19 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                     children: [
                       const BrandMark(size: 76),
                       const SizedBox(height: 28),
-                      Text(
+                      AppText(
                         profile.name,
                         style: Theme.of(context).textTheme.headlineLarge,
                       ),
                       const SizedBox(height: 8),
-                      Text(
+                      AppText(
                         profile.title,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       const SizedBox(height: 32),
                       if (animated)
                         Semantics(
-                          label: 'Opening portfolio',
+                          label: context.tr('Opening portfolio'),
                           child: const CupertinoActivityIndicator(),
                         ),
                     ],

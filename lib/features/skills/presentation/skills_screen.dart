@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/localization/app_localizations.dart';
 import '../../../core/design_system/components.dart';
 import '../../../shared/providers/portfolio_providers.dart';
 
@@ -40,7 +41,7 @@ class SkillsScreen extends ConsumerWidget {
                       ),
                       const SizedBox(width: 14),
                       Expanded(
-                        child: Text(
+                        child: AppText(
                           category.name,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
@@ -53,7 +54,7 @@ class SkillsScreen extends ConsumerWidget {
                     padding: const EdgeInsets.fromLTRB(64, 14, 16, 14),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(
+                      child: AppText(
                         skill,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),

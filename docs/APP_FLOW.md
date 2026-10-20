@@ -13,6 +13,19 @@ Direct links to all screens work without waiting for the splash screen.
 Recruiter: introduction → featured project → case study → resume → contact.
 Technical reviewer: skills → experience → project implementation notes → GitHub.
 Owner: settings → theme and animation preferences, persisted on this device.
+Settings → Language switch (off: English / on: ភាសាខ្មែរ) updates the complete interface without
+leaving the current route. The choice persists alongside theme and motion.
+Project filter selections and contact form input remain intact when switching.
+The language text beside Settings switches directly between English and Khmer
+with one tap. The US/Cambodian flag updates with the selected language. Tapping
+the language name in Settings does the same; no selection popup is shown.
+The Dark mode switch selects dark when on and light when off. Follow system
+tracks device appearance; changing Dark mode selects a manual preference.
+Turning Follow system off keeps the currently displayed appearance.
+Contact: user name, email, phone, and message → validation → prefilled email
+draft to the profile email → Gmail in the browser if no mail app is available.
+Web uses Gmail directly. The visitor completes sending in their email app or
+Gmail; the form retains its input and offers Copy message if both launches fail.
 
 ## Design system
 

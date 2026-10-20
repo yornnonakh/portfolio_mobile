@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/localization/app_localizations.dart';
 import '../../../core/design_system/components.dart';
 import '../../../shared/models/portfolio.dart';
 import 'project_art.dart';
@@ -28,7 +29,7 @@ class ProjectCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              AppText(
                 project.title,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
@@ -40,7 +41,7 @@ class ProjectCard extends StatelessWidget {
               IosButton.plain(
                 onPressed: () =>
                     context.push('/projects/${project.id}?from=$heroSource'),
-                label: const Text('Explore case study'),
+                label: const AppText('Explore case study'),
                 icon: const Icon(CupertinoIcons.chevron_right, size: 15),
                 iconAlignment: IconAlignment.end,
               ),

@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/localization/app_localizations.dart';
 import '../../../core/design_system/components.dart';
 import '../../../core/services/link_service.dart';
 import '../../../core/utils/action_feedback.dart';
 import '../../../core/widgets/profile_avatar.dart';
 import '../../../shared/providers/portfolio_providers.dart';
+import 'contact_form.dart';
 
 class ContactScreen extends ConsumerWidget {
   const ContactScreen({super.key});
@@ -13,54 +15,62 @@ class ContactScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(portfolioProvider).profile;
     final service = ref.read(linkServiceProvider);
-    return PageContent(
-      children: [
-        const PageHeader(
-          eyebrow: 'Contact',
-          title: 'Contact',
-          description: 'Let’s talk about your next mobile project.',
-        ),
-        SurfaceCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+    final profileCard = SurfaceCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
-              ProfileAvatar(profile: profile, size: 90),
-              const SizedBox(height: 16),
-              Text(
-                'Yorn Nona',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineLarge,
-              ),
-              const SizedBox(height: 8),
-              IosSelectableText(
-                profile.email,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: IosButton.filled(
-                  onPressed: () => performAction(
-                    context,
-                    () => service.email(profile.email),
-                  ),
-                  child: const Text('Send an email'),
-                ),
-              ),
-              Center(
-                child: IosButton.plain(
-                  onPressed: () =>
-                      performAction(context, () => service.copy(profile.email)),
-                  icon: const LiquidGlassIcon(CupertinoIcons.doc_on_doc, size: 18),
-                  label: const Text('Copy email'),
+              ProfileAvatar(profile: profile, size: 56),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppText(
+                      profile.name,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    MutedText(profile.title),
+                  ],
                 ),
               ),
             ],
           ),
-        ),
-        const SizedBox(height: 28),
+          const SizedBox(height: 16),
+          IosSelectableText(
+            profile.email,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 20,
+            children: [
+              IosButton.plain(
+                onPressed: () =>
+                    performAction(context, () => service.email(profile.email)),
+                icon: const Icon(CupertinoIcons.envelope, size: 18),
+                label: const AppText('Email me'),
+              ),
+              IosButton.plain(
+                onPressed: () =>
+                    performAction(context, () => service.copy(profile.email)),
+                icon: const Icon(CupertinoIcons.doc_on_doc, size: 18),
+                label: const AppText('Copy email'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+    final socialLinks = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
         const Eyebrow('Social Media'),
         const SizedBox(height: 10),
         IosGroupedList(
@@ -104,6 +114,49 @@ class ContactScreen extends ConsumerWidget {
                   : null,
             ),
           ],
+        ),
+      ],
+    );
+    return PageContent(
+      children: [
+        const PageHeader(
+          eyebrow: 'Contact',
+          title: 'Let’s connect.',
+          description: 'A project, an opportunity, or a simple hello.',
+        ),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final form = ContactForm(recipient: profile.email);
+            if (constraints.maxWidth >= 980 &&
+                MediaQuery.textScalerOf(context).scale(16) <= 22) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 4,
+                    child: Column(
+                      children: [
+                        profileCard,
+                        const SizedBox(height: 28),
+                        socialLinks,
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 28),
+                  Expanded(flex: 7, child: form),
+                ],
+              );
+            }
+            return Column(
+              children: [
+                profileCard,
+                const SizedBox(height: 24),
+                form,
+                const SizedBox(height: 28),
+                socialLinks,
+              ],
+            );
+          },
         ),
       ],
     );

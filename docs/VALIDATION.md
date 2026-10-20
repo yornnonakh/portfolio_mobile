@@ -4,11 +4,31 @@
 
 - Dart formatting: passed across `lib` and `test`.
 - Flutter static analysis: no issues.
-- Full suite with preview capture: all 16 tests passed.
+- Full suite with preview capture: all 37 tests passed.
 - Layout coverage: every content route at 320 px with 200% text, tablet, and desktop.
 - Visual previews: desktop Home and every mobile content screen in both themes, including project details, Skills, Experience, Resume, and Licenses.
 - Cupertino app shell, navigation bars, page routes, buttons, dialogs, selection menus, tabs, segmented controls, switch, grouped rows, and loading indicators.
 - Clipboard confirmation and license-detail back navigation pass integration checks.
+- Contact form checks cover required/invalid fields, full email draft contents,
+  Unicode and special-character encoding, and input preservation when an email app cannot open.
+- Contact form light/dark previews are saved alongside the full-page previews.
+- Modern contact layout: compact profile card, responsive columns, rounded input
+  fields with focus/error states, message counter, and inline action feedback.
+- Khmer/English: Settings and the app-bar flag switch the full UI immediately;
+  native controls are localized, and the language choice restores on startup.
+  Storage failure leaves the previous choice intact. Contact input and project
+  filters survive switching. Every Khmer route passes in both themes at 320 px
+  with 200% text, tablet, and desktop. Bundled-font Khmer previews are saved.
+- Direct language switching: localization checks cover tapping the language text
+  in either direction, saving the choice, staying on the current tab, and 320 px
+  with 200% text. English/Khmer button previews include the bundled SVG flags.
+- Settings uses Cupertino switches for language, dark/light appearance, following
+  device appearance, and motion. Checks cover manual light/dark selection, device
+  brightness changes in system mode, saved preferences, and both UI languages.
+- Email fallback checks cover missing/throwing mail handlers, Gmail with every form
+  detail preserved, browser dispatch, an explicit Gmail button, and copying the full
+  message when both launches fail. The Gmail compose URL opens successfully in Safari
+  on the running iPhone 17 Pro Max simulator; no email was sent during validation.
 
 The build results below predate the UI refresh.
 

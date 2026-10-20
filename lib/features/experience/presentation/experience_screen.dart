@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/localization/app_localizations.dart';
 import '../../../core/design_system/components.dart';
 import '../../../shared/providers/portfolio_providers.dart';
 import '../../home/presentation/home_screen.dart';
@@ -24,12 +25,12 @@ class ExperienceScreen extends ConsumerWidget {
               children: [
                 Eyebrow(experience.period),
                 const SizedBox(height: 10),
-                Text(
+                AppText(
                   experience.title,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 const SizedBox(height: 8),
-                Text(
+                AppText(
                   experience.organization,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -51,7 +52,7 @@ class ExperienceScreen extends ConsumerWidget {
             children: [
               Eyebrow(data.education.period),
               const SizedBox(height: 12),
-              Text(
+              AppText(
                 data.education.program,
                 style: Theme.of(context).textTheme.titleLarge,
               ),

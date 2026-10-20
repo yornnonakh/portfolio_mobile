@@ -84,6 +84,7 @@ class _LicensesScreenState extends State<LicensesScreen> {
                               SurfaceCard(
                                 child: IosSelectableText(
                                   package.value,
+                                  localize: false,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ),

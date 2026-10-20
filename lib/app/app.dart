@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import '../core/constants/app_constants.dart';
 import '../features/settings/application/settings_view_model.dart';
 import 'router/app_router.dart';
@@ -16,7 +17,13 @@ class PortfolioApp extends ConsumerWidget {
       title: AppConstants.name,
       debugShowCheckedModeBanner: false,
       routerConfig: ref.watch(routerProvider),
-      localizationsDelegates: const [DefaultMaterialLocalizations.delegate],
+      locale: Locale(settings.languageCode),
+      supportedLocales: const [Locale('en'), Locale('km')],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       builder: (context, child) {
         final data = MediaQuery.of(context);
         final brightness = switch (settings.themeMode) {

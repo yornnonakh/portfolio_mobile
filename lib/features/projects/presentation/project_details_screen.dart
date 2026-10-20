@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/localization/app_localizations.dart';
 import '../../../core/design_system/components.dart';
 import '../../../core/services/link_service.dart';
 import '../../../core/utils/action_feedback.dart';
@@ -29,7 +30,7 @@ class ProjectDetailsScreen extends ConsumerWidget {
             message: 'This project is not in the portfolio.',
             action: IosButton.filled(
               onPressed: () => context.go('/projects'),
-              child: const Text('Browse projects'),
+              child: const AppText('Browse projects'),
             ),
           ),
         ],
@@ -50,7 +51,7 @@ class ProjectDetailsScreen extends ConsumerWidget {
           child: ProjectArt(project: project, height: 330),
         ),
         const SizedBox(height: 36),
-        const SectionHeading('Project overview', eyebrow: 'The work'),
+        const SectionHeading('Project overview'),
         ResponsiveGrid(
           minimumWidth: 430,
           children: [
@@ -58,7 +59,7 @@ class ProjectDetailsScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  AppText(
                     'Features',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
@@ -71,7 +72,7 @@ class ProjectDetailsScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  AppText(
                     'My contributions',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
@@ -83,12 +84,12 @@ class ProjectDetailsScreen extends ConsumerWidget {
           ],
         ),
         const SizedBox(height: 36),
-        const SectionHeading('How it works', eyebrow: 'Development'),
+        const SectionHeading('How it works'),
         SurfaceCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              AppText(
                 'Architecture & state management',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
@@ -110,7 +111,7 @@ class ProjectDetailsScreen extends ConsumerWidget {
                 ],
               ),
               const Divider(height: 40),
-              Text(
+              AppText(
                 'API integration',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
@@ -127,7 +128,7 @@ class ProjectDetailsScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              AppText(
                 'Technical discussion',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
@@ -152,8 +153,11 @@ class ProjectDetailsScreen extends ConsumerWidget {
                       () => links.website(project.repositoryUrl),
                     )
                   : null,
-              icon: const Icon(CupertinoIcons.chevron_left_slash_chevron_right, size: 18),
-              label: Text(
+              icon: const Icon(
+                CupertinoIcons.chevron_left_slash_chevron_right,
+                size: 18,
+              ),
+              label: AppText(
                 LinkService.isWebUrl(project.repositoryUrl)
                     ? 'View repository'
                     : 'Repository unavailable',
@@ -165,12 +169,15 @@ class ProjectDetailsScreen extends ConsumerWidget {
                   context,
                   () => links.website(project.appStoreUrl),
                 ),
-                icon: const LiquidGlassIcon(CupertinoIcons.device_phone_portrait, size: 18),
-                label: const Text('View on App Store'),
+                icon: const LiquidGlassIcon(
+                  CupertinoIcons.device_phone_portrait,
+                  size: 18,
+                ),
+                label: const AppText('View on App Store'),
               ),
             IosButton.plain(
               onPressed: () => context.go('/contact'),
-              child: const Text('Discuss this project'),
+              child: const AppText('Discuss this project'),
             ),
           ],
         ),
@@ -201,7 +208,9 @@ class _ScreenshotGallery extends StatelessWidget {
             child: Image.asset(
               asset,
               fit: BoxFit.contain,
-              semanticLabel: '${project.title} screenshot',
+              semanticLabel: context.tr(
+                '${context.tr(project.title)} screenshot',
+              ),
               errorBuilder: (_, error, stack) => const EmptyState(
                 icon: CupertinoIcons.photo_fill,
                 title: 'Image unavailable',

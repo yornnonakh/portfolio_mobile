@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../localization/app_localizations.dart';
 import '../constants/app_constants.dart';
 import '../utils/motion.dart';
 
@@ -122,7 +123,7 @@ class IosIconButton extends StatelessWidget {
       );
     }
     return Semantics(
-      label: label,
+      label: context.tr(label),
       button: true,
       child: CupertinoButton(
         padding: EdgeInsets.zero,
@@ -135,13 +136,19 @@ class IosIconButton extends StatelessWidget {
 }
 
 class IosSelectableText extends StatelessWidget {
-  const IosSelectableText(this.data, {super.key, this.style});
+  const IosSelectableText(
+    this.data, {
+    super.key,
+    this.style,
+    this.localize = true,
+  });
   final String data;
   final TextStyle? style;
+  final bool localize;
 
   @override
   Widget build(BuildContext context) => SelectableText(
-    data,
+    localize ? context.tr(data) : data,
     style: style,
     selectionControls: cupertinoTextSelectionHandleControls,
     contextMenuBuilder: (context, state) =>
@@ -227,7 +234,7 @@ class IosSelectionControl<T extends Object> extends StatelessWidget {
                     onPressed: onChanged == null
                         ? null
                         : () => onChanged!(item.key),
-                    child: Text(
+                    child: AppText(
                       item.value,
                       style: style?.copyWith(
                         color: value == item.key
@@ -256,7 +263,7 @@ class IosSelectionControl<T extends Object> extends StatelessWidget {
                     vertical: 9,
                     horizontal: 6,
                   ),
-                  child: Text(
+                  child: AppText(
                     item.value,
                     textAlign: TextAlign.center,
                     style: style,
@@ -317,7 +324,7 @@ class IosActionRow extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              AppText(
                 title,
                 style: Theme.of(
                   context,
@@ -361,7 +368,7 @@ class Eyebrow extends StatelessWidget {
             shape: BoxShape.circle,
           ),
         ),
-      Text(
+      AppText(
         text,
         style: Theme.of(context).textTheme.labelSmall?.copyWith(
           fontSize: 13,
@@ -395,7 +402,7 @@ class PageHeader extends StatelessWidget {
         children: [
           Semantics(
             header: true,
-            child: Text(
+            child: AppText(
               title,
               style: Theme.of(context).textTheme.displayMedium,
             ),
@@ -430,10 +437,10 @@ class SectionHeading extends StatelessWidget {
   const SectionHeading(
     this.title, {
     super.key,
-    this.eyebrow,
     this.subtitle,
     this.action,
     this.onAction,
+    this.eyebrow,
   });
   final String title;
   final String? eyebrow, subtitle, action;
@@ -451,11 +458,11 @@ class SectionHeading extends StatelessWidget {
           spacing: 20,
           runSpacing: 8,
           children: [
-            Text(title, style: Theme.of(context).textTheme.headlineMedium),
+            AppText(title, style: Theme.of(context).textTheme.headlineMedium),
             if (action != null)
               IosButton.plain(
                 onPressed: onAction,
-                label: Text(action!),
+                label: AppText(action!),
                 icon: const Icon(CupertinoIcons.chevron_right, size: 18),
                 iconAlignment: IconAlignment.end,
               ),
@@ -475,7 +482,7 @@ class MutedText extends StatelessWidget {
   final String text;
   final bool large;
   @override
-  Widget build(BuildContext context) => Text(
+  Widget build(BuildContext context) => AppText(
     text,
     style:
         (large
@@ -498,7 +505,7 @@ class TechBadge extends StatelessWidget {
           : Theme.of(context).colorScheme.surfaceContainerHighest,
       borderRadius: BorderRadius.circular(8),
     ),
-    child: Text(
+    child: AppText(
       label,
       style: Theme.of(context).textTheme.labelMedium?.copyWith(
         fontSize: 11,
@@ -574,7 +581,7 @@ class BulletList extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Expanded(child: Text(item)),
+                Expanded(child: AppText(item)),
               ],
             ),
           ),
@@ -600,7 +607,7 @@ class EmptyState extends StatelessWidget {
       children: [
         IconTile(icon),
         const SizedBox(height: 16),
-        Text(
+        AppText(
           title,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleLarge,
@@ -608,7 +615,7 @@ class EmptyState extends StatelessWidget {
         const SizedBox(height: 8),
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 520),
-          child: Text(
+          child: AppText(
             message,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -675,7 +682,7 @@ class BrandMark extends StatelessWidget {
   final double size;
   @override
   Widget build(BuildContext context) => Semantics(
-    label: 'Yorn Nona monogram',
+    label: context.tr('Yorn Nona monogram'),
     image: true,
     child: Container(
       width: size,
@@ -685,7 +692,7 @@ class BrandMark extends StatelessWidget {
         color: Theme.of(context).colorScheme.onSurface,
         borderRadius: BorderRadius.circular(size * .22),
       ),
-      child: Text(
+      child: AppText(
         'yn',
         textScaler: TextScaler.noScaling,
         style: TextStyle(
@@ -778,7 +785,8 @@ class LiquidGlassIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveColor = color ?? Theme.of(context).colorScheme.onSurfaceVariant;
+    final effectiveColor =
+        color ?? Theme.of(context).colorScheme.onSurfaceVariant;
     return LiquidGlassContainer(
       padding: padding,
       borderRadius: borderRadius,

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/localization/app_localizations.dart';
 import '../../core/design_system/components.dart';
 import '../../core/utils/motion.dart';
 import '../../core/widgets/app_frame.dart';
@@ -103,7 +104,7 @@ final routerProvider = Provider<GoRouter>((ref) {
               message: 'Explore the portfolio from the home screen.',
               action: IosButton.filled(
                 onPressed: () => context.go('/home'),
-                child: const Text('Back to home'),
+                child: const AppText('Back to home'),
               ),
             ),
           ],

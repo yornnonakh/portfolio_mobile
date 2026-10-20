@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/localization/app_localizations.dart';
 import '../../../core/design_system/components.dart';
 import '../../../core/widgets/profile_avatar.dart';
 import '../../../shared/providers/portfolio_providers.dart';
@@ -26,23 +27,21 @@ class AboutScreen extends ConsumerWidget {
             children: [
               ProfileAvatar(profile: profile, size: 90),
               const SizedBox(height: 16),
-              Text(
+              AppText(
                 profile.name,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 4),
-              Text(
+              AppText(
                 profile.title,
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
               const SizedBox(height: 4),
               MutedText(profile.location),
               const SizedBox(height: 20),
-              Text(
+              AppText(
                 profile.summary,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge,
@@ -51,7 +50,7 @@ class AboutScreen extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 36),
-        const SectionHeading('How I got here', eyebrow: ''),
+        const SectionHeading('How I got here'),
         MutedText(data.journey, large: true),
         const SizedBox(height: 26),
         ResponsiveGrid(
@@ -67,7 +66,7 @@ class AboutScreen extends ConsumerWidget {
                     size: 24,
                   ),
                   SizedBox(height: 12),
-                  Text(
+                  AppText(
                     data.education.program,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
@@ -95,7 +94,7 @@ class AboutScreen extends ConsumerWidget {
                     size: 24,
                   ),
                   const SizedBox(height: 12),
-                  Text(
+                  AppText(
                     'Languages',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
@@ -107,7 +106,7 @@ class AboutScreen extends ConsumerWidget {
                         spacing: 16,
                         runSpacing: 8,
                         children: [
-                          Text(
+                          AppText(
                             language.name,
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
@@ -142,7 +141,7 @@ class AboutScreen extends ConsumerWidget {
                 children: [
                   Eyebrow(experience.period),
                   const SizedBox(height: 10),
-                  Text(
+                  AppText(
                     experience.title,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
@@ -156,7 +155,7 @@ class AboutScreen extends ConsumerWidget {
         IosButton.tinted(
           onPressed: () => context.push('/resume'),
           icon: const LiquidGlassIcon(CupertinoIcons.doc_text, size: 18),
-          label: const Text('View resume'),
+          label: const AppText('View resume'),
         ),
       ],
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import '../localization/app_localizations.dart';
 import '../services/link_service.dart';
 
 Future<void> performAction(
@@ -19,14 +20,14 @@ Future<void> performAction(
   await showCupertinoDialog<void>(
     context: context,
     builder: (dialogContext) => CupertinoAlertDialog(
-      title: Text(
+      title: AppText(
         result.succeeded ? 'Done' : 'Unable to complete action',
         style: textTheme.textStyle.copyWith(
           fontSize: 17,
           fontWeight: FontWeight.w600,
         ),
       ),
-      content: Text(
+      content: AppText(
         result.message!,
         style: textTheme.textStyle.copyWith(fontSize: 13, height: 1.4),
       ),
@@ -34,7 +35,7 @@ Future<void> performAction(
         CupertinoDialogAction(
           isDefaultAction: true,
           onPressed: () => Navigator.of(dialogContext).pop(),
-          child: Text(
+          child: AppText(
             'OK',
             style: textTheme.actionTextStyle.copyWith(
               fontWeight: FontWeight.w600,

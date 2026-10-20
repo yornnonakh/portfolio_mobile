@@ -22,6 +22,16 @@ Future<void> main() async {
       'Inter',
     ], await rootBundle.loadString('assets/fonts/OFL.txt'));
   });
+  LicenseRegistry.addLicense(() async* {
+    yield LicenseEntryWithLineBreaks([
+      'Noto Sans Khmer',
+    ], await rootBundle.loadString('assets/fonts/NotoSansKhmer-OFL.txt'));
+  });
+  LicenseRegistry.addLicense(() async* {
+    yield LicenseEntryWithLineBreaks([
+      'flag-icons',
+    ], await rootBundle.loadString('assets/icons/flags/LICENSE.txt'));
+  });
   runApp(
     ProviderScope(
       overrides: [
