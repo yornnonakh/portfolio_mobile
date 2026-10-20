@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/settings/application/settings_view_model.dart';
 import '../localization/app_localizations.dart';
@@ -44,13 +45,19 @@ class LanguageButton extends ConsumerWidget {
                 LanguageFlag(
                   languageCode: settings.languageCode,
                   width: 22,
-                  height: 16.5,
+                  height: 15.5,
                 ),
-                const SizedBox(width: 6),
+                const SizedBox(width: 5),
+                Container(
+                  color: Colors.blueGrey,
+                  width: 1.50,
+                  height: 15.5,
+                ),
+                const SizedBox(width: 5),
                 Text(
-                  isKhmer ? 'ខ្មែរ' : 'English',
+                  isKhmer ? 'ខ្មែរ' : 'EN',
                   style: CupertinoTheme.of(context).textTheme.navActionTextStyle
-                      .copyWith(fontSize: 13, fontWeight: FontWeight.w600),
+                      .copyWith(fontSize: 15, fontWeight: FontWeight.w600),
                 ),
               ],
             ),

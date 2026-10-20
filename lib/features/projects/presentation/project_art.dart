@@ -148,7 +148,7 @@ class _IllustratedPhone extends StatelessWidget {
                   child: Transform.rotate(
                     angle: -.2,
                     child: const Icon(
-                      CupertinoIcons.headphones,
+                       CupertinoIcons.headphones,
                       color: Color(0xFF244E50),
                       size: 64,
                     ),
