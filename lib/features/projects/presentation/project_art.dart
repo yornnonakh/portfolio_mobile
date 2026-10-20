@@ -12,7 +12,7 @@ class ProjectArt extends StatelessWidget {
     final notes = project.id == 'notes';
     return Semantics(
       image: true,
-      label: '${project.title}. Illustrative preview.',
+      // label: '${project.title}. Illustrative preview.',
       child: ExcludeSemantics(
         child: MediaQuery.withNoTextScaling(
           child: Container(
@@ -65,31 +65,6 @@ class ProjectArt extends StatelessWidget {
                     child: Transform.rotate(
                       angle: notes ? -.06 : .06,
                       child: _IllustratedPhone(notes: notes),
-                    ),
-                  ),
-                  Positioned(
-                    left: 22,
-                    bottom: 20,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.surface.withValues(alpha: .85),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        'Illustrative preview',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                          fontSize: 10,
-                          letterSpacing: 0,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
                     ),
                   ),
                 ],
