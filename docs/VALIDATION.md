@@ -1,0 +1,47 @@
+# Validation
+
+## iOS UI refresh · 20 October 2026
+
+- Dart formatting: passed across `lib` and `test`.
+- Flutter static analysis: no issues.
+- Full suite with preview capture: all 16 tests passed.
+- Layout coverage: every content route at 320 px with 200% text, tablet, and desktop.
+- Visual previews: desktop Home and every mobile content screen in both themes, including project details, Skills, Experience, Resume, and Licenses.
+- Cupertino app shell, navigation bars, page routes, buttons, dialogs, selection menus, tabs, segmented controls, switch, grouped rows, and loading indicators.
+- Clipboard confirmation and license-detail back navigation pass integration checks.
+
+The build results below predate the UI refresh.
+
+## Build verification · 19 October 2026
+
+Flutter 3.44.8 stable, Dart 3.12.2, Xcode 26.3.
+
+| Check | Result |
+| --- | --- |
+| Dart formatting | Passed |
+| Flutter static analysis | No issues |
+| Full suite with preview capture | 14 tests passed |
+| Release web compilation | Passed, including Wasm compatibility dry run |
+| Android debug APK | Passed |
+| Unsigned iOS release | Passed, 20.7 MB app bundle |
+
+Tests cover every content route, unknown routes and unknown project IDs at
+320 × 700 with 200% text scaling, 834 × 1194, and 1440 × 1000; they also exercise
+splash redirection, tabs, filtering, case studies, preference persistence, system
+reduced motion, missing assets/links, contact URI creation, error recovery, and
+PDF asset validation. The opt-in capture test loads the real font/icon assets
+and exports the light/dark previews under `docs/previews/`. The release web app
+was also rendered in Chrome for visual review.
+
+Build outputs (generated, excluded from source control):
+
+- `build/app/outputs/flutter-apk/app-debug.apk`
+- `build/ios/iphoneos/Runner.app`
+- `build/web/`
+
+The supplied portrait is bundled for Home and About.
+The PDF, original screenshots and project/social URLs described as
+missing in README were not supplied. PDF preview/save/share integrations compile;
+physical-device checks with the owner's actual PDF and mail/phone applications
+remain part of release acceptance. Store signing, upload and publication have
+not been performed. No credentials or provisioning profiles were created.
