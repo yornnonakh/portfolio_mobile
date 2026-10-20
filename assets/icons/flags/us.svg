@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="flag-icons-us" viewBox="0 0 640 480">
+  <path fill="#bd3d44" d="M0 0h640v480H0"/>
+  <path stroke="#fff" stroke-width="37" d="M0 55.3h640M0 129h640M0 203h640M0 277h640M0 351h640M0 425h640"/>
+  <path fill="#192f5d" d="M0 0h364.8v258.5H0"/>
+  <defs><path id="us-star" fill="#fff" d="m14 0 9 27L0 10h28L5 27z"/></defs>
+  <use xlink:href="#us-star" x="16.40" y="12.35"/>
+  <use xlink:href="#us-star" x="77.20" y="12.35"/>
+  <use xlink:href="#us-star" x="138.00" y="12.35"/>
+  <use xlink:href="#us-star" x="198.80" y="12.35"/>
+  <use xlink:href="#us-star" x="259.60" y="12.35"/>
+  <use xlink:href="#us-star" x="320.40" y="12.35"/>
+  <use xlink:href="#us-star" x="46.80" y="38.20"/>
+  <use xlink:href="#us-star" x="107.60" y="38.20"/>
+  <use xlink:href="#us-star" x="168.40" y="38.20"/>
+  <use xlink:href="#us-star" x="229.20" y="38.20"/>
+  <use xlink:href="#us-star" x="290.00" y="38.20"/>
+  <use xlink:href="#us-star" x="16.40" y="64.05"/>
+  <use xlink:href="#us-star" x="77.20" y="64.05"/>
+  <use xlink:href="#us-star" x="138.00" y="64.05"/>
+  <use xlink:href="#us-star" x="198.80" y="64.05"/>
+  <use xlink:href="#us-star" x="259.60" y="64.05"/>
+  <use xlink:href="#us-star" x="320.40" y="64.05"/>
+  <use xlink:href="#us-star" x="46.80" y="89.90"/>
+  <use xlink:href="#us-star" x="107.60" y="89.90"/>
+  <use xlink:href="#us-star" x="168.40" y="89.90"/>
+  <use xlink:href="#us-star" x="229.20" y="89.90"/>
+  <use xlink:href="#us-star" x="290.00" y="89.90"/>
+  <use xlink:href="#us-star" x="16.40" y="115.75"/>
+  <use xlink:href="#us-star" x="77.20" y="115.75"/>
+  <use xlink:href="#us-star" x="138.00" y="115.75"/>
+  <use xlink:href="#us-star" x="198.80" y="115.75"/>
+  <use xlink:href="#us-star" x="259.60" y="115.75"/>
+  <use xlink:href="#us-star" x="320.40" y="115.75"/>
+  <use xlink:href="#us-star" x="46.80" y="141.60"/>
+  <use xlink:href="#us-star" x="107.60" y="141.60"/>
+  <use xlink:href="#us-star" x="168.40" y="141.60"/>
+  <use xlink:href="#us-star" x="229.20" y="141.60"/>
+  <use xlink:href="#us-star" x="290.00" y="141.60"/>
+  <use xlink:href="#us-star" x="16.40" y="167.45"/>
+  <use xlink:href="#us-star" x="77.20" y="167.45"/>
+  <use xlink:href="#us-star" x="138.00" y="167.45"/>
+  <use xlink:href="#us-star" x="198.80" y="167.45"/>
+  <use xlink:href="#us-star" x="259.60" y="167.45"/>
+  <use xlink:href="#us-star" x="320.40" y="167.45"/>
+  <use xlink:href="#us-star" x="46.80" y="193.30"/>
+  <use xlink:href="#us-star" x="107.60" y="193.30"/>
+  <use xlink:href="#us-star" x="168.40" y="193.30"/>
+  <use xlink:href="#us-star" x="229.20" y="193.30"/>
+  <use xlink:href="#us-star" x="290.00" y="193.30"/>
+  <use xlink:href="#us-star" x="16.40" y="219.15"/>
+  <use xlink:href="#us-star" x="77.20" y="219.15"/>
+  <use xlink:href="#us-star" x="138.00" y="219.15"/>
+  <use xlink:href="#us-star" x="198.80" y="219.15"/>
+  <use xlink:href="#us-star" x="259.60" y="219.15"/>
+  <use xlink:href="#us-star" x="320.40" y="219.15"/>
+</svg>

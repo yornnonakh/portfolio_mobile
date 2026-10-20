@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../localization/app_localizations.dart';
 import '../design_system/components.dart';
+import 'language_button.dart';
 
 class AppFrame extends StatefulWidget {
   const AppFrame({
@@ -71,7 +73,7 @@ class _AppFrameState extends State<AppFrame> {
           opacity: _isScrolled ? 1.0 : 0.0,
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeInOut,
-          child: Text(
+          child: AppText(
             navigationTitle,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -91,10 +93,17 @@ class _AppFrameState extends State<AppFrame> {
               )
             : null,
         trailing: shell != null
-            ? IosIconButton(
-                label: 'Settings',
-                onPressed: () => context.push('/settings'),
-                icon: CupertinoIcons.gear_alt_fill,
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const LanguageButton(),
+                  const SizedBox(width: 4),
+                  IosIconButton(
+                    label: 'Settings',
+                    onPressed: () => context.push('/settings'),
+                    icon: CupertinoIcons.gear_alt_fill,
+                  ),
+                ],
               )
             : null,
       ),
@@ -124,47 +133,49 @@ class _AppFrameState extends State<AppFrame> {
                 if (shell != null)
                   Align(
                     alignment: Alignment.bottomCenter,
-                    child: CupertinoTabBar(
-                      currentIndex: shell.currentIndex,
-                      onTap: (index) => shell.goBranch(
-                        index,
-                        initialLocation: index == shell.currentIndex,
-                      ),
-                      backgroundColor: scheme.surface.withValues(alpha: .86),
-                      activeColor: scheme.primary,
-                      inactiveColor: scheme.onSurfaceVariant,
-                      iconSize: 24,
-                      height: 56,
-                      border: Border(
-                        top: BorderSide(
-                          color: scheme.outlineVariant.withValues(alpha: .5),
-                          width: .5,
+                    child: MediaQuery.withNoTextScaling(
+                      child: CupertinoTabBar(
+                        currentIndex: shell.currentIndex,
+                        onTap: (index) => shell.goBranch(
+                          index,
+                          initialLocation: index == shell.currentIndex,
                         ),
-                      ),
-                      items: const [
-                        BottomNavigationBarItem(
-                          icon: Icon(CupertinoIcons.house),
-                          activeIcon: Icon(CupertinoIcons.house_fill),
-                          label: 'Home',
-                        ),
-                        BottomNavigationBarItem(
-                          icon: Icon(CupertinoIcons.square_stack),
-                          activeIcon: Icon(CupertinoIcons.square_stack_fill),
-                          label: 'Projects',
-                        ),
-                        BottomNavigationBarItem(
-                          icon: Icon(CupertinoIcons.person_crop_circle),
-                          activeIcon: Icon(
-                            CupertinoIcons.person_crop_circle_fill,
+                        backgroundColor: scheme.surface.withValues(alpha: .86),
+                        activeColor: scheme.primary,
+                        inactiveColor: scheme.onSurfaceVariant,
+                        iconSize: 24,
+                        height: 56,
+                        border: Border(
+                          top: BorderSide(
+                            color: scheme.outlineVariant.withValues(alpha: .5),
+                            width: .5,
                           ),
-                          label: 'About',
                         ),
-                        BottomNavigationBarItem(
-                          icon: Icon(CupertinoIcons.bubble_left),
-                          activeIcon: Icon(CupertinoIcons.bubble_left_fill),
-                          label: 'Contact',
-                        ),
-                      ],
+                        items: [
+                          BottomNavigationBarItem(
+                            icon: Icon(CupertinoIcons.house),
+                            activeIcon: Icon(CupertinoIcons.house_fill),
+                            label: context.tr('Home'),
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Icon(CupertinoIcons.square_stack),
+                            activeIcon: Icon(CupertinoIcons.square_stack_fill),
+                            label: context.tr('Projects'),
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Icon(CupertinoIcons.person_crop_circle),
+                            activeIcon: Icon(
+                              CupertinoIcons.person_crop_circle_fill,
+                            ),
+                            label: context.tr('About'),
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Icon(CupertinoIcons.bubble_left),
+                            activeIcon: Icon(CupertinoIcons.bubble_left_fill),
+                            label: context.tr('Contact'),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
               ],

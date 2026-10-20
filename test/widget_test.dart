@@ -20,9 +20,10 @@ Future<ProviderContainer> mountApp(
   String path, {
   Size size = const Size(390, 844),
   double scale = 1,
+  Map<String, Object> savedPreferences = const {},
 }) async {
   GoogleFonts.config.allowRuntimeFetching = false;
-  SharedPreferences.setMockInitialValues({});
+  SharedPreferences.setMockInitialValues(savedPreferences);
   final preferences = await SharedPreferences.getInstance();
   final container = ProviderContainer(
     overrides: [
@@ -121,11 +122,14 @@ void main() {
     tester,
   ) async {
     final container = await mountApp(tester, '/settings');
-    await tester.tap(find.text('Dark'));
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('settings-dark-mode')),
+    );
+    await tester.tap(find.byKey(const ValueKey('settings-dark-mode')));
     await tester.pumpAndSettle();
     expect(container.read(settingsProvider).themeMode, ThemeMode.dark);
-    await tester.ensureVisible(find.byType(CupertinoSwitch));
-    await tester.tap(find.byType(CupertinoSwitch));
+    await tester.ensureVisible(find.byKey(const ValueKey('settings-motion')));
+    await tester.tap(find.byKey(const ValueKey('settings-motion')));
     await tester.pumpAndSettle();
     final store = container.read(settingsRepositoryProvider);
     final reloaded = ProviderContainer(
@@ -135,6 +139,50 @@ void main() {
     expect(reloaded.read(settingsProvider).themeMode, ThemeMode.dark);
     expect(reloaded.read(settingsProvider).animations, isFalse);
   });
+
+  testWidgets(
+    'Appearance switches choose light and dark and track the device in system mode',
+    (tester) async {
+      tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
+      addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
+      final container = await mountApp(tester, '/settings');
+      Finder toggle(String key) => find.byKey(ValueKey(key));
+      bool value(String key) =>
+          tester.widget<CupertinoSwitch>(toggle(key)).value;
+      Future<void> tap(String key) async {
+        await Scrollable.ensureVisible(
+          tester.element(toggle(key)),
+          alignment: .5,
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(toggle(key));
+        await tester.pumpAndSettle();
+      }
+
+      expect(value('settings-system-theme'), isTrue);
+      expect(value('settings-dark-mode'), isTrue);
+      await tap('settings-dark-mode');
+      expect(container.read(settingsProvider).themeMode, ThemeMode.light);
+      expect(value('settings-system-theme'), isFalse);
+      expect(value('settings-dark-mode'), isFalse);
+      expect(
+        Theme.of(tester.element(toggle('settings-dark-mode'))).brightness,
+        Brightness.light,
+      );
+      await tap('settings-dark-mode');
+      expect(container.read(settingsProvider).themeMode, ThemeMode.dark);
+      await tap('settings-system-theme');
+      expect(container.read(settingsProvider).themeMode, ThemeMode.system);
+      tester.platformDispatcher.platformBrightnessTestValue = Brightness.light;
+      await tester.pumpAndSettle();
+      expect(value('settings-dark-mode'), isFalse);
+      await tap('settings-system-theme');
+      expect(container.read(settingsRepositoryProvider).theme, 'light');
+      tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
+      await tester.pumpAndSettle();
+      expect(value('settings-dark-mode'), isFalse);
+    },
+  );
 
   testWidgets(
     'Missing CV and unprovided social links have honest empty states',
@@ -229,7 +277,9 @@ void main() {
   ) async {
     await mountApp(tester, '/projects');
     final opacityFinder = find.byWidgetPredicate(
-      (w) => w is AnimatedOpacity && w.duration == const Duration(milliseconds: 200),
+      (w) =>
+          w is AnimatedOpacity &&
+          w.duration == const Duration(milliseconds: 200),
     );
     expect(opacityFinder, findsOneWidget);
     expect(tester.widget<AnimatedOpacity>(opacityFinder).opacity, 0.0);
@@ -261,6 +311,9 @@ void main() {
             ),
           );
         await cupertino.load();
+        await (FontLoader(
+          'NotoSansKhmer',
+        )..addFont(rootBundle.load('assets/fonts/NotoSansKhmer.ttf'))).load();
         final inter = FontLoader('Inter');
         for (final weight in [
           'Regular',
@@ -294,7 +347,7 @@ void main() {
                       '/settings',
                       '/licenses',
                     ]
-                  : ['/home']) {
+                  : ['/home', '/contact']) {
             container.read(routerProvider).go(route);
             await tester.pumpAndSettle();
             final boundary = tester.renderObject<RenderRepaintBoundary>(

@@ -17,7 +17,14 @@ flutter run -d chrome
 ```
 
 The portfolio follows the device theme on first launch. Settings provides explicit
-light and dark options and a persistent animation preference.
+light/dark and Follow system switches, plus a persistent animation preference.
+Tap **English** or **ភាសាខ្មែរ** in Settings to switch immediately, or tap the
+language text beside the flag in the app bar. The Settings switch is also
+available (off: English, on: Khmer). The choice updates navigation,
+portfolio descriptions, forms, feedback, and native controls immediately and is
+saved on this device. English is the default. Noto Sans Khmer is bundled for
+offline text rendering; names, contact details, technology names, user input,
+original license text, and the supplied CV PDF retain their original content.
 
 ## App flow and screens
 
@@ -33,12 +40,22 @@ light and dark options and a persistent animation preference.
 | Skills | `/skills` | All six CV-based skill categories; no invented proficiency scores |
 | Experience | `/experience` | Both roles, responsibilities, vertical timeline, education and App Store deployment experience |
 | Resume | `/resume` | Exact summary and work history; asset-backed PDF preview, save/download and sharing once the original PDF is supplied |
-| Contact | `/contact` | Email composer, copy email, phone call, real GitHub profile; LinkedIn/Telegram links stay unavailable until verified URLs are supplied |
+| Contact | `/contact` | Validated Contact Us form, email composer, copy email, phone call, real GitHub profile; LinkedIn/Telegram links stay unavailable until verified URLs are supplied |
 | Settings | `/settings` | Persistent theme and animation settings, version, dependency licenses |
 
 Floating navigation retains each of the four tab stacks and their scroll positions.
 Detail screens support back navigation and direct links. Invalid routes and project
 IDs show recoverable empty states. Theme settings load before the first screen.
+
+The Contact Us form collects user name, email, phone, and message. Send opens the
+visitor's email app with every detail filled into a draft addressed to the
+portfolio email (`Yornnonaistad@gmail.com`). If no mail app is available (including
+on iOS Simulator), Gmail opens in the browser instead. Web uses Gmail directly
+in the same tab to avoid popup blocking. The visitor signs in if necessary and
+finishes sending there. Open in Gmail is also available explicitly; if both
+launches fail, Copy message copies the recipient and complete message. Inputs
+remain in the form. Direct delivery inside the portfolio requires a configured
+email service/backend.
 
 ## Structure
 
@@ -110,7 +127,19 @@ project repository links, store links, or CV PDF were provided with this task.
 Saved design previews: [Desktop light](docs/previews/home-light.png) ·
 [Desktop dark](docs/previews/home-dark.png) ·
 [Mobile light](docs/previews/home-mobile-light.png) ·
-[Mobile dark](docs/previews/home-mobile-dark.png).
+[Mobile dark](docs/previews/home-mobile-dark.png) ·
+[Contact form light](docs/previews/contact-form-light.png) ·
+[Contact form dark](docs/previews/contact-form-dark.png).
+
+Khmer previews: [Settings](docs/previews/settings-khmer-light.png) ·
+[Home](docs/previews/home-khmer-light.png) ·
+[Contact dark](docs/previews/contact-khmer-dark.png).
+Language button: [English](docs/previews/language-button-en-light.png) ·
+[Khmer dark](docs/previews/language-button-km-dark.png).
+
+Contact uses a compact profile card, icon-led rounded fields with focus and error
+states, a live message counter, and a full-width Send action. On desktop, profile
+and social links sit beside the form; smaller screens use a single column.
 
 The interface follows iOS conventions: grouped white surfaces on a light gray
 canvas, black and charcoal surfaces in dark mode, system blue accents, and large
@@ -167,6 +196,12 @@ shared_preferences, printing and file_saver. Package APIs were checked against t
 uses Flutter's stable package solver. The local data remains usable offline.
 External links need their destination apps/network. Web PDF rasterization uses
 printing's PDF.js support and can require a network connection on first preview.
+Native localization uses Flutter's `flutter_localizations`. The bundled
+[Noto Sans Khmer font](https://github.com/google/fonts/tree/main/ofl/notosanskhmer)
+includes its SIL Open Font License in `assets/fonts/NotoSansKhmer-OFL.txt`.
+US and Cambodian flag SVGs come from [flag-icons](https://github.com/lipis/flag-icons),
+with the MIT license bundled in `assets/icons/flags/LICENSE.txt`. The US stars
+use explicit SVG instances for compatibility with Flutter's SVG renderer.
 
 Regenerate the code-drawn launcher icons on macOS:
 

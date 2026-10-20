@@ -84,7 +84,7 @@ void main() {
     final service = LinkService(launcher: (_) async => false);
     final result = await service.email('example@example.com');
     expect(result.succeeded, isFalse);
-    expect(result.message, contains('email app'));
+    expect(result.message, contains('Could not open email or Gmail'));
     final broken = LinkService(
       launcher: (_) async => throw PlatformException(code: 'missing'),
     );

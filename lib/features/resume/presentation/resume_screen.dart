@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:printing/printing.dart';
+import '../../../core/localization/app_localizations.dart';
 import '../../../core/design_system/components.dart';
 import '../../../core/services/cv_service.dart';
 import '../../../core/utils/action_feedback.dart';
@@ -25,7 +26,7 @@ class ResumeScreen extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.all(40),
               child: Semantics(
-                label: 'Loading CV',
+                label: context.tr('Loading CV'),
                 child: const CupertinoActivityIndicator(),
               ),
             ),
@@ -36,7 +37,7 @@ class ResumeScreen extends ConsumerWidget {
             message: 'Please try again, or read the resume summary below.',
             action: IosButton.tinted(
               onPressed: () => ref.invalidate(cvDocumentProvider),
-              child: const Text('Try again'),
+              child: const AppText('Try again'),
             ),
           ),
           data: (bytes) {
@@ -59,8 +60,11 @@ class ResumeScreen extends ConsumerWidget {
                         context,
                         () => ref.read(cvServiceProvider).save(bytes),
                       ),
-                      icon: const LiquidGlassIcon(CupertinoIcons.arrow_down_doc_fill, size: 18),
-                      label: const Text('Download / save PDF'),
+                      icon: const LiquidGlassIcon(
+                        CupertinoIcons.arrow_down_doc_fill,
+                        size: 18,
+                      ),
+                      label: const AppText('Download / save PDF'),
                     ),
                     Builder(
                       builder: (buttonContext) => IosButton.tinted(
@@ -77,8 +81,11 @@ class ResumeScreen extends ConsumerWidget {
                                 .share(bytes, bounds),
                           );
                         },
-                        icon: const LiquidGlassIcon(CupertinoIcons.square_arrow_up_fill, size: 18),
-                        label: const Text('Share CV'),
+                        icon: const LiquidGlassIcon(
+                          CupertinoIcons.square_arrow_up_fill,
+                          size: 18,
+                        ),
+                        label: const AppText('Share CV'),
                       ),
                     ),
                   ],
@@ -113,22 +120,25 @@ class ResumeScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              AppText(
                 data.profile.name,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 4),
-              Text(
+              AppText(
                 data.profile.title,
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
               const SizedBox(height: 16),
-              Text(data.profile.summary),
+              AppText(data.profile.summary),
               const Divider(height: 36),
-              Text('Experience', style: Theme.of(context).textTheme.titleLarge),
+              AppText(
+                'Experience',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
               const SizedBox(height: 18),
               for (final experience in data.experiences) ...[
-                Text(
+                AppText(
                   '${experience.title} · ${experience.period}',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -137,9 +147,12 @@ class ResumeScreen extends ConsumerWidget {
                 BulletList(experience.responsibilities),
                 const SizedBox(height: 12),
               ],
-              Text('Education', style: Theme.of(context).textTheme.titleLarge),
+              AppText(
+                'Education',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
               const SizedBox(height: 12),
-              Text(data.education.institute),
+              AppText(data.education.institute),
               MutedText(
                 '${data.education.program} · ${data.education.period} · ${data.education.status}',
               ),
