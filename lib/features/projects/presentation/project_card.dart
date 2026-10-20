@@ -28,8 +28,6 @@ class ProjectCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Eyebrow(project.category),
-              const SizedBox(height: 10),
               Text(
                 project.title,
                 style: Theme.of(context).textTheme.titleLarge,

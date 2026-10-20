@@ -61,7 +61,7 @@ class ContactScreen extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 28),
-        const Eyebrow('Connect'),
+        const Eyebrow('Social Media'),
         const SizedBox(height: 10),
         IosGroupedList(
           children: [
@@ -104,21 +104,6 @@ class ContactScreen extends ConsumerWidget {
                   : null,
             ),
           ],
-        ),
-        const SizedBox(height: 20),
-        Center(
-          child: Wrap(
-            spacing: 6,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Icon(
-                CupertinoIcons.location_fill,
-                size: 15,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-              MutedText(profile.location),
-            ],
-          ),
         ),
       ],
     );

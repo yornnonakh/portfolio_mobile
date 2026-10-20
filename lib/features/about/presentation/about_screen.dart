@@ -51,7 +51,7 @@ class AboutScreen extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 36),
-        const SectionHeading('How I got here', eyebrow: 'My journey'),
+        const SectionHeading('How I got here', eyebrow: ''),
         MutedText(data.journey, large: true),
         const SizedBox(height: 26),
         ResponsiveGrid(
@@ -66,9 +66,7 @@ class AboutScreen extends ConsumerWidget {
                     color: Theme.of(context).colorScheme.primary,
                     size: 24,
                   ),
-                  const SizedBox(height: 18),
-                  const Eyebrow('Education'),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12),
                   Text(
                     data.education.program,
                     style: Theme.of(context).textTheme.titleLarge,
@@ -96,8 +94,6 @@ class AboutScreen extends ConsumerWidget {
                     color: Theme.of(context).colorScheme.primary,
                     size: 24,
                   ),
-                  const SizedBox(height: 18),
-                  const Eyebrow('Communication'),
                   const SizedBox(height: 12),
                   Text(
                     'Languages',

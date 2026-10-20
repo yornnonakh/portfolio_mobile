@@ -20,12 +20,11 @@ class SettingsScreen extends ConsumerWidget {
         const PageHeader(
           eyebrow: 'Settings',
           title: 'Settings',
-          description: 'A few preferences to make this feel like home.',
         ),
         IosGroupedList(
           children: [
             CupertinoButton(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(15),
               onPressed: () => context.go('/about'),
               child: Row(
                 children: [

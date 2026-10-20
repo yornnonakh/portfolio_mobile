@@ -24,8 +24,6 @@ class HomeScreen extends ConsumerWidget {
             final introduction = Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Eyebrow('Flutter Developer'),
-                const SizedBox(height: 10),
                 _TypewriterText(
                   text: 'Mobile engineer',
                   style: wide
