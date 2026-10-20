@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/design_system/components.dart';
 import '../../../core/services/link_service.dart';
 import '../../../core/utils/action_feedback.dart';
+import '../../../core/widgets/profile_avatar.dart';
 import '../../../shared/providers/portfolio_providers.dart';
 
 class ContactScreen extends ConsumerWidget {
@@ -21,12 +22,13 @@ class ContactScreen extends ConsumerWidget {
         ),
         SurfaceCard(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const IconTile(CupertinoIcons.envelope_fill),
+              ProfileAvatar(profile: profile, size: 90),
               const SizedBox(height: 16),
               Text(
-                'Say hello.',
+                'Yorn Nona',
+                textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
               const SizedBox(height: 8),
@@ -51,7 +53,7 @@ class ContactScreen extends ConsumerWidget {
                 child: IosButton.plain(
                   onPressed: () =>
                       performAction(context, () => service.copy(profile.email)),
-                  icon: const Icon(CupertinoIcons.doc_on_doc, size: 17),
+                  icon: const LiquidGlassIcon(CupertinoIcons.doc_on_doc, size: 18),
                   label: const Text('Copy email'),
                 ),
               ),
@@ -104,17 +106,19 @@ class ContactScreen extends ConsumerWidget {
           ],
         ),
         const SizedBox(height: 20),
-        Wrap(
-          spacing: 6,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Icon(
-              CupertinoIcons.location,
-              size: 15,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-            MutedText(profile.location),
-          ],
+        Center(
+          child: Wrap(
+            spacing: 6,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Icon(
+                CupertinoIcons.location_fill,
+                size: 15,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              MutedText(profile.location),
+            ],
+          ),
         ),
       ],
     );

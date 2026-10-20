@@ -53,6 +53,12 @@ abstract final class AppTheme {
       scaffoldBackgroundColor: background,
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
+      appBarTheme: AppBarTheme(
+        backgroundColor: scheme.surface.withValues(alpha: .86),
+        scrolledUnderElevation: 0,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+      ),
       cupertinoOverrideTheme: CupertinoThemeData(
         brightness: brightness,
         primaryColor: scheme.primary,

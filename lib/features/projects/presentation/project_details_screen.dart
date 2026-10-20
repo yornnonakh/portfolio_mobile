@@ -152,7 +152,7 @@ class ProjectDetailsScreen extends ConsumerWidget {
                       () => links.website(project.repositoryUrl),
                     )
                   : null,
-              icon: const Icon(CupertinoIcons.chevron_left_slash_chevron_right),
+              icon: const Icon(CupertinoIcons.chevron_left_slash_chevron_right, size: 18),
               label: Text(
                 LinkService.isWebUrl(project.repositoryUrl)
                     ? 'View repository'
@@ -165,7 +165,7 @@ class ProjectDetailsScreen extends ConsumerWidget {
                   context,
                   () => links.website(project.appStoreUrl),
                 ),
-                icon: const Icon(CupertinoIcons.device_phone_portrait),
+                icon: const LiquidGlassIcon(CupertinoIcons.device_phone_portrait, size: 18),
                 label: const Text('View on App Store'),
               ),
             IosButton.plain(
@@ -203,7 +203,7 @@ class _ScreenshotGallery extends StatelessWidget {
               fit: BoxFit.contain,
               semanticLabel: '${project.title} screenshot',
               errorBuilder: (_, error, stack) => const EmptyState(
-                icon: CupertinoIcons.photo,
+                icon: CupertinoIcons.photo_fill,
                 title: 'Image unavailable',
                 message: 'This screenshot could not be loaded.',
               ),

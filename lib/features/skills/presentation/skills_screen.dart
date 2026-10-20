@@ -8,11 +8,11 @@ class SkillsScreen extends ConsumerWidget {
   const SkillsScreen({super.key});
   static const _icons = {
     'mobile': CupertinoIcons.device_phone_portrait,
-    'state': CupertinoIcons.layers,
+    'state': CupertinoIcons.layers_fill,
     'api': CupertinoIcons.chevron_left_slash_chevron_right,
-    'architecture': CupertinoIcons.square_stack_3d_up,
-    'tools': CupertinoIcons.chevron_left_slash_chevron_right,
-    'people': CupertinoIcons.person_2,
+    'architecture': CupertinoIcons.square_stack_3d_up_fill,
+    'tools': CupertinoIcons.hammer_fill,
+    'people': CupertinoIcons.person_2_fill,
   };
 
   @override

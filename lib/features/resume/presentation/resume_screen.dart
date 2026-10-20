@@ -31,7 +31,7 @@ class ResumeScreen extends ConsumerWidget {
             ),
           ),
           error: (error, stack) => EmptyState(
-            icon: CupertinoIcons.exclamationmark_circle,
+            icon: CupertinoIcons.exclamationmark_circle_fill,
             title: 'CV could not be opened',
             message: 'Please try again, or read the resume summary below.',
             action: IosButton.tinted(
@@ -42,7 +42,7 @@ class ResumeScreen extends ConsumerWidget {
           data: (bytes) {
             if (bytes == null) {
               return const EmptyState(
-                icon: CupertinoIcons.doc_text,
+                icon: CupertinoIcons.doc_text_fill,
                 title: 'Resume PDF unavailable',
                 message: 'Read the resume below or contact me for a PDF copy.',
               );
@@ -59,7 +59,7 @@ class ResumeScreen extends ConsumerWidget {
                         context,
                         () => ref.read(cvServiceProvider).save(bytes),
                       ),
-                      icon: const Icon(CupertinoIcons.arrow_down_doc),
+                      icon: const LiquidGlassIcon(CupertinoIcons.arrow_down_doc_fill, size: 18),
                       label: const Text('Download / save PDF'),
                     ),
                     Builder(
@@ -77,7 +77,7 @@ class ResumeScreen extends ConsumerWidget {
                                 .share(bytes, bounds),
                           );
                         },
-                        icon: const Icon(CupertinoIcons.square_arrow_up),
+                        icon: const LiquidGlassIcon(CupertinoIcons.square_arrow_up_fill, size: 18),
                         label: const Text('Share CV'),
                       ),
                     ),
@@ -96,7 +96,7 @@ class ResumeScreen extends ConsumerWidget {
                       canChangeOrientation: false,
                       canChangePageFormat: false,
                       onError: (_, error) => const EmptyState(
-                        icon: CupertinoIcons.exclamationmark_circle,
+                        icon: CupertinoIcons.exclamationmark_circle_fill,
                         title: 'Preview unavailable',
                         message:
                             'Download the PDF to open it in your preferred reader.',

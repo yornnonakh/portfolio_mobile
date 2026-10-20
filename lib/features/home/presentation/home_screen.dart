@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/design_system/components.dart';
+import '../../../core/utils/motion.dart';
 import '../../../core/widgets/profile_avatar.dart';
 import '../../../shared/providers/portfolio_providers.dart';
 import '../../projects/presentation/project_card.dart';
@@ -25,19 +26,11 @@ class HomeScreen extends ConsumerWidget {
               children: [
                 const Eyebrow('Flutter Developer'),
                 const SizedBox(height: 10),
-                Text(
-                  'Thoughtful apps.',
+                _TypewriterText(
+                  text: 'Mobile engineer',
                   style: wide
                       ? theme.textTheme.displayLarge
                       : theme.textTheme.displayMedium,
-                ),
-                Text(
-                  'Built with Flutter.',
-                  style:
-                      (wide
-                              ? theme.textTheme.displayLarge
-                              : theme.textTheme.displayMedium)
-                          ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),
                 const SizedBox(height: 20),
                 ConstrainedBox(
@@ -68,9 +61,13 @@ class HomeScreen extends ConsumerWidget {
               ],
             );
             final identity = Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(profile.name, style: theme.textTheme.headlineMedium),
+                Text(
+                  profile.name,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.headlineMedium,
+                ),
                 const SizedBox(height: 4),
                 MutedText(profile.location),
               ],
@@ -84,34 +81,25 @@ class HomeScreen extends ConsumerWidget {
                         const SizedBox(width: 64),
                         Expanded(
                           flex: 2,
-                          child: SurfaceCard(
-                            padding: const EdgeInsets.all(32),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ProfileAvatar(profile: profile, size: 180),
-                                const SizedBox(height: 24),
-                                identity,
-                                const SizedBox(height: 20),
-                                const TechBadge('iOS & Android', accent: true),
-                              ],
-                            ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ProfileAvatar(profile: profile, size: 140),
+                              const SizedBox(height: 24),
+                              identity,
+                              const SizedBox(height: 20),
+                              const TechBadge('iOS & Android', accent: true),
+                            ],
                           ),
                         ),
                       ],
                     )
                   : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SurfaceCard(
-                          child: Row(
-                            children: [
-                              ProfileAvatar(profile: profile, size: 70),
-                              const SizedBox(width: 16),
-                              Expanded(child: identity),
-                            ],
-                          ),
-                        ),
+                        ProfileAvatar(profile: profile, size: 90),
+                        const SizedBox(height: 16),
+                        identity,
                         const SizedBox(height: 32),
                         introduction,
                       ],
@@ -221,31 +209,6 @@ class HomeScreen extends ConsumerWidget {
         ),
         const SizedBox(height: 16),
         DeploymentCard(text: portfolio.deployment),
-        const SizedBox(height: 32),
-        SurfaceCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Eyebrow('Get in touch'),
-              const SizedBox(height: 12),
-              Text(
-                'Let’s build something useful.',
-                style: theme.textTheme.headlineLarge,
-              ),
-              const SizedBox(height: 12),
-              const MutedText(
-                'Have a mobile project or Flutter opportunity in mind?',
-              ),
-              const SizedBox(height: 24),
-              IosButton.filled(
-                onPressed: () => context.go('/contact'),
-                label: const Text('Get in touch'),
-                icon: const Icon(CupertinoIcons.arrow_up_right, size: 18),
-                iconAlignment: IconAlignment.end,
-              ),
-            ],
-          ),
-        ),
       ],
     );
   }
@@ -255,7 +218,6 @@ class _Fact extends StatelessWidget {
   const _Fact({required this.value, required this.label, required this.icon});
   final String value, label;
   final IconData icon;
-
   @override
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.all(16),
@@ -310,4 +272,135 @@ class DeploymentCard extends StatelessWidget {
       ],
     ),
   );
+}
+class _TypewriterText extends ConsumerStatefulWidget {
+  const _TypewriterText({
+    required this.text,
+    required this.style,
+  });
+
+  final String text;
+  final TextStyle? style;
+
+  @override
+  ConsumerState<_TypewriterText> createState() => _TypewriterTextState();
+}
+
+class _TypewriterTextState extends ConsumerState<_TypewriterText>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
+
+  // Configurable timings
+  static const _typeDuration = Duration(milliseconds: 80);   // per character
+  static const _deleteDuration = Duration(milliseconds: 50); // per character
+  static const _pauseAfterType = Duration(milliseconds: 1800);
+  static const _pauseAfterDelete = Duration(milliseconds: 400);
+
+  bool _isDeleting = false;
+  int _charIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(vsync: this);
+
+    _animation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.linear),
+    )..addListener(_onTick);
+
+    _controller.addStatusListener(_onStatus);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      if (motionEnabled(context, ref)) {
+        _startTyping();
+      } else {
+        setState(() => _charIndex = widget.text.length);
+      }
+    });
+  }
+
+  void _onTick() {
+    if (!mounted) return;
+
+    final progress = _animation.value;
+    final target = _isDeleting ? 0 : widget.text.length;
+    final start = _isDeleting ? widget.text.length : 0;
+
+    final newIndex = (start + (target - start) * progress)
+        .round()
+        .clamp(0, widget.text.length);
+
+    if (newIndex != _charIndex) {
+      setState(() => _charIndex = newIndex);
+    }
+  }
+
+  void _onStatus(AnimationStatus status) {
+    if (status != AnimationStatus.completed || !mounted) return;
+
+    if (!_isDeleting) {
+      // Finished typing → pause → start deleting
+      Future.delayed(_pauseAfterType, () {
+        if (!mounted || !motionEnabled(context, ref)) return;
+        setState(() => _isDeleting = true);
+        _startDeleting();
+      });
+    } else {
+      // Finished deleting → short pause → start typing again
+      Future.delayed(_pauseAfterDelete, () {
+        if (!mounted || !motionEnabled(context, ref)) return;
+        setState(() => _isDeleting = false);
+        _startTyping();
+      });
+    }
+  }
+
+  void _startTyping() {
+    if (!mounted || widget.text.isEmpty) return;
+
+    final duration = _typeDuration * widget.text.length;
+    _controller
+      ..duration = duration
+      ..forward(from: 0);
+  }
+
+  void _startDeleting() {
+    if (!mounted) return;
+
+    final duration = _deleteDuration * widget.text.length;
+    _controller
+      ..duration = duration
+      ..forward(from: 0);
+  }
+
+  @override
+  void dispose() {
+    _controller
+      ..removeListener(_onTick)
+      ..removeStatusListener(_onStatus)
+      ..dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Live-check reduced motion
+    final motionOn = motionEnabled(context, ref);
+    if (!motionOn && _charIndex != widget.text.length) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) setState(() => _charIndex = widget.text.length);
+      });
+    }
+
+    final displayText =
+    widget.text.substring(0, _charIndex.clamp(0, widget.text.length));
+
+    return Text(
+      displayText,
+      style: widget.style,
+    );
+  }
 }

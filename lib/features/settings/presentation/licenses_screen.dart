@@ -39,7 +39,7 @@ class _LicensesScreenState extends State<LicensesScreen> {
         return const PageContent(
           children: [
             EmptyState(
-              icon: CupertinoIcons.doc_text,
+              icon: CupertinoIcons.doc_text_fill,
               title: 'Licenses unavailable',
               message: 'Please reopen this page to try again.',
             ),
@@ -60,7 +60,7 @@ class _LicensesScreenState extends State<LicensesScreen> {
           ),
           if (licenses.isEmpty)
             const EmptyState(
-              icon: CupertinoIcons.doc_text,
+              icon: CupertinoIcons.doc_text_fill,
               title: 'No licenses registered',
               message: 'License information will appear here when available.',
             )
@@ -69,7 +69,7 @@ class _LicensesScreenState extends State<LicensesScreen> {
               children: [
                 for (final package in licenses.entries)
                   IosActionRow(
-                    icon: CupertinoIcons.doc_text,
+                    icon: CupertinoIcons.doc_text_fill,
                     title: package.key,
                     onPressed: () => Navigator.of(context).push(
                       IosPageRoute<void>(

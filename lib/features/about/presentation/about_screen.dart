@@ -22,36 +22,29 @@ class AboutScreen extends ConsumerWidget {
         ),
         SurfaceCard(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Wrap(
-                spacing: 20,
-                runSpacing: 16,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  ProfileAvatar(profile: profile, size: 84),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        profile.name,
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
-                      Text(
-                        profile.title,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      MutedText(profile.location),
-                    ],
-                  ),
-                ],
+              ProfileAvatar(profile: profile, size: 90),
+              const SizedBox(height: 16),
+              Text(
+                profile.name,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 4),
+              Text(
+                profile.title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              const SizedBox(height: 4),
+              MutedText(profile.location),
+              const SizedBox(height: 20),
               Text(
                 profile.summary,
+                textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
@@ -69,9 +62,9 @@ class AboutScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(
-                    CupertinoIcons.book,
+                    CupertinoIcons.book_fill,
                     color: Theme.of(context).colorScheme.primary,
-                    size: 28,
+                    size: 24,
                   ),
                   const SizedBox(height: 18),
                   const Eyebrow('Education'),
@@ -101,7 +94,7 @@ class AboutScreen extends ConsumerWidget {
                   Icon(
                     CupertinoIcons.globe,
                     color: Theme.of(context).colorScheme.primary,
-                    size: 28,
+                    size: 24,
                   ),
                   const SizedBox(height: 18),
                   const Eyebrow('Communication'),
@@ -166,7 +159,7 @@ class AboutScreen extends ConsumerWidget {
         const SizedBox(height: 12),
         IosButton.tinted(
           onPressed: () => context.push('/resume'),
-          icon: const Icon(CupertinoIcons.doc_text),
+          icon: const LiquidGlassIcon(CupertinoIcons.doc_text, size: 18),
           label: const Text('View resume'),
         ),
       ],

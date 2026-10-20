@@ -66,7 +66,7 @@ void main() {
     await mountApp(tester, '/');
     await tester.pump(const Duration(milliseconds: 1300));
     await tester.pumpAndSettle();
-    expect(find.text('Thoughtful apps.'), findsOneWidget);
+    expect(find.text('Mobile engineer'), findsOneWidget);
     await tester.tap(find.bySemanticsLabel('Projects').last);
     await tester.pumpAndSettle();
     expect(find.text('Projects'), findsWidgets);
@@ -173,7 +173,7 @@ void main() {
     expect(find.text('Email copied to clipboard.'), findsOneWidget);
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
-    expect(find.text('Say hello.'), findsOneWidget);
+    expect(find.text('Yorn Nona'), findsOneWidget);
     expect(find.byType(CupertinoAlertDialog), findsNothing);
     expect(tester.takeException(), isNull);
   });
@@ -192,11 +192,11 @@ void main() {
       await tester.tap(find.text(package).first);
       await tester.pumpAndSettle();
       expect(find.byType(SelectableText), findsOneWidget);
-      await tester.tap(find.byType(CupertinoNavigationBarBackButton).last);
+      await tester.tap(find.bySemanticsLabel('Back').last);
       await tester.pumpAndSettle();
       expect(find.text('Open source'), findsOneWidget);
       expect(find.text(package), findsOneWidget);
-      await tester.tap(find.byType(CupertinoNavigationBarBackButton).last);
+      await tester.tap(find.bySemanticsLabel('Back').last);
       await tester.pumpAndSettle();
       expect(find.text('Interface animations'), findsOneWidget);
       expect(tester.takeException(), isNull);
@@ -216,13 +216,31 @@ void main() {
       expect(heroModes.any((mode) => !mode.enabled), isTrue);
       expect(
         MediaQuery.disableAnimationsOf(
-          tester.element(find.text('Thoughtful apps.')),
+          tester.element(find.text('Mobile engineer')),
         ),
         isTrue,
       );
       expect(tester.takeException(), isNull);
     },
   );
+
+  testWidgets('AppBar title is hidden at top and appears when scrolled', (
+    tester,
+  ) async {
+    await mountApp(tester, '/projects');
+    final opacityFinder = find.byWidgetPredicate(
+      (w) => w is AnimatedOpacity && w.duration == const Duration(milliseconds: 200),
+    );
+    expect(opacityFinder, findsOneWidget);
+    expect(tester.widget<AnimatedOpacity>(opacityFinder).opacity, 0.0);
+
+    await tester.drag(
+      find.byType(SingleChildScrollView),
+      const Offset(0, -100),
+    );
+    await tester.pumpAndSettle();
+    expect(tester.widget<AnimatedOpacity>(opacityFinder).opacity, 1.0);
+  });
 
   testWidgets(
     'Capture portfolio previews',

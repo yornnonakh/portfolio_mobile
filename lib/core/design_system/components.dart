@@ -102,22 +102,36 @@ class IosIconButton extends StatelessWidget {
     required this.label,
     required this.icon,
     required this.onPressed,
+    this.liquidGlass = false,
+    this.circular = false,
   });
   final String label;
   final IconData icon;
   final VoidCallback? onPressed;
+  final bool liquidGlass;
+  final bool circular;
 
   @override
-  Widget build(BuildContext context) => Semantics(
-    label: label,
-    button: true,
-    child: CupertinoButton(
-      padding: EdgeInsets.zero,
-      minimumSize: const Size(44, 44),
-      onPressed: onPressed,
-      child: Icon(icon, size: 22),
-    ),
-  );
+  Widget build(BuildContext context) {
+    Widget iconWidget = Icon(icon, size: 22);
+    if (liquidGlass) {
+      iconWidget = LiquidGlassContainer(
+        padding: const EdgeInsets.all(8),
+        borderRadius: circular ? 999.0 : 12.0,
+        child: Icon(icon, size: 18),
+      );
+    }
+    return Semantics(
+      label: label,
+      button: true,
+      child: CupertinoButton(
+        padding: EdgeInsets.zero,
+        minimumSize: const Size(44, 44),
+        onPressed: onPressed,
+        child: iconWidget,
+      ),
+    );
+  }
 }
 
 class IosSelectableText extends StatelessWidget {
@@ -553,7 +567,7 @@ class BulletList extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 5),
                   child: Icon(
                     checks
-                        ? CupertinoIcons.checkmark_circle
+                        ? CupertinoIcons.checkmark_circle_fill
                         : CupertinoIcons.circle_fill,
                     size: checks ? 17 : 5,
                     color: Theme.of(context).colorScheme.primary,
@@ -647,14 +661,9 @@ class Footer extends StatelessWidget {
     children: [
       const Divider(),
       const SizedBox(height: 20),
-      Wrap(
-        alignment: WrapAlignment.spaceBetween,
-        spacing: 24,
-        runSpacing: 8,
-        children: [
-          Text('Yorn Nona', style: Theme.of(context).textTheme.labelMedium),
-          const MutedText('Flutter developer · ${AppConstants.year}'),
-        ],
+      const Align(
+        alignment: Alignment.center,
+        child: MutedText('© ${AppConstants.year} Yorn Nona'),
       ),
       const SizedBox(height: 8),
     ],
@@ -713,4 +722,67 @@ class GlassSurface extends StatelessWidget {
       ),
     ),
   );
+}
+
+class LiquidGlassContainer extends StatelessWidget {
+  const LiquidGlassContainer({
+    super.key,
+    required this.child,
+    this.padding = const EdgeInsets.all(6),
+    this.borderRadius = 10.0,
+    this.blur = 16.0,
+  });
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+  final double borderRadius;
+  final double blur;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(borderRadius),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
+        child: Container(
+          padding: padding,
+          decoration: BoxDecoration(
+            color: scheme.surface.withValues(alpha: .75),
+            borderRadius: BorderRadius.circular(borderRadius),
+            border: Border.all(
+              color: scheme.outlineVariant.withValues(alpha: .5),
+              width: .5,
+            ),
+          ),
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+
+class LiquidGlassIcon extends StatelessWidget {
+  const LiquidGlassIcon(
+    this.icon, {
+    super.key,
+    this.size = 16,
+    this.color,
+    this.padding = const EdgeInsets.all(6),
+    this.borderRadius = 8.0,
+  });
+  final IconData icon;
+  final double size;
+  final Color? color;
+  final EdgeInsetsGeometry padding;
+  final double borderRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    final effectiveColor = color ?? Theme.of(context).colorScheme.onSurfaceVariant;
+    return LiquidGlassContainer(
+      padding: padding,
+      borderRadius: borderRadius,
+      child: Icon(icon, size: size, color: effectiveColor),
+    );
+  }
 }
