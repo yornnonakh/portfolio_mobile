@@ -304,14 +304,14 @@ class _NavBarTab extends StatelessWidget {
           duration: const Duration(milliseconds: 250),
           curve: Curves.easeInOut,
           padding: EdgeInsets.symmetric(
-            horizontal: isSelected ? 12 : 8,
-            vertical: 8,
+            horizontal: isSelected ? 13 : 9,
+            vertical: 16,
           ),
           decoration: BoxDecoration(
             color: isSelected
                 ? (isDark ? Colors.white : Colors.black)
                 : Colors.transparent,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(36),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -319,13 +319,13 @@ class _NavBarTab extends StatelessWidget {
             children: [
               Icon(
                 isSelected ? item.activeIcon : item.icon,
-                size: 20,
+                size: 23,
                 color: isSelected
                     ? (isDark ? Colors.black : Colors.white)
                     : theme.colorScheme.onSurfaceVariant,
               ),
               if (isSelected) ...[
-                const SizedBox(width: 6),
+                const SizedBox(width: 5),
                 Flexible(
                   child: AppText(
                     item.label,
@@ -333,7 +333,7 @@ class _NavBarTab extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 13,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.bold,
                       color: isDark ? Colors.black : Colors.white,
                     ),
                   ),
