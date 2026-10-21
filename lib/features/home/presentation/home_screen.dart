@@ -11,6 +11,7 @@ import '../../../core/widgets/profile_avatar.dart';
 import '../../../shared/providers/portfolio_providers.dart';
 import '../../projects/presentation/project_card.dart';
 import 'project_phone_showcase.dart';
+import 'tools_icon_marquee.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -150,6 +151,9 @@ class HomeScreen extends ConsumerWidget {
               .map((p) => ProjectCard(project: p, heroSource: 'home'))
               .toList(),
         ),
+        const SizedBox(height: 32),
+        const SectionHeading('Tools I use'),
+        const ToolsIconMarquee(key: ValueKey('home-tools')),
         const SizedBox(height: 32),
         const SectionHeading('About me'),
         SurfaceCard(

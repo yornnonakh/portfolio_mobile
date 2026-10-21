@@ -193,7 +193,7 @@ class SurfaceCard extends StatelessWidget {
   );
 }
 
-class IosSelectionControl<T extends Object> extends StatelessWidget {
+class IosSelectionControl<T extends Object> extends ConsumerWidget {
   const IosSelectionControl({
     super.key,
     required this.items,
@@ -205,7 +205,7 @@ class IosSelectionControl<T extends Object> extends StatelessWidget {
   final ValueChanged<T>? onChanged;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
     final style = Theme.of(context).textTheme.bodySmall?.copyWith(
       fontWeight: FontWeight.w600,
@@ -230,7 +230,7 @@ class IosSelectionControl<T extends Object> extends StatelessWidget {
                     color: value == item.key
                         ? scheme.primary.withValues(alpha: .12)
                         : scheme.surfaceContainerHighest,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(30),
                     onPressed: onChanged == null
                         ? null
                         : () => onChanged!(item.key),
@@ -247,33 +247,105 @@ class IosSelectionControl<T extends Object> extends StatelessWidget {
             ],
           );
         }
-        return SizedBox(
-          width: double.infinity,
-          child: CupertinoSlidingSegmentedControl<T>(
-            groupValue: value,
-            backgroundColor: scheme.surfaceContainerHighest,
-            thumbColor: Theme.of(context).brightness == Brightness.dark
-                ? const Color(0xFF636366)
-                : Colors.white,
-            padding: const EdgeInsets.all(4),
-            children: {
-              for (final item in items.entries)
-                item.key: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 9,
-                    horizontal: 6,
+        final entries = items.entries.toList();
+        if (entries.isEmpty) return const SizedBox.shrink();
+        final selectedIndex = entries
+            .indexWhere((item) => item.key == value)
+            .clamp(0, entries.length - 1);
+        void selectAt(Offset position) {
+          if (onChanged == null) return;
+          var index =
+              (((position.dx - 4) / (constraints.maxWidth - 8)) *
+                      entries.length)
+                  .floor()
+                  .clamp(0, entries.length - 1);
+          if (Directionality.of(context) == TextDirection.rtl)
+            index = entries.length - 1 - index;
+          if (entries[index].key != value) onChanged!(entries[index].key);
+        }
+
+        return GestureDetector(
+          onHorizontalDragStart: onChanged == null
+              ? null
+              : (details) => selectAt(details.localPosition),
+          onHorizontalDragUpdate: onChanged == null
+              ? null
+              : (details) => selectAt(details.localPosition),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: scheme.surfaceContainerHighest,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(4),
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: AnimatedAlign(
+                      alignment: AlignmentDirectional(
+                        entries.length == 1
+                            ? 0
+                            : -1 + 2 * selectedIndex / (entries.length - 1),
+                        0,
+                      ),
+                      duration: motionEnabled(context, ref)
+                          ? const Duration(milliseconds: 280)
+                          : Duration.zero,
+                      curve: Curves.easeOutCubic,
+                      child: FractionallySizedBox(
+                        widthFactor: 1 / entries.length,
+                        heightFactor: 1,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? const Color(0xFF636366)
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: .1),
+                                blurRadius: 8,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  child: AppText(
-                    item.value,
-                    textAlign: TextAlign.center,
-                    style: style,
+                  IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        for (final item in entries)
+                          Expanded(
+                            child: Semantics(
+                              selected: value == item.key,
+                              child: CupertinoButton(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10,
+                                  horizontal: 6,
+                                ),
+                                minimumSize: const Size(44, 44),
+                                borderRadius: BorderRadius.circular(30),
+                                onPressed: onChanged == null
+                                    ? null
+                                    : () => onChanged!(item.key),
+                                child: AppText(
+                                  item.value,
+                                  textAlign: TextAlign.center,
+                                  style: style,
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
-                ),
-            },
-            onValueChanged: (selection) {
-              if (selection != null) onChanged?.call(selection);
-            },
-            disabledChildren: onChanged == null ? items.keys.toSet() : const {},
+                ],
+              ),
+            ),
           ),
         );
       },

@@ -21,6 +21,7 @@ Future<ProviderContainer> mountApp(
   Size size = const Size(390, 844),
   double scale = 1,
   Map<String, Object> savedPreferences = const {},
+  bool settle = true,
 }) async {
   GoogleFonts.config.allowRuntimeFetching = false;
   SharedPreferences.setMockInitialValues(savedPreferences);
@@ -49,7 +50,12 @@ Future<ProviderContainer> mountApp(
       ),
     ),
   );
-  await tester.pumpAndSettle();
+  if (settle) {
+    await tester.pumpAndSettle();
+  } else {
+    // Continuous Home animations are observed with explicitly timed frames.
+    await tester.pump(const Duration(milliseconds: 100));
+  }
   return container;
 }
 
@@ -95,6 +101,7 @@ void main() {
         '/home',
         size: size,
         scale: size.width == 320 ? 2 : 1,
+        savedPreferences: {'animations': false},
       );
       for (final route in [
         '/home',
@@ -121,7 +128,7 @@ void main() {
   testWidgets('Home typewriter cycles through both phrases and repeats', (
     tester,
   ) async {
-    await mountApp(tester, '/home');
+    await mountApp(tester, '/home', settle: false);
     Future<void> waitForPhrase(String phrase) async {
       // Other Home animations can change when pumpAndSettle returns. Observe
       // the visible phrase instead of assuming a particular typewriter phase.
@@ -295,7 +302,11 @@ void main() {
   testWidgets('AppBar title is hidden at top and appears when scrolled', (
     tester,
   ) async {
-    final container = await mountApp(tester, '/projects');
+    final container = await mountApp(
+      tester,
+      '/projects',
+      savedPreferences: {'animations': false},
+    );
     final opacityFinder = find.byWidgetPredicate(
       (w) =>
           w is AnimatedOpacity &&
@@ -306,7 +317,11 @@ void main() {
     final navigationPosition = tester.getRect(find.byType(CupertinoTabBar));
 
     await tester.drag(
-      find.byType(SingleChildScrollView),
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is SingleChildScrollView &&
+            widget.scrollDirection == Axis.vertical,
+      ),
       const Offset(0, -100),
     );
     await tester.pumpAndSettle();
@@ -328,7 +343,11 @@ void main() {
     final homeTitle = find.byKey(const ValueKey('home-navigation-title'));
     expect(tester.widget<AnimatedOpacity>(homeTitle).opacity, 0);
     await tester.drag(
-      find.byType(SingleChildScrollView),
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is SingleChildScrollView &&
+            widget.scrollDirection == Axis.vertical,
+      ),
       const Offset(0, -120),
     );
     await tester.pumpAndSettle();
@@ -346,6 +365,7 @@ void main() {
         tester,
         '/home',
         size: const Size(1440, 1800),
+        savedPreferences: {'animations': false},
       );
       await tester.runAsync(() async {
         final icons = FontLoader('MaterialIcons')

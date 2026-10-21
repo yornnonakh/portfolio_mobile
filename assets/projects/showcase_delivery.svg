@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="360" viewBox="0 0 360 360">
+  <!-- Apartment shelf. -->
+  <path d="M245 17v96m104-96v96M245 23h104m-104 38h104m-104 37h104" fill="none" stroke="#edb65b" stroke-width="3"/>
+  <path d="M247 24h100M247 62h100M247 99h100" stroke="#ffe7b7" stroke-width="2"/>
+  <path d="m260 23 2-19h5l3 19Z" fill="#d1f5ef"/>
+  <path d="m264 6 3-6" stroke="#d1f5ef" stroke-width="2"/>
+  <rect x="312" y="8" width="11" height="15" rx="3" fill="#f7a0da"/>
+  <path d="M279 61q-7-4-5-10 5-4 10 0 6-2 8 3-1 7-13 7Z" fill="#94dd9b"/>
+  <path d="M316 61q-10-2-9-9h28q0 9-19 9Z" fill="#92dfa9"/>
+  <circle cx="316" cy="49" r="3" fill="#ffd679"/><circle cx="323" cy="48" r="3" fill="#f6a4d0"/>
+  <path d="M255 89h30v7h-30Z" fill="#a0e9df"/><path d="M257 86h25v4h-25Z" fill="#e9f4ce"/>
+  <path d="M297 96q-10-9-3-18 2-5 5-3 5-3 6 4 8 9-1 17Z" fill="#ffdf00"/>
+  <!-- Sofa and feet. -->
+  <path d="m46 289-6 31m28-32-4 21m243-21 9 31m-27-31 5 23" stroke="#f7bc48" stroke-width="9" stroke-linecap="round"/>
+  <rect x="29" y="169" width="303" height="121" rx="38" fill="#99e4f0"/>
+  <rect x="45" y="154" width="268" height="112" rx="35" fill="#abedf5"/>
+  <rect x="24" y="209" width="34" height="83" rx="17" fill="#8addE9" stroke="#52cbdc" stroke-width="2"/>
+  <rect x="306" y="209" width="34" height="83" rx="17" fill="#92e1ed" stroke="#52cbdc" stroke-width="2"/>
+  <path d="M59 263h242" stroke="#79d6e4" stroke-width="2"/>
+  <!-- Hair, neck and face. -->
+  <path d="M133 119q-9-34 15-43 27-11 35 25 3 10 15 12 21 8 8 25-13 12-35-1Z" fill="#283c41"/>
+  <path d="m150 119-2 20 18 8 11-14-12-24Z" fill="#a65335"/>
+  <path d="M142 89q7 2 14-6 15 8 18 24 0 20-14 20-17-4-18-24Z" fill="#b86b46"/>
+  <path d="m157 98 2 11 5-1" fill="none" stroke="#87472f" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="148" cy="99" r="1.5" fill="#302a29"/><circle cx="165" cy="96" r="1.5" fill="#302a29"/>
+  <path d="m157 115 7-1" stroke="#743f2f" stroke-width="2" stroke-linecap="round"/>
+  <!-- White top and bent arm holding a phone. -->
+  <path d="M141 136q11 9 25 1 23 2 30 24l20 65-29 8-8-28-1 38-62-13 8-47-13-3 5-31Z" fill="#fff"/>
+  <path d="m119 150-9 40-10-2-7-47 13-4Z" fill="#b86640"/>
+  <path d="m102 161 5 10 6-14 8-8-3-3-10 8-2-13-7-3Z" fill="#b86640"/>
+  <g transform="rotate(-12 101 139)"><rect x="91" y="123" width="18" height="29" rx="3" fill="#40565b"/><rect x="93" y="126" width="14" height="20" rx="1" fill="#a5e9ed"/></g>
+  <path d="m189 182 7 41 12 25 9-3-10-28-3-37Z" fill="#b86640"/>
+  <!-- Crossed blue trousers. -->
+  <path d="M127 224q31 13 52 12 0 23-29 37l-62 24-13-17 57-39Z" fill="#0099d4"/>
+  <path d="M148 250q-22 7-26 21l17 54 20-4-10-48 28-18Z" fill="#008dbf"/>
+  <path d="m91 284-9 13-23-9-6 12 30 18q9 3 15-9l9-16Z" fill="#c4c8c9"/>
+  <path d="m59 290 4 11 22 8 10-10 5 9q-8 15-18 10l-30-18Z" fill="#3e474a"/>
+  <path d="m140 319-5 17-8 8q-5 8 9 9l27-3-5-30Z" fill="#e5e8e7"/>
+  <path d="m129 343 30-3 5 9q-17 8-36 3-8-4 1-9Z" fill="#465054"/>
+  <path d="m142 328 11 1m-13 4 14 1m-15 4 16 1" stroke="#697477" stroke-width="2"/>
+  <!-- Delivery bag, table and legs. -->
+  <path d="M242 229v-29h23v29" fill="none" stroke="#f1b74c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M224 220h61v62h-61Z" fill="#ffc84d"/>
+  <path d="m236 248 5 13 6-14 4 14 7-14m4-1-3 15m9-25-5 25 7-1m3-15h11m-6-6-3 22 5-1" fill="none" stroke="#4b5142" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m224 293-9 51m60-51 15 51m-39-50v62" stroke="#df6c40" stroke-width="7" stroke-linecap="round"/>
+  <ellipse cx="251" cy="288" rx="51" ry="6" fill="#3c5054"/>
+  <!-- Small reaction bubble. -->
+  <circle cx="72" cy="128" r="11" fill="#b9f1ec"/>
+  <circle cx="72" cy="128" r="6" fill="#ffe443"/>
+  <circle cx="70" cy="126" r=".9" fill="#5b7368"/><circle cx="74" cy="126" r=".9" fill="#5b7368"/>
+  <path d="M70 130q2 3 4 0" fill="none" stroke="#5b7368" stroke-width="1"/>
+</svg>
