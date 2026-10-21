@@ -119,7 +119,7 @@ class IosIconButton extends StatelessWidget {
       iconWidget = LiquidGlassContainer(
         padding: const EdgeInsets.all(8),
         borderRadius: circular ? 999.0 : 12.0,
-        child: Icon(icon, size: 25),
+        child: Icon(icon, size: 22),
       );
     }
     return Semantics(

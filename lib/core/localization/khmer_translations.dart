@@ -1,18 +1,14 @@
 /// Khmer translations of portfolio UI and CV descriptions.
+///
+/// Editing guide:
+/// - Find the screen or feature section below (HOME, SETTINGS, CONTACT, etc.).
+/// - Keep the English key on the left unchanged; the app uses it for lookup.
+/// - Edit the Khmer value on the right to update the displayed translation.
+/// - Preserve escaped newlines (\n), punctuation, and technology/product names.
 const khmerTranslations = <String, String>{
-  "Switch to English": "ប្ដូរទៅភាសាអង់គ្លេស",
-  "Switch to Khmer": "ប្ដូរទៅភាសាខ្មែរ",
-  "Tap the language name to switch between English and Khmer.":
-      "ចុចលើឈ្មោះភាសា ដើម្បីប្ដូររវាងភាសាអង់គ្លេស និងភាសាខ្មែរ។",
-  "Off for English. On for Khmer.":
-      "បិទសម្រាប់ភាសាអង់គ្លេស។ បើកសម្រាប់ភាសាខ្មែរ។",
-  "Follow system": "តាមប្រព័ន្ធ",
-  "Dark mode": "របៀបងងឹត",
-  "Turn Dark mode off for light mode. Follow system matches your device automatically.":
-      "បិទរបៀបងងឹត ដើម្បីប្រើរបៀបភ្លឺ។ បើកតាមប្រព័ន្ធ ដើម្បីផ្លាស់ប្ដូរតាមឧបករណ៍ដោយស្វ័យប្រវត្តិ។",
-  "Choose your language": "ជ្រើសរើសភាសារបស់អ្នក",
-  "United States": "សហរដ្ឋអាមេរិក",
-  "Cambodia": "កម្ពុជា",
+  // ---------------------------------------------------------------------------
+  // SHARED - Navigation, buttons, and dialogs
+  // ---------------------------------------------------------------------------
   "Cancel": "បោះបង់",
   "Home": "ទំព័រដើម",
   "Projects": "គម្រោង",
@@ -28,6 +24,23 @@ const khmerTranslations = <String, String>{
   "Back to home": "ត្រឡប់ទៅទំព័រដើម",
   "Done": "រួចរាល់",
   "OK": "យល់ព្រម",
+
+  // ---------------------------------------------------------------------------
+  // SETTINGS - Language, appearance, motion, and storage
+  // ---------------------------------------------------------------------------
+  "Switch to English": "ប្ដូរទៅភាសាអង់គ្លេស",
+  "Switch to Khmer": "ប្ដូរទៅភាសាខ្មែរ",
+  "Tap the language name to switch between English and Khmer.":
+      "ចុចលើឈ្មោះភាសា ដើម្បីប្ដូររវាងភាសាអង់គ្លេស និងភាសាខ្មែរ។",
+  "Off for English. On for Khmer.":
+      "បិទសម្រាប់ភាសាអង់គ្លេស។ បើកសម្រាប់ភាសាខ្មែរ។",
+  "Follow system": "តាមប្រព័ន្ធ",
+  "Dark mode": "របៀបងងឹត",
+  "Turn Dark mode off for light mode. Follow system matches your device automatically.":
+      "បិទរបៀបងងឹត ដើម្បីប្រើរបៀបភ្លឺ។ បើកតាមប្រព័ន្ធ ដើម្បីផ្លាស់ប្ដូរតាមឧបករណ៍ដោយស្វ័យប្រវត្តិ។",
+  "Choose your language": "ជ្រើសរើសភាសារបស់អ្នក",
+  "United States": "សហរដ្ឋអាមេរិក",
+  "Cambodia": "កម្ពុជា",
   "Language": "ភាសា",
   "Choose your preferred language. Changes apply throughout the portfolio.":
       "ជ្រើសរើសភាសាដែលអ្នកចង់ប្រើ។ ការផ្លាស់ប្ដូរនឹងអនុវត្តទូទាំងកម្មវិធី។",
@@ -54,6 +67,15 @@ const khmerTranslations = <String, String>{
       "មិនអាចរក្សាទុកការកំណត់របស់អ្នកបានទេ។ សូមព្យាយាមម្ដងទៀត។",
   "Could not save language preferences. Please try again.":
       "មិនអាចរក្សាទុកភាសាបានទេ។ សូមព្យាយាមម្ដងទៀត។",
+
+  // ---------------------------------------------------------------------------
+  // HOME - Introduction, typewriter, featured work, and shortcuts
+  // ---------------------------------------------------------------------------
+  "Four illustrative mobile app screens":
+      "រូបភាពគំរូអេក្រង់កម្មវិធីទូរសព្ទចំនួនបួន",
+  "I’m Yorn Nona, a mobile engineer. I enjoy designing clean architectures and solving complex engineering problems.":
+      "ខ្ញុំឈ្មោះ Yorn Nona ជាវិស្វករកម្មវិធីទូរសព្ទ។ ខ្ញុំចូលចិត្តរចនាស្ថាបត្យកម្មកម្មវិធីដែលមានរចនាសម្ព័ន្ធច្បាស់លាស់ និងដោះស្រាយបញ្ហាវិស្វកម្មស្មុគស្មាញ។",
+  "IOS and Android": "iOS និង Android",
   "Mobile engineer": "វិស្វករកម្មវិធីទូរសព្ទ",
   "I build thoughtful mobile experiences for iOS and Android, from Phnom Penh.":
       "ខ្ញុំបង្កើតបទពិសោធន៍ប្រើប្រាស់កម្មវិធីទូរសព្ទសម្រាប់ iOS និង Android ពីរាជធានីភ្នំពេញ។",
@@ -71,6 +93,10 @@ const khmerTranslations = <String, String>{
   "My toolkit": "ឧបករណ៍ដែលខ្ញុំប្រើ",
   "Explore skills": "ស្វែងយល់ពីជំនាញ",
   "From development to deployment": "ពីការអភិវឌ្ឍដល់ការដាក់ឱ្យប្រើប្រាស់",
+
+  // ---------------------------------------------------------------------------
+  // ABOUT - Profile, journey, education, and spoken languages
+  // ---------------------------------------------------------------------------
   "Flutter Developer": "អ្នកអភិវឌ្ឍកម្មវិធី Flutter",
   "Phnom Penh, Cambodia": "ភ្នំពេញ កម្ពុជា",
   "6 months": "៦ ខែ",
@@ -93,6 +119,10 @@ const khmerTranslations = <String, String>{
   "What I bring": "អ្វីដែលខ្ញុំអាចរួមចំណែក",
   "All skills": "ជំនាញទាំងអស់",
   "Full timeline": "ប្រវត្តិការងារទាំងមូល",
+
+  // ---------------------------------------------------------------------------
+  // PROJECTS - Gallery, filters, case-study labels, and actions
+  // ---------------------------------------------------------------------------
   "A selection of Flutter apps, from everyday notes to mobile shopping.":
       "គម្រោងកម្មវិធី Flutter ដែលបានជ្រើសរើស ចាប់ពីការកត់ត្រាប្រចាំថ្ងៃដល់ការទិញទំនិញតាមទូរសព្ទ។",
   "Previews are illustrations. Original screenshots are not available yet.":
@@ -128,6 +158,10 @@ const khmerTranslations = <String, String>{
   "This project is not in the portfolio.": "គម្រោងនេះមិនមានក្នុងស្នាដៃទេ។",
   "Browse projects": "រកមើលគម្រោង",
   "Project": "គម្រោង",
+
+  // ---------------------------------------------------------------------------
+  // PROJECTS - Notes app features, contributions, and architecture
+  // ---------------------------------------------------------------------------
   "Authentication and login": "ការផ្ទៀងផ្ទាត់អត្តសញ្ញាណ និងការចូលប្រើ",
   "Folder management": "ការគ្រប់គ្រងថតឯកសារ",
   "Notes management": "ការគ្រប់គ្រងកំណត់ត្រា",
@@ -154,6 +188,10 @@ const khmerTranslations = <String, String>{
   "Rich content and attachment handling":
       "ការគ្រប់គ្រងមាតិកាចម្រុះ និងឯកសារភ្ជាប់",
   "API errors and loading states": "កំហុស API និងស្ថានភាពកំពុងផ្ទុក",
+
+  // ---------------------------------------------------------------------------
+  // PROJECTS - E-commerce app features, contributions, and architecture
+  // ---------------------------------------------------------------------------
   "Product listing": "បញ្ជីផលិតផល",
   "Product search": "ការស្វែងរកផលិតផល",
   "Favorites management": "ការគ្រប់គ្រងបញ្ជីចំណូលចិត្ត",
@@ -181,6 +219,10 @@ const khmerTranslations = <String, String>{
       "ការស្វែងរកផលិតផល និងស្ថានភាពផ្ទុក API",
   "Reusable layouts across screen sizes":
       "ប្លង់ដែលអាចប្រើឡើងវិញលើទំហំអេក្រង់ផ្សេងៗ",
+
+  // ---------------------------------------------------------------------------
+  // SKILLS - Categories and practical skills
+  // ---------------------------------------------------------------------------
   "The technologies and practical skills behind my mobile work.":
       "បច្ចេកវិទ្យា និងជំនាញអនុវត្តដែលប្រើក្នុងការងារកម្មវិធីទូរសព្ទរបស់ខ្ញុំ។",
   "iOS and Android UI development": "ការអភិវឌ្ឍផ្ទៃប្រើប្រាស់ iOS និង Android",
@@ -203,6 +245,10 @@ const khmerTranslations = <String, String>{
   "Team collaboration": "ការសហការជាក្រុម",
   "Problem-solving": "ការដោះស្រាយបញ្ហា",
   "Continuous learning": "ការរៀនសូត្រជាបន្តបន្ទាប់",
+
+  // ---------------------------------------------------------------------------
+  // EXPERIENCE - Work history, responsibilities, and deployment
+  // ---------------------------------------------------------------------------
   "From teaching computer skills to building mobile applications.":
       "ពីការបង្រៀនជំនាញកុំព្យូទ័រដល់ការបង្កើតកម្មវិធីទូរសព្ទ។",
   "Flutter Mobile Application Projects": "គម្រោងកម្មវិធីទូរសព្ទ Flutter",
@@ -225,6 +271,10 @@ const khmerTranslations = <String, String>{
   "Education": "ការអប់រំ",
   "Deployed a Flutter iOS app with Xcode and App Store Connect, from signing and build preparation to release submission.":
       "បានដាក់កម្មវិធី Flutter iOS ឱ្យប្រើប្រាស់ដោយប្រើ Xcode និង App Store Connect ចាប់ពីការចុះហត្ថលេខា និងការរៀបចំ build រហូតដល់ការដាក់ស្នើចេញផ្សាយ។",
+
+  // ---------------------------------------------------------------------------
+  // RESUME - Summary, PDF actions, and file feedback
+  // ---------------------------------------------------------------------------
   "My background, education, and mobile development work.":
       "ប្រវត្តិ ការអប់រំ និងការងារអភិវឌ្ឍកម្មវិធីទូរសព្ទរបស់ខ្ញុំ។",
   "CV could not be opened": "មិនអាចបើកប្រវត្តិរូបបានទេ",
@@ -246,6 +296,10 @@ const khmerTranslations = <String, String>{
       "មិនអាចរក្សាទុកប្រវត្តិរូបបានទេ។ សូមសាកល្បងចែករំលែកទៅ Files។",
   "Sharing is unavailable on this device. Try saving the CV instead.":
       "មិនអាចចែករំលែកលើឧបករណ៍នេះបានទេ។ សូមសាកល្បងរក្សាទុកប្រវត្តិរូប។",
+
+  // ---------------------------------------------------------------------------
+  // CONTACT - Social links, form fields, and email feedback
+  // ---------------------------------------------------------------------------
   "Let’s connect.": "តោះទាក់ទងគ្នា។",
   "A project, an opportunity, or a simple hello.":
       "គម្រោង ឱកាសការងារ ឬគ្រាន់តែការសួរសុខទុក្ខ។",
@@ -278,6 +332,10 @@ const khmerTranslations = <String, String>{
       "មិនអាចបើកអ៊ីមែល ឬ Gmail បានទេ។ ព័ត៌មានរបស់អ្នកនៅតែរក្សាទុកក្នុងទម្រង់នេះ។ សូមព្យាយាមម្ដងទៀត ឬចម្លងសារខាងក្រោម។",
   "Could not access the clipboard. Please select and copy the email.":
       "មិនអាចចម្លងដោយស្វ័យប្រវត្តិបានទេ។ សូមជ្រើសរើស និងចម្លងអ៊ីមែល។",
+
+  // ---------------------------------------------------------------------------
+  // CONTACT - Form validation messages
+  // ---------------------------------------------------------------------------
   "Please enter your name.": "សូមបញ្ចូលឈ្មោះរបស់អ្នក។",
   "Please use 80 characters or fewer.": "សូមប្រើមិនលើសពី ៨០ តួអក្សរ។",
   "Please enter your email.": "សូមបញ្ចូលអ៊ីមែលរបស់អ្នក។",
@@ -286,6 +344,10 @@ const khmerTranslations = <String, String>{
   "Please enter a valid phone number.": "សូមបញ្ចូលលេខទូរសព្ទត្រឹមត្រូវ។",
   "Please enter a message.": "សូមបញ្ចូលសារ។",
   "Please use 2,000 characters or fewer.": "សូមប្រើមិនលើសពី ២.០០០ តួអក្សរ។",
+
+  // ---------------------------------------------------------------------------
+  // SHARED - Action errors and unavailable links
+  // ---------------------------------------------------------------------------
   "This action could not be completed. Please try again.":
       "មិនអាចបំពេញសកម្មភាពនេះបានទេ។ សូមព្យាយាមម្ដងទៀត។",
   "Unable to complete action": "មិនអាចបំពេញសកម្មភាពបានទេ",
@@ -295,6 +357,10 @@ const khmerTranslations = <String, String>{
       "មិនអាចបើកកម្មវិធីទូរសព្ទបានទេ។ អ្នកអាចចម្លងព័ត៌មានទំនាក់ទំនងជំនួសបាន។",
   "Could not open this link. You can copy the contact details instead.":
       "មិនអាចបើកតំណនេះបានទេ។ អ្នកអាចចម្លងព័ត៌មានទំនាក់ទំនងជំនួសបាន។",
+
+  // ---------------------------------------------------------------------------
+  // LICENSES - Open-source packages and empty states
+  // ---------------------------------------------------------------------------
   "Licenses unavailable": "មិនអាចបង្ហាញអាជ្ញាបណ្ណបានទេ",
   "Please reopen this page to try again.":
       "សូមបើកទំព័រនេះឡើងវិញ ដើម្បីព្យាយាមម្ដងទៀត។",
@@ -304,11 +370,19 @@ const khmerTranslations = <String, String>{
   "No licenses registered": "មិនមានអាជ្ញាបណ្ណដែលបានចុះបញ្ជី",
   "License information will appear here when available.":
       "ព័ត៌មានអាជ្ញាបណ្ណនឹងបង្ហាញនៅទីនេះ នៅពេលមាន។",
+
+  // ---------------------------------------------------------------------------
+  // ROUTING AND ACCESSIBILITY - Missing pages, loading, and branding
+  // ---------------------------------------------------------------------------
   "Page not found": "រកមិនឃើញទំព័រ",
   "This page isn’t here": "មិនមានទំព័រនេះទេ",
   "Explore the portfolio from the home screen.": "ស្វែងយល់ពីស្នាដៃតាមទំព័រដើម។",
   "Opening portfolio": "កំពុងបើកស្នាដៃ",
   "Yorn Nona monogram": "អក្សរកាត់ឈ្មោះ Yorn Nona",
+
+  // ---------------------------------------------------------------------------
+  // PROJECT ILLUSTRATIONS - Labels inside decorative previews
+  // ---------------------------------------------------------------------------
   "Flutter views": "ផ្ទៃប្រើប្រាស់ Flutter",
   "Notes": "កំណត់ត្រា",
   "Discover": "ស្វែងរក",

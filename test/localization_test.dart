@@ -78,7 +78,7 @@ void main() {
     'Language text switches immediately in either direction without leaving the tab',
     (tester) async {
       final container = await harness.mountApp(tester, '/projects');
-      await tester.tap(find.text('English'));
+      await tester.tap(find.text('EN'));
       await tester.pumpAndSettle();
       expect(container.read(settingsProvider).languageCode, 'km');
       expect(find.text('ខ្មែរ'), findsOneWidget);
@@ -91,11 +91,11 @@ void main() {
       await tester.tap(find.text('ខ្មែរ'));
       await tester.pumpAndSettle();
       expect(container.read(settingsRepositoryProvider).languageCode, 'en');
-      expect(find.text('English'), findsOneWidget);
+      expect(find.text('EN'), findsOneWidget);
       tester.view.physicalSize = const Size(320, 700);
       tester.platformDispatcher.textScaleFactorTestValue = 2;
       await tester.pumpAndSettle();
-      await tester.tap(find.text('English'));
+      await tester.tap(find.text('EN'));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
       expect(container.read(settingsRepositoryProvider).languageCode, 'km');

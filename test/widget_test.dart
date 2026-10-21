@@ -64,7 +64,7 @@ void main() {
   testWidgets('Splash opens home; tabs, filters and case study navigate', (
     tester,
   ) async {
-    await mountApp(tester, '/');
+    await mountApp(tester, '/', savedPreferences: {'animations': false});
     await tester.pump(const Duration(milliseconds: 1300));
     await tester.pumpAndSettle();
     expect(find.text('Mobile engineer'), findsOneWidget);
@@ -117,6 +117,26 @@ void main() {
       }
     });
   }
+
+  testWidgets('Home typewriter cycles through both phrases and repeats', (
+    tester,
+  ) async {
+    await mountApp(tester, '/home');
+    Future<void> waitForPhrase(String phrase) async {
+      // Other Home animations can change when pumpAndSettle returns. Observe
+      // the visible phrase instead of assuming a particular typewriter phase.
+      for (var frame = 0; frame < 250; frame++) {
+        if (find.text(phrase).evaluate().isNotEmpty) break;
+        await tester.pump(const Duration(milliseconds: 40));
+      }
+      expect(find.text(phrase), findsOneWidget);
+    }
+
+    await waitForPhrase('Mobile engineer');
+    await waitForPhrase('Ios and android');
+    await waitForPhrase('Mobile engineer');
+    expect(tester.takeException(), isNull);
+  });
 
   testWidgets('Theme and animation changes survive a new provider container', (
     tester,
@@ -275,7 +295,7 @@ void main() {
   testWidgets('AppBar title is hidden at top and appears when scrolled', (
     tester,
   ) async {
-    await mountApp(tester, '/projects');
+    final container = await mountApp(tester, '/projects');
     final opacityFinder = find.byWidgetPredicate(
       (w) =>
           w is AnimatedOpacity &&
@@ -283,6 +303,7 @@ void main() {
     );
     expect(opacityFinder, findsOneWidget);
     expect(tester.widget<AnimatedOpacity>(opacityFinder).opacity, 0.0);
+    final navigationPosition = tester.getRect(find.byType(CupertinoTabBar));
 
     await tester.drag(
       find.byType(SingleChildScrollView),
@@ -290,6 +311,32 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(tester.widget<AnimatedOpacity>(opacityFinder).opacity, 1.0);
+    expect(tester.getRect(find.byType(CupertinoTabBar)), navigationPosition);
+    container.read(routerProvider).go('/home');
+    await tester.pumpAndSettle();
+    final navigationBar = tester.widget<CupertinoNavigationBar>(
+      find.byType(CupertinoNavigationBar),
+    );
+    expect(navigationBar.middle, isNull);
+    expect(
+      find.descendant(
+        of: find.byType(CupertinoNavigationBar),
+        matching: find.text('Yorn Nona'),
+      ),
+      findsOneWidget,
+    );
+    final homeTitle = find.byKey(const ValueKey('home-navigation-title'));
+    expect(tester.widget<AnimatedOpacity>(homeTitle).opacity, 0);
+    await tester.drag(
+      find.byType(SingleChildScrollView),
+      const Offset(0, -120),
+    );
+    await tester.pumpAndSettle();
+    expect(tester.widget<AnimatedOpacity>(homeTitle).opacity, 1);
+    final scroll = tester.state<ScrollableState>(find.byType(Scrollable).first);
+    scroll.position.jumpTo(scroll.position.minScrollExtent);
+    await tester.pumpAndSettle();
+    expect(tester.widget<AnimatedOpacity>(homeTitle).opacity, 0);
   });
 
   testWidgets(
