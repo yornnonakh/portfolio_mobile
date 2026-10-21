@@ -722,6 +722,26 @@ class EmptyState extends StatelessWidget {
   );
 }
 
+class PageFooterScope extends InheritedWidget {
+  const PageFooterScope({
+    super.key,
+    required this.showInlineFooter,
+    required super.child,
+  });
+
+  final bool showInlineFooter;
+
+  static bool showsInlineFooterOf(BuildContext context) =>
+      context
+          .dependOnInheritedWidgetOfExactType<PageFooterScope>()
+          ?.showInlineFooter ??
+      true;
+
+  @override
+  bool updateShouldNotify(PageFooterScope oldWidget) =>
+      showInlineFooter != oldWidget.showInlineFooter;
+}
+
 class PageContent extends StatelessWidget {
   const PageContent({super.key, required this.children});
   final List<Widget> children;
@@ -746,7 +766,13 @@ class PageContent extends StatelessWidget {
         child: Reveal(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [...children, const SizedBox(height: 56), const Footer()],
+            children: [
+              ...children,
+              if (PageFooterScope.showsInlineFooterOf(context)) ...[
+                const SizedBox(height: 45),
+                const Footer(),
+              ],
+            ],
           ),
         ),
       ),
@@ -755,19 +781,53 @@ class PageContent extends StatelessWidget {
 }
 
 class Footer extends StatelessWidget {
-  const Footer({super.key});
+  const Footer({super.key, this.pinned = false});
+
+  final bool pinned;
+
   @override
-  Widget build(BuildContext context) => Column(
-    children: [
-      const Divider(),
-      const SizedBox(height: 20),
-      const Align(
-        alignment: Alignment.center,
-        child: MutedText('© ${AppConstants.year} Yorn Nona'),
+  Widget build(BuildContext context) {
+    final notice = AppText(
+      '© ${AppConstants.year} Yorn Nona',
+      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
       ),
-      const SizedBox(height: 8),
-    ],
-  );
+    );
+    if (pinned) {
+      final scheme = Theme.of(context).colorScheme;
+      return DecoratedBox(
+        key: const ValueKey('copyright-bottom-bar'),
+        decoration: BoxDecoration(
+          color: scheme.surface,
+          border: Border(
+            top: BorderSide(
+              color: scheme.outlineVariant.withValues(alpha: .5),
+              width: .5,
+            ),
+          ),
+        ),
+        child: SafeArea(
+          top: false,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 30),
+              child: Center(heightFactor: 1, child: notice),
+            ),
+          ),
+        ),
+      );
+    }
+    return Column(
+      children: [
+        const Divider(),
+        const SizedBox(height: 20),
+        Align(alignment: Alignment.center, child: notice),
+        const SizedBox(height: 8),
+      ],
+    );
+  }
 }
 
 class BrandMark extends StatelessWidget {

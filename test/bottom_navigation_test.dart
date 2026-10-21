@@ -96,16 +96,14 @@ void main() {
         tester.widget<Icon>(find.byIcon(CupertinoIcons.square_stack)).color,
         scheme.onSurfaceVariant,
       );
+      final glass = find.byKey(const ValueKey('bottom-nav-glass'));
+      final decoration =
+          tester.widget<Container>(glass).decoration as BoxDecoration;
+      final gradient = decoration.gradient! as LinearGradient;
+      expect(gradient.colors.every((color) => color.a < 1), isTrue);
       expect(
-        tester
-            .widgetList<Container>(find.byType(Container))
-            .any(
-              (container) =>
-                  container.decoration is BoxDecoration &&
-                  (container.decoration as BoxDecoration).color ==
-                      scheme.surface,
-            ),
-        isTrue,
+        find.ancestor(of: glass, matching: find.byType(BackdropFilter)),
+        findsOneWidget,
       );
     });
   }

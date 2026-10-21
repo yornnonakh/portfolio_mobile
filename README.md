@@ -32,7 +32,7 @@ original license text, and the supplied CV PDF retain their original content.
 
 | Screen | Route | Behavior / CV source |
 | --- | --- | --- |
-| Splash | `/` | YN monogram, gradient entrance, timed redirect to Home |
+| Splash | `/` | Robot holding a phone, floating entrance, “Wellcome” speech bubble, and progress line; opens Home after a 2.8-second greeting, immediately with reduced motion |
 | Home | `/home` | Name, title, location, exact professional summary, six-month experience, both featured projects, deployment experience, CV/contact actions |
 | Projects | `/projects` | Local project gallery with All / Productivity / E-commerce filters |
 | Project details | `/projects/notes`, `/projects/products` | Features, stack, contributions, conceptual architecture, integration notes, screenshot gallery and verified optional links |
@@ -125,6 +125,13 @@ those subdirectories to `pubspec.yaml`. No project screenshots,
 project repository links, store links, or CV PDF were provided with this task.
 
 ## Design and accessibility
+
+Splash previews: [Mobile light](docs/previews/splash-mobile-light.png) ·
+[Mobile dark](docs/previews/splash-mobile-dark.png) ·
+[Desktop light](docs/previews/splash-desktop-light.png) ·
+[Desktop dark](docs/previews/splash-desktop-dark.png).
+The robot is bundled locally; its [generation prompt](docs/splash-robot-artwork.md)
+is saved with the project.
 
 Saved design previews: [Desktop light](docs/previews/home-light.png) ·
 [Desktop dark](docs/previews/home-dark.png) ·
