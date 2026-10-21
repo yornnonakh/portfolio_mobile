@@ -144,7 +144,7 @@ class LocalPortfolioRepository implements PortfolioRepository {
       WorkExperience(
         title: 'Flutter Developer',
         period: '2026 · 6 months',
-        organization: 'Flutter Mobile Application Projects',
+        organization: 'OTOKHI Company',
         location: 'iOS & Android',
         responsibilities: [
           'Built responsive mobile interfaces for iOS and Android.',
@@ -167,15 +167,41 @@ class LocalPortfolioRepository implements PortfolioRepository {
         ],
       ),
     ],
-    education: Education(
-      'Institute of Science and Technology Advanced Development (ISTAD)',
-      'Software Development',
-      '2025–2027',
-      'In Progress',
-    ),
+    educations: [
+      Education(
+        'Norton University',
+        'Software Development',
+        '3 Years',
+        'Completed',
+      ),
+      Education(
+        'Institute of Science and Technology Advanced Development (ISTAD)',
+        'Web Development',
+        '2 Years',
+        'Completed',
+      ),
+      Education(
+        'ETEC Computer Center',
+        'Mobile Development',
+        'Short Course',
+        'Completed',
+      ),
+      Education(
+        'Sastra Digital Solution',
+        'Flutter Development',
+        'Short Course',
+        'Completed',
+      ),
+    ],
     languages: [
       SpokenLanguage('Khmer', 'Native'),
       SpokenLanguage('English', 'Basic'),
+    ],
+    programmingLanguages: [
+      ProgrammingLanguage('Dart', 0.90, '90%'),
+      ProgrammingLanguage('Kotlin', 0.70, '70%'),
+      ProgrammingLanguage('Java', 0.60, '60%'),
+      ProgrammingLanguage('Swift', 0.50, '50%'),
     ],
     journey:
         'I started by teaching computer skills at Addbook Computer Center. Today, I’m studying Software Development at ISTAD and building Flutter apps for iOS and Android.',

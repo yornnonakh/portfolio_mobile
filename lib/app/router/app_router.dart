@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/localization/app_localizations.dart';
 import '../../core/design_system/components.dart';
+import '../../core/services/analytics_service.dart';
 import '../../core/utils/motion.dart';
 import '../../core/widgets/app_frame.dart';
 import '../../features/about/presentation/about_screen.dart';
@@ -30,6 +31,7 @@ GoRoute _screen(
 final routerProvider = Provider<GoRouter>((ref) {
   final router = GoRouter(
     initialLocation: '/',
+    observers: [ref.watch(analyticsNavigatorObserverProvider)],
     routes: [
       _screen('/', (_, state) => const SplashScreen()),
       StatefulShellRoute.indexedStack(

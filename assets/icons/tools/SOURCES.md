@@ -4,6 +4,10 @@ Brand icons are used to identify the tools. Brand names and logos belong to thei
 
 Devicon assets are pinned to v2.17.0 (MIT); Simple Icons assets are pinned to 12.0.0 (OpenAI) and 14.0.0 (Claude), both CC0-1.0. The license texts are included alongside the assets.
 
+- `flutter.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/flutter/flutter-original.svg
+- `dart.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/dart/dart-original.svg
+- `kotlin.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/kotlin/kotlin-original.svg
+- `java.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/java/java-original.svg
 - `github.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/github/github-original.svg
 - `supabase.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/supabase/supabase-original.svg
 - `firebase.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/firebase/firebase-original.svg

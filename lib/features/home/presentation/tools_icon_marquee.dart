@@ -23,16 +23,16 @@ class _ToolsIconMarqueeState extends ConsumerState<ToolsIconMarquee>
   final Set<int> _pressedPointers = {};
 
   static const _tools = [
+    _Tool('Flutter', 'flutter'),
+    _Tool('Dart', 'dart'),
+    _Tool('Kotlin', 'kotlin'),
+    _Tool('Swift', 'swift'),
     _Tool('GitHub', 'github', adaptiveColor: true),
-    _Tool('Supabase', 'supabase'),
     _Tool('Firebase', 'firebase'),
+    _Tool('Supabase', 'supabase'),
     _Tool('VS Code', 'vscode'),
-    _Tool('iOS', 'ios', adaptiveColor: true),
     _Tool('Android Studio', 'android-studio'),
-    _Tool('Android', 'android'),
-    _Tool('ChatGPT', 'chatgpt', tint: Color(0xFF10A37F)),
-    _Tool('Google', 'google'),
-    _Tool('Claude AI', 'claude', tint: Color(0xFFD97757)),
+    _Tool('iOS', 'ios', adaptiveColor: true),
   ];
 
   @override

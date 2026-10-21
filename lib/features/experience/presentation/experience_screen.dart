@@ -45,24 +45,27 @@ class ExperienceScreen extends ConsumerWidget {
         ],
         DeploymentCard(text: data.deployment),
         const SizedBox(height: 32),
-        const SectionHeading('Education'),
-        SurfaceCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Eyebrow(data.education.period),
-              const SizedBox(height: 12),
-              AppText(
-                data.education.program,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 8),
-              MutedText(data.education.institute),
-              const SizedBox(height: 16),
-              TechBadge(data.education.status, accent: true),
-            ],
+        const SectionHeading('Education & Training'),
+        for (final edu in data.educations) ...[
+          SurfaceCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Eyebrow(edu.period),
+                const SizedBox(height: 12),
+                AppText(
+                  edu.program,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 8),
+                MutedText(edu.institute),
+                const SizedBox(height: 16),
+                TechBadge(edu.status, accent: true),
+              ],
+            ),
           ),
-        ),
+          const SizedBox(height: 16),
+        ],
       ],
     );
   }
