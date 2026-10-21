@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart' show listEquals;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -9,6 +10,7 @@ import '../../../core/utils/motion.dart';
 import '../../../core/widgets/profile_avatar.dart';
 import '../../../shared/providers/portfolio_providers.dart';
 import '../../projects/presentation/project_card.dart';
+import 'project_phone_showcase.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -27,7 +29,10 @@ class HomeScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _TypewriterText(
-                  text: context.tr('Mobile engineer'),
+                  texts: [
+                    context.tr('Mobile engineer'),
+                    context.tr('Ios and android'),
+                  ],
                   style: wide
                       ? theme.textTheme.displayLarge
                       : theme.textTheme.displayMedium,
@@ -36,7 +41,7 @@ class HomeScreen extends ConsumerWidget {
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 480),
                   child: const MutedText(
-                    'I build thoughtful mobile experiences for iOS and Android, from Phnom Penh.',
+                    'I’m Yorn Nona, a mobile engineer. I enjoy designing clean architectures and solving complex engineering problems.',
                     large: true,
                   ),
                 ),
@@ -107,6 +112,8 @@ class HomeScreen extends ConsumerWidget {
             );
           },
         ),
+        const ProjectPhoneShowcase(),
+        const SizedBox(height: 32),
         SurfaceCard(
           padding: EdgeInsets.zero,
           child: Column(
@@ -275,9 +282,10 @@ class DeploymentCard extends StatelessWidget {
 }
 
 class _TypewriterText extends ConsumerStatefulWidget {
-  const _TypewriterText({required this.text, required this.style});
+  const _TypewriterText({required this.texts, required this.style})
+    : assert(texts.length > 0);
 
-  final String text;
+  final List<String> texts;
   final TextStyle? style;
 
   @override
@@ -297,15 +305,18 @@ class _TypewriterTextState extends ConsumerState<_TypewriterText>
 
   bool _isDeleting = false;
   int _charIndex = 0;
+  int _textIndex = 0;
   Timer? _pauseTimer;
-  int get _characterCount => widget.text.characters.length;
+  String get _currentText => widget.texts[_textIndex];
+  int get _characterCount => _currentText.characters.length;
 
   @override
   void didUpdateWidget(_TypewriterText oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text != widget.text) {
+    if (!listEquals(oldWidget.texts, widget.texts)) {
       _pauseTimer?.cancel();
       _controller.stop();
+      _textIndex = 0;
       _isDeleting = false;
       _charIndex = motionEnabled(context, ref) ? 0 : _characterCount;
       if (motionEnabled(context, ref)) _startTyping();
@@ -365,14 +376,18 @@ class _TypewriterTextState extends ConsumerState<_TypewriterText>
       // Finished deleting → short pause → start typing again
       _pauseTimer = Timer(_pauseAfterDelete, () {
         if (!mounted || !motionEnabled(context, ref)) return;
-        setState(() => _isDeleting = false);
+        setState(() {
+          _textIndex = (_textIndex + 1) % widget.texts.length;
+          _charIndex = 0;
+          _isDeleting = false;
+        });
         _startTyping();
       });
     }
   }
 
   void _startTyping() {
-    if (!mounted || widget.text.isEmpty) return;
+    if (!mounted || _currentText.isEmpty) return;
 
     final duration = _typeDuration * _characterCount;
     _controller
@@ -409,7 +424,7 @@ class _TypewriterTextState extends ConsumerState<_TypewriterText>
       });
     }
 
-    final displayText = widget.text.characters
+    final displayText = _currentText.characters
         .take(_charIndex.clamp(0, _characterCount))
         .toString();
 

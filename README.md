@@ -44,6 +44,8 @@ original license text, and the supplied CV PDF retain their original content.
 | Settings | `/settings` | Persistent theme and animation settings, version, dependency licenses |
 
 Floating navigation retains each of the four tab stacks and their scroll positions.
+The bottom bar stays fixed while scrolling, with 30 px corners, safe-area spacing,
+and a centered width on larger screens.
 Detail screens support back navigation and direct links. Invalid routes and project
 IDs show recoverable empty states. Theme settings load before the first screen.
 

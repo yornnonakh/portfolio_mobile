@@ -19,7 +19,7 @@ class AboutScreen extends ConsumerWidget {
           eyebrow: 'About',
           title: 'About me',
           description:
-              'A Flutter developer in Phnom Penh, learning through hands-on work.',
+              "I'm Yorn Nona  a Mobile engineer. I enjoy designing clean architectures and solving complex engineering problems"
         ),
         SurfaceCard(
           child: Column(

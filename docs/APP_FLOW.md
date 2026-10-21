@@ -36,7 +36,8 @@ Apple system typography on Apple platforms, Inter elsewhere. Large page titles,
 rows, native segmented controls, and an iOS switch keep the UI consistent.
 The root app, navigation bars, page routes, buttons, alerts, text-selection menus,
 and licenses browser use Cupertino widgets. Navigation bars are transparent;
-the Cupertino tab bar is translucent. Skills and Experience use grouped rows
+the Cupertino tab bar is translucent, fixed at the bottom, and inset with 30 px
+corners. Skills and Experience use grouped rows
 and cards consistent with the rest of the app.
 Project artwork is labeled illustrative. Content is constrained to 1160 px;
 grids adapt to available width. Body text scales; large-text selections wrap into
