@@ -10,16 +10,16 @@ import 'package:portfolio_mobile/features/settings/application/settings_view_mod
 import 'widget_test.dart' as harness;
 
 const toolNames = [
+  'Flutter',
+  'Dart',
+  'Kotlin',
+  'Swift',
   'GitHub',
-  'Supabase',
   'Firebase',
+  'Supabase',
   'VS Code',
-  'iOS',
   'Android Studio',
-  'Android',
-  'ChatGPT',
-  'Google',
-  'Claude AI',
+  'iOS',
 ];
 
 double marqueeOffset(WidgetTester tester) => tester

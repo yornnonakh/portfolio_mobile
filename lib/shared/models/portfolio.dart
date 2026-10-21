@@ -82,14 +82,22 @@ class SpokenLanguage {
   final String name, proficiency;
 }
 
+class ProgrammingLanguage {
+  const ProgrammingLanguage(this.name, this.proficiency, this.percentage);
+  final String name;
+  final double proficiency;
+  final String percentage;
+}
+
 class Portfolio {
   const Portfolio({
     required this.profile,
     required this.projects,
     required this.skills,
     required this.experiences,
-    required this.education,
+    required this.educations,
     required this.languages,
+    required this.programmingLanguages,
     required this.deployment,
     required this.journey,
   });
@@ -97,7 +105,10 @@ class Portfolio {
   final List<PortfolioProject> projects;
   final List<SkillCategory> skills;
   final List<WorkExperience> experiences;
-  final Education education;
+  final List<Education> educations;
   final List<SpokenLanguage> languages;
+  final List<ProgrammingLanguage> programmingLanguages;
   final String deployment, journey;
+
+  Education get education => educations.first;
 }

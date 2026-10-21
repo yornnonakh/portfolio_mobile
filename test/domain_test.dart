@@ -40,7 +40,7 @@ void main() {
     );
     expect(
       data.experiences[0].organization,
-      'Flutter Mobile Application Projects',
+      'OTOKHI Company',
     );
     expect(data.experiences[1].organization, 'Addbook Computer Center');
   });

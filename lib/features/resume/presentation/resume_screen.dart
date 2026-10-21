@@ -148,14 +148,20 @@ class ResumeScreen extends ConsumerWidget {
                 const SizedBox(height: 12),
               ],
               AppText(
-                'Education',
+                'Education & Training',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 12),
-              AppText(data.education.institute),
-              MutedText(
-                '${data.education.program} · ${data.education.period} · ${data.education.status}',
-              ),
+              for (final edu in data.educations) ...[
+                AppText(
+                  edu.institute,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                MutedText(
+                  '${edu.program} · ${edu.period} · ${edu.status}',
+                ),
+                if (edu != data.educations.last) const SizedBox(height: 12),
+              ],
             ],
           ),
         ),

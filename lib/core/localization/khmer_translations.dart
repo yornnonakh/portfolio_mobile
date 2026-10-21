@@ -255,6 +255,7 @@ const khmerTranslations = <String, String>{
   "From teaching computer skills to building mobile applications.":
       "ពីការបង្រៀនជំនាញកុំព្យូទ័រដល់ការបង្កើតកម្មវិធីទូរសព្ទ។",
   "Flutter Mobile Application Projects": "គម្រោងកម្មវិធីទូរសព្ទ Flutter",
+  "OTOKHI Company": "ក្រុមហ៊ុន OTOKHI",
   "Built responsive mobile interfaces for iOS and Android.":
       "បានបង្កើតផ្ទៃប្រើប្រាស់សម្របតាមអេក្រង់សម្រាប់ iOS និង Android។",
   "Developed reusable Flutter widgets and navigation flows.":
@@ -272,6 +273,22 @@ const khmerTranslations = <String, String>{
   "Provided technical guidance and student support.":
       "បានផ្ដល់ការណែនាំបច្ចេកទេស និងជួយសិស្ស។",
   "Education": "ការអប់រំ",
+  "Education & Training": "ការអប់រំ និងការបណ្ដុះបណ្ដាល",
+  "Programming Languages": "ភាសាសរសេរកម្មវិធី",
+  "Norton University": "សាកលវិទ្យាល័យ ន័រតុន",
+  "Web Development": "ការអភិវឌ្ឍវេបសាយ",
+  "ETEC Computer Center": "មជ្ឈមណ្ឌលកុំព្យូទ័រ ETEC",
+  "Mobile Development": "ការអភិវឌ្ឍកម្មវិធីទូរសព្ទ",
+  "Sastra Digital Solution": "Sastra Digital Solution",
+  "Flutter Development": "ការអភិវឌ្ឍកម្មវិធី Flutter",
+  "3 Years": "៣ ឆ្នាំ",
+  "2 Years": "២ ឆ្នាំ",
+  "Short Course": "វគ្គសិក្សាខ្លី",
+  "Completed": "បានបញ្ចប់",
+  "90%": "៩០%",
+  "70%": "៧០%",
+  "60%": "៦០%",
+  "50%": "៥០%",
   "Deployed a Flutter iOS app with Xcode and App Store Connect, from signing and build preparation to release submission.":
       "បានដាក់កម្មវិធី Flutter iOS ឱ្យប្រើប្រាស់ដោយប្រើ Xcode និង App Store Connect ចាប់ពីការចុះហត្ថលេខា និងការរៀបចំ build រហូតដល់ការដាក់ស្នើចេញផ្សាយ។",
 
