@@ -76,25 +76,23 @@ class ContactScreen extends ConsumerWidget {
         IosGroupedList(
           children: [
             IosActionRow(
-              icon: CupertinoIcons.phone_fill,
+              svgAsset: 'assets/icons/tools/phone.svg',
               title: 'Phone',
               subtitle: profile.phone,
               onPressed: () =>
                   performAction(context, () => service.phone(profile.phoneUri)),
             ),
             IosActionRow(
-              icon: CupertinoIcons.chevron_left_slash_chevron_right,
+              svgAsset: 'assets/icons/tools/github.svg',
               title: 'GitHub',
               subtitle: profile.github,
               onPressed: () =>
                   performAction(context, () => service.website(profile.github)),
             ),
             IosActionRow(
-              icon: CupertinoIcons.briefcase_fill,
+              svgAsset: 'assets/icons/tools/linkedin.svg',
               title: 'LinkedIn',
-              subtitle: LinkService.isWebUrl(profile.linkedIn)
-                  ? profile.name
-                  : 'Profile link unavailable',
+              subtitle: profile.linkedIn ?? 'Profile link unavailable',
               onPressed: LinkService.isWebUrl(profile.linkedIn)
                   ? () => performAction(
                       context,
@@ -103,7 +101,7 @@ class ContactScreen extends ConsumerWidget {
                   : null,
             ),
             IosActionRow(
-              icon: CupertinoIcons.paperplane_fill,
+              svgAsset: 'assets/icons/tools/telegram.svg',
               title: 'Telegram',
               subtitle: profile.telegramNumber,
               onPressed: LinkService.isWebUrl(profile.telegramUrl)

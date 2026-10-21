@@ -8,7 +8,9 @@ Devicon assets are pinned to v2.17.0 (MIT); Simple Icons assets are pinned to 12
 - `dart.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/dart/dart-original.svg
 - `kotlin.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/kotlin/kotlin-original.svg
 - `java.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/java/java-original.svg
-- `github.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/github/github-original.svg
+- `linkedin.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/linkedin/linkedin-original.svg
+- `telegram.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/telegram/telegram-original.svg
+- `phone.svg`: Official material phone vector icon
 - `supabase.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/supabase/supabase-original.svg
 - `firebase.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/firebase/firebase-original.svg
 - `vscode.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/vscode/vscode-original.svg

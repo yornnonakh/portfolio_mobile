@@ -213,18 +213,21 @@ void main() {
   );
 
   testWidgets(
-    'Missing CV and unprovided social links have honest empty states',
+    'Missing CV and provided/unprovided social links handle states correctly',
     (tester) async {
       final container = await mountApp(tester, '/resume');
       expect(find.text('Resume PDF unavailable'), findsOneWidget);
       expect(find.text('Download / save PDF'), findsNothing);
       container.read(routerProvider).go('/contact');
       await tester.pumpAndSettle();
-      expect(find.text('Profile link unavailable'), findsOneWidget);
       final linkedIn = tester.widget<CupertinoButton>(
         find.widgetWithText(CupertinoButton, 'LinkedIn'),
       );
-      expect(linkedIn.onPressed, isNull);
+      expect(linkedIn.onPressed, isNotNull);
+      final telegram = tester.widget<CupertinoButton>(
+        find.widgetWithText(CupertinoButton, 'Telegram'),
+      );
+      expect(telegram.onPressed, isNotNull);
     },
   );
   testWidgets('Copy email shows an iOS confirmation and leaves contact open', (

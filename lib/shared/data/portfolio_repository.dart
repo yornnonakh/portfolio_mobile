@@ -22,6 +22,8 @@ class LocalPortfolioRepository implements PortfolioRepository {
       phoneUri: '+855968093758',
       telegramNumber: '0968093758',
       github: 'https://github.com/yornnona',
+      linkedIn: 'https://www.linkedin.com/in/yorn-nona-69a90a345',
+      telegramUrl: 'https://t.me/YornNona',
       portraitAsset: 'assets/images/yorn_nona_portrait.jpg',
       cvAsset: 'assets/documents/yorn_nona_cv.pdf',
       // Add verified linkedIn and telegramUrl here when supplied.

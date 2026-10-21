@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../localization/app_localizations.dart';
 import '../constants/app_constants.dart';
@@ -374,12 +375,14 @@ class IosGroupedList extends StatelessWidget {
 class IosActionRow extends StatelessWidget {
   const IosActionRow({
     super.key,
-    required this.icon,
+    this.icon = CupertinoIcons.app,
+    this.svgAsset,
     required this.title,
     this.subtitle,
     required this.onPressed,
   });
   final IconData icon;
+  final String? svgAsset;
   final String title;
   final String? subtitle;
   final VoidCallback? onPressed;
@@ -390,7 +393,7 @@ class IosActionRow extends StatelessWidget {
     onPressed: onPressed,
     child: Row(
       children: [
-        IconTile(icon),
+        IconTile(icon, svgAsset: svgAsset),
         const SizedBox(width: 14),
         Expanded(
           child: Column(
@@ -490,18 +493,29 @@ class PageHeader extends StatelessWidget {
 }
 
 class IconTile extends StatelessWidget {
-  const IconTile(this.icon, {super.key});
+  const IconTile(this.icon, {super.key, this.svgAsset});
   final IconData icon;
+  final String? svgAsset;
 
   @override
   Widget build(BuildContext context) => Container(
     width: 34,
     height: 34,
+    padding: svgAsset != null ? const EdgeInsets.all(7) : EdgeInsets.zero,
     decoration: BoxDecoration(
-      color: Theme.of(context).colorScheme.primary,
+      color: svgAsset != null
+          ? Theme.of(context).colorScheme.surfaceContainerHighest
+          : Theme.of(context).colorScheme.primary,
       borderRadius: BorderRadius.circular(8),
     ),
-    child: Icon(icon, size: 20, color: Colors.white),
+    child: svgAsset != null
+        ? SvgPicture.asset(
+            svgAsset!,
+            width: 20,
+            height: 20,
+            excludeFromSemantics: true,
+          )
+        : Icon(icon, size: 20, color: Colors.white),
   );
 }
 
