@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/design_system/components.dart';
 import '../application/projects_view_model.dart';
-import 'project_card.dart';
+import 'project_timeline.dart';
 
 class ProjectsScreen extends ConsumerWidget {
   const ProjectsScreen({super.key});
@@ -34,10 +34,8 @@ class ProjectsScreen extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 20),
-        ResponsiveGrid(
-          minimumWidth: 450,
-          children: projects.map((p) => ProjectCard(project: p)).toList(),
-        ),
+        const SectionHeading('Project timeline'),
+        ProjectTimeline(projects: projects),
         const SizedBox(height: 24),
         const MutedText(
           'Previews are illustrations. Original screenshots are not available yet.',
