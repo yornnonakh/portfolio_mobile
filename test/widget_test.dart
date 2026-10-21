@@ -13,6 +13,7 @@ import 'package:portfolio_mobile/app/router/app_router.dart';
 import 'package:portfolio_mobile/core/services/settings_repository.dart';
 import 'package:portfolio_mobile/core/design_system/components.dart';
 import 'package:portfolio_mobile/core/widgets/app_frame.dart';
+import 'package:portfolio_mobile/core/widgets/profile_avatar.dart';
 import 'package:portfolio_mobile/features/settings/application/settings_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -86,6 +87,38 @@ void main() {
     await tester.tap(find.text('Explore case study').last);
     await tester.pumpAndSettle();
     expect(find.text('Project overview'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('Holding and sliding the bottom bar switches app routes', (
+    tester,
+  ) async {
+    final container = await mountApp(
+      tester,
+      '/home',
+      savedPreferences: {'animations': false},
+    );
+    final rect = tester.getRect(find.byType(FloatingPillBottomNavBar));
+    Offset tabCenter(int index) => Offset(
+      rect.left + 6 + (rect.width - 12) / 4 * (index + .5),
+      rect.center.dy,
+    );
+    final gesture = await tester.startGesture(tabCenter(0));
+    await tester.pump(const Duration(milliseconds: 600));
+    for (final entry in [
+      'home',
+      'projects',
+      'about',
+      'contact',
+    ].indexed.skip(1)) {
+      await gesture.moveTo(tabCenter(entry.$1));
+      await tester.pumpAndSettle();
+      expect(
+        container.read(routerProvider).routeInformationProvider.value.uri.path,
+        '/${entry.$2}',
+      );
+    }
+    await gesture.up();
     expect(tester.takeException(), isNull);
   });
 
@@ -318,7 +351,9 @@ void main() {
     );
     expect(opacityFinder, findsOneWidget);
     expect(tester.widget<AnimatedOpacity>(opacityFinder).opacity, 0.0);
-    final navigationPosition = tester.getRect(find.byType(FloatingPillBottomNavBar));
+    final navigationPosition = tester.getRect(
+      find.byType(FloatingPillBottomNavBar),
+    );
 
     await tester.drag(
       find.byWidgetPredicate(
@@ -330,7 +365,10 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(tester.widget<AnimatedOpacity>(opacityFinder).opacity, 1.0);
-    expect(tester.getRect(find.byType(FloatingPillBottomNavBar)), navigationPosition);
+    expect(
+      tester.getRect(find.byType(FloatingPillBottomNavBar)),
+      navigationPosition,
+    );
     container.read(routerProvider).go('/home');
     await tester.pumpAndSettle();
     final navigationBar = tester.widget<CupertinoNavigationBar>(
@@ -342,7 +380,17 @@ void main() {
         of: find.byType(CupertinoNavigationBar),
         matching: find.text('Yorn Nona'),
       ),
-      findsOneWidget,
+      findsNothing,
+    );
+    final navigationAvatar = find.descendant(
+      of: find.byType(CupertinoNavigationBar),
+      matching: find.byType(ProfileAvatar),
+    );
+    expect(navigationAvatar, findsOneWidget);
+    expect(tester.widget<ProfileAvatar>(navigationAvatar).size, 32);
+    expect(
+      tester.widget<ProfileAvatar>(navigationAvatar).profile.portraitAsset,
+      'assets/images/yorn_nona_portrait.jpg',
     );
     final homeTitle = find.byKey(const ValueKey('home-navigation-title'));
     expect(tester.widget<AnimatedOpacity>(homeTitle).opacity, 0);

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/localization/app_localizations.dart';
 import '../../../core/design_system/components.dart';
 import '../../../shared/models/portfolio.dart';
@@ -102,37 +101,10 @@ class _SkillProgrammingLanguageRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final lower = language.name.toLowerCase();
-    final color = switch (lower) {
-      'dart' => const Color(0xFF0175C2),
-      'kotlin' => const Color(0xFF7F52FF),
-      'java' => const Color(0xFFF89820),
-      'swift' => const Color(0xFFF05138),
-      _ => const Color(0xFF007AFF),
-    };
-    final assetPath = 'assets/icons/tools/$lower.svg';
 
     return Row(
       children: [
-        Container(
-          width: 36,
-          height: 36,
-          padding: const EdgeInsets.all(6),
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.12),
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: color.withValues(alpha: 0.25),
-              width: 1,
-            ),
-          ),
-          child: SvgPicture.asset(
-            assetPath,
-            width: 22,
-            height: 22,
-            excludeFromSemantics: true,
-          ),
-        ),
+        BrandIcon(language.name.toLowerCase(), size: 28),
         const SizedBox(width: 12),
         Expanded(
           child: AppText(
@@ -142,10 +114,7 @@ class _SkillProgrammingLanguageRow extends StatelessWidget {
             ),
           ),
         ),
-        TechBadge(
-          language.percentage,
-          accent: language.proficiency >= 0.7,
-        ),
+        TechBadge(language.percentage, accent: language.proficiency >= 0.7),
       ],
     );
   }

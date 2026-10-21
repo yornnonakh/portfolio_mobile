@@ -82,6 +82,7 @@ const khmerTranslations = <String, String>{
   "View projects": "មើលគម្រោង",
   "View resume": "មើលប្រវត្តិរូប",
   "Flutter experience": "បទពិសោធន៍ Flutter",
+  "Development journey": "ដំណើរនៃការអភិវឌ្ឍ",
   "Mobile development": "ការអភិវឌ្ឍកម្មវិធីទូរសព្ទ",
   "Deployment experience": "បទពិសោធន៍ដាក់ឱ្យប្រើប្រាស់",
   "Selected work": "ស្នាដៃដែលបានជ្រើសរើស",

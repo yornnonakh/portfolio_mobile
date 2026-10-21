@@ -14,20 +14,11 @@ class LanguageFlag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ExcludeSemantics(
-    child: Container(
+    child: SvgPicture.asset(
+      'assets/icons/flags/${languageCode == 'km' ? 'kh' : 'us'}.svg',
       width: width,
       height: height,
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(width < 30 ? 4 : 7),
-        border: Border.all(
-          color: CupertinoColors.systemGrey.withValues(alpha: .2),
-        ),
-      ),
-      child: SvgPicture.asset(
-        'assets/icons/flags/${languageCode == 'km' ? 'kh' : 'us'}.svg',
-        fit: BoxFit.cover,
-      ),
+      fit: BoxFit.cover,
     ),
   );
 }

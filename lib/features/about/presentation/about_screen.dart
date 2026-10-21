@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/localization/app_localizations.dart';
 import '../../../core/design_system/components.dart';
@@ -116,7 +115,9 @@ class AboutScreen extends ConsumerWidget {
           'What I bring',
           action: 'All skills',
           onAction: () {
-            ref.read(analyticsServiceProvider).trackEvent('explore_skills_clicked');
+            ref
+                .read(analyticsServiceProvider)
+                .trackEvent('explore_skills_clicked');
             context.push('/skills');
           },
         ),
@@ -126,7 +127,9 @@ class AboutScreen extends ConsumerWidget {
           'Experience',
           action: 'Full timeline',
           onAction: () {
-            ref.read(analyticsServiceProvider).trackEvent('full_timeline_clicked');
+            ref
+                .read(analyticsServiceProvider)
+                .trackEvent('full_timeline_clicked');
             context.push('/experience');
           },
         ),
@@ -152,10 +155,12 @@ class AboutScreen extends ConsumerWidget {
         const SizedBox(height: 12),
         IosButton.tinted(
           onPressed: () {
-            ref.read(analyticsServiceProvider).trackEvent('view_resume_clicked');
+            ref
+                .read(analyticsServiceProvider)
+                .trackEvent('view_resume_clicked');
             context.push('/resume');
           },
-          icon: const LiquidGlassIcon(CupertinoIcons.doc_text, size: 18),
+          icon: const Icon(CupertinoIcons.doc_text, size: 18),
           label: const AppText('View resume'),
         ),
       ],
@@ -169,14 +174,12 @@ class _ProgrammingLanguageUiModel {
     required this.proficiency,
     required this.percentage,
     required this.color,
-    required this.assetPath,
   });
 
   final String name;
   final double proficiency;
   final String percentage;
   final Color color;
-  final String assetPath;
 
   static _ProgrammingLanguageUiModel fromDomain(ProgrammingLanguage lang) {
     final lower = lang.name.toLowerCase();
@@ -191,7 +194,6 @@ class _ProgrammingLanguageUiModel {
         'swift' => const Color(0xFFF05138),
         _ => const Color(0xFF007AFF),
       },
-      assetPath: 'assets/icons/tools/$lower.svg',
     );
   }
 }
@@ -208,25 +210,7 @@ class _ProgrammingLanguageRow extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(
-              width: 38,
-              height: 38,
-              padding: const EdgeInsets.all(7),
-              decoration: BoxDecoration(
-                color: language.color.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: language.color.withValues(alpha: 0.25),
-                  width: 1,
-                ),
-              ),
-              child: SvgPicture.asset(
-                language.assetPath,
-                width: 24,
-                height: 24,
-                excludeFromSemantics: true,
-              ),
-            ),
+            BrandIcon(language.name.toLowerCase(), size: 28),
             const SizedBox(width: 12),
             Expanded(
               child: AppText(
@@ -236,10 +220,7 @@ class _ProgrammingLanguageRow extends StatelessWidget {
                 ),
               ),
             ),
-            TechBadge(
-              language.percentage,
-              accent: language.proficiency >= 0.7,
-            ),
+            TechBadge(language.percentage, accent: language.proficiency >= 0.7),
           ],
         ),
         const SizedBox(height: 10),
@@ -248,8 +229,9 @@ class _ProgrammingLanguageRow extends StatelessWidget {
           child: LinearProgressIndicator(
             value: language.proficiency,
             minHeight: 8,
-            backgroundColor:
-                theme.colorScheme.onSurface.withValues(alpha: 0.08),
+            backgroundColor: theme.colorScheme.onSurface.withValues(
+              alpha: 0.08,
+            ),
             valueColor: AlwaysStoppedAnimation<Color>(language.color),
           ),
         ),

@@ -104,25 +104,13 @@ class IosIconButton extends StatelessWidget {
     required this.label,
     required this.icon,
     required this.onPressed,
-    this.liquidGlass = false,
-    this.circular = false,
   });
   final String label;
   final IconData icon;
   final VoidCallback? onPressed;
-  final bool liquidGlass;
-  final bool circular;
 
   @override
   Widget build(BuildContext context) {
-    Widget iconWidget = Icon(icon, size: 28);
-    if (liquidGlass) {
-      iconWidget = LiquidGlassContainer(
-        padding: const EdgeInsets.all(8),
-        borderRadius: circular ? 999.0 : 12.0,
-        child: Icon(icon, size: 22),
-      );
-    }
     return Semantics(
       label: context.tr(label),
       button: true,
@@ -130,7 +118,7 @@ class IosIconButton extends StatelessWidget {
         padding: EdgeInsets.zero,
         minimumSize: const Size(44, 44),
         onPressed: onPressed,
-        child: iconWidget,
+        child: Icon(icon, size: 28),
       ),
     );
   }
@@ -260,8 +248,9 @@ class IosSelectionControl<T extends Object> extends ConsumerWidget {
                       entries.length)
                   .floor()
                   .clamp(0, entries.length - 1);
-          if (Directionality.of(context) == TextDirection.rtl)
+          if (Directionality.of(context) == TextDirection.rtl) {
             index = entries.length - 1 - index;
+          }
           if (entries[index].key != value) onChanged!(entries[index].key);
         }
 
@@ -492,30 +481,48 @@ class PageHeader extends StatelessWidget {
   );
 }
 
+/// A locally bundled brand logo, displayed without a decorative background.
+class BrandIcon extends StatelessWidget {
+  const BrandIcon(this.name, {super.key, this.size = 26, this.color});
+  final String name;
+  final double size;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    final tint =
+        color ??
+        switch (name) {
+          'github' || 'ios' => Theme.of(context).colorScheme.onSurface,
+          'app-store' => Theme.of(context).colorScheme.primary,
+          _ => null,
+        };
+    return SvgPicture.asset(
+      'assets/icons/tools/$name.svg',
+      width: size,
+      height: size,
+      excludeFromSemantics: true,
+      colorFilter: tint == null
+          ? null
+          : ColorFilter.mode(tint, BlendMode.srcIn),
+    );
+  }
+}
+
 class IconTile extends StatelessWidget {
   const IconTile(this.icon, {super.key, this.svgAsset});
   final IconData icon;
   final String? svgAsset;
 
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) => SizedBox(
     width: 34,
     height: 34,
-    padding: svgAsset != null ? const EdgeInsets.all(7) : EdgeInsets.zero,
-    decoration: BoxDecoration(
-      color: svgAsset != null
-          ? Theme.of(context).colorScheme.surfaceContainerHighest
-          : Theme.of(context).colorScheme.primary,
-      borderRadius: BorderRadius.circular(8),
+    child: Center(
+      child: svgAsset != null
+          ? BrandIcon(svgAsset!.split('/').last.replaceFirst('.svg', ''))
+          : Icon(icon, size: 24, color: Theme.of(context).colorScheme.primary),
     ),
-    child: svgAsset != null
-        ? SvgPicture.asset(
-            svgAsset!,
-            width: 20,
-            height: 20,
-            excludeFromSemantics: true,
-          )
-        : Icon(icon, size: 20, color: Colors.white),
   );
 }
 
@@ -770,24 +777,14 @@ class BrandMark extends StatelessWidget {
   Widget build(BuildContext context) => Semantics(
     label: context.tr('Yorn Nona monogram'),
     image: true,
-    child: Container(
+    child: SvgPicture.asset(
+      'assets/icons/monogram.svg',
       width: size,
       height: size,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onSurface,
-        borderRadius: BorderRadius.circular(size * .22),
-      ),
-      child: AppText(
-        'yn',
-        textScaler: TextScaler.noScaling,
-        style: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: size * .42,
-          fontWeight: FontWeight.w600,
-          letterSpacing: -size * .035,
-          color: Theme.of(context).colorScheme.surface,
-        ),
+      excludeFromSemantics: true,
+      colorFilter: ColorFilter.mode(
+        Theme.of(context).colorScheme.primary,
+        BlendMode.srcIn,
       ),
     ),
   );
@@ -815,68 +812,4 @@ class GlassSurface extends StatelessWidget {
       ),
     ),
   );
-}
-
-class LiquidGlassContainer extends StatelessWidget {
-  const LiquidGlassContainer({
-    super.key,
-    required this.child,
-    this.padding = const EdgeInsets.all(6),
-    this.borderRadius = 10.0,
-    this.blur = 16.0,
-  });
-  final Widget child;
-  final EdgeInsetsGeometry padding;
-  final double borderRadius;
-  final double blur;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(borderRadius),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
-        child: Container(
-          padding: padding,
-          decoration: BoxDecoration(
-            color: scheme.surface.withValues(alpha: .75),
-            borderRadius: BorderRadius.circular(borderRadius),
-            border: Border.all(
-              color: scheme.outlineVariant.withValues(alpha: .5),
-              width: .5,
-            ),
-          ),
-          child: child,
-        ),
-      ),
-    );
-  }
-}
-
-class LiquidGlassIcon extends StatelessWidget {
-  const LiquidGlassIcon(
-    this.icon, {
-    super.key,
-    this.size = 16,
-    this.color,
-    this.padding = const EdgeInsets.all(6),
-    this.borderRadius = 8.0,
-  });
-  final IconData icon;
-  final double size;
-  final Color? color;
-  final EdgeInsetsGeometry padding;
-  final double borderRadius;
-
-  @override
-  Widget build(BuildContext context) {
-    final effectiveColor =
-        color ?? Theme.of(context).colorScheme.onSurfaceVariant;
-    return LiquidGlassContainer(
-      padding: padding,
-      borderRadius: borderRadius,
-      child: Icon(icon, size: size, color: effectiveColor),
-    );
-  }
 }

@@ -2,14 +2,17 @@
 
 Brand icons are used to identify the tools. Brand names and logos belong to their respective owners.
 
-Devicon assets are pinned to v2.17.0 (MIT); Simple Icons assets are pinned to 12.0.0 (OpenAI) and 14.0.0 (Claude), both CC0-1.0. The license texts are included alongside the assets.
+Devicon assets are pinned to v2.17.0 (MIT); Simple Icons assets are pinned to 12.0.0 (OpenAI) and 14.0.0 (Claude and App Store), both CC0-1.0. The license texts are included alongside the assets. Gmail and Telegram use full-color brand artwork from the sources below.
 
 - `flutter.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/flutter/flutter-original.svg
 - `dart.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/dart/dart-original.svg
 - `kotlin.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/kotlin/kotlin-original.svg
 - `java.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/java/java-original.svg
+- `swift.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/swift/swift-original.svg
 - `linkedin.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/linkedin/linkedin-original.svg
-- `telegram.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/telegram/telegram-original.svg
+- `telegram.svg`: https://telegram.org/img/t_logo.svg
+- `app-store.svg`: https://raw.githubusercontent.com/simple-icons/simple-icons/14.0.0/icons/appstore.svg
+- `gmail.svg`: https://commons.wikimedia.org/wiki/File:Gmail_icon_(2020).svg (Google's multicolor logo)
 - `phone.svg`: Official material phone vector icon
 - `supabase.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/supabase/supabase-original.svg
 - `firebase.svg`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/icons/firebase/firebase-original.svg
@@ -23,6 +26,6 @@ Devicon assets are pinned to v2.17.0 (MIT); Simple Icons assets are pinned to 12
 - `DEVICON-LICENSE.txt`: https://raw.githubusercontent.com/devicons/devicon/v2.17.0/LICENSE
 - `SIMPLE-ICONS-LICENSE.txt`: https://raw.githubusercontent.com/simple-icons/simple-icons/12.0.0/LICENSE.md
 
-GitHub and Apple icons use the current foreground color for light and dark themes. OpenAI and Claude icons are tinted with their brand colors. Other logos retain their original colors.
+GitHub and Apple icons use the current foreground color for light and dark themes. OpenAI and Claude icons are tinted with their brand colors. App Store uses the app accent color, or the button's contrasting foreground color. Gmail retains its multicolor artwork; Telegram retains its blue gradient and white paper plane. Other logos retain their original colors.
 
 The VS Code SVG omits its drop-shadow filters and blend-mode hint for Flutter SVG compatibility.

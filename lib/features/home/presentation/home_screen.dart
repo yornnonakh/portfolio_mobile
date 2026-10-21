@@ -10,6 +10,7 @@ import '../../../core/utils/motion.dart';
 import '../../../core/widgets/profile_avatar.dart';
 import '../../../shared/providers/portfolio_providers.dart';
 import '../../projects/presentation/project_card.dart';
+import 'development_timeline.dart';
 import 'project_phone_showcase.dart';
 import 'tools_icon_marquee.dart';
 
@@ -115,29 +116,9 @@ class HomeScreen extends ConsumerWidget {
         ),
         const ProjectPhoneShowcase(),
         const SizedBox(height: 32),
-        SurfaceCard(
-          padding: EdgeInsets.zero,
-          child: Column(
-            children: [
-              _Fact(
-                value: profile.experience,
-                label: 'Flutter experience',
-                icon: CupertinoIcons.chevron_left_slash_chevron_right,
-              ),
-              const Divider(indent: 64, endIndent: 16),
-              const _Fact(
-                value: 'iOS & Android',
-                label: 'Mobile development',
-                icon: CupertinoIcons.device_phone_portrait,
-              ),
-              const Divider(indent: 64, endIndent: 16),
-              const _Fact(
-                value: 'App Store',
-                label: 'Deployment experience',
-                icon: CupertinoIcons.app_badge,
-              ),
-            ],
-          ),
+        DevelopmentTimeline(
+          key: const ValueKey('development-timeline'),
+          experience: profile.experience,
         ),
         const SizedBox(height: 32),
         SectionHeading(
@@ -225,37 +206,6 @@ class HomeScreen extends ConsumerWidget {
   }
 }
 
-class _Fact extends StatelessWidget {
-  const _Fact({required this.value, required this.label, required this.icon});
-  final String value, label;
-  final IconData icon;
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(16),
-    child: Row(
-      children: [
-        IconTile(icon),
-        const SizedBox(width: 14),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppText(
-                value,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w400),
-              ),
-              const SizedBox(height: 2),
-              MutedText(label),
-            ],
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
 class DeploymentCard extends StatelessWidget {
   const DeploymentCard({super.key, required this.text});
   final String text;
@@ -265,7 +215,7 @@ class DeploymentCard extends StatelessWidget {
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const IconTile(CupertinoIcons.app_badge),
+        const BrandIcon('app-store', size: 28),
         const SizedBox(width: 16),
         Expanded(
           child: Column(

@@ -153,10 +153,7 @@ class ProjectDetailsScreen extends ConsumerWidget {
                       () => links.website(project.repositoryUrl),
                     )
                   : null,
-              icon: const Icon(
-                CupertinoIcons.chevron_left_slash_chevron_right,
-                size: 18,
-              ),
+              icon: const BrandIcon('github', size: 20),
               label: AppText(
                 LinkService.isWebUrl(project.repositoryUrl)
                     ? 'View repository'
@@ -169,9 +166,10 @@ class ProjectDetailsScreen extends ConsumerWidget {
                   context,
                   () => links.website(project.appStoreUrl),
                 ),
-                icon: const LiquidGlassIcon(
-                  CupertinoIcons.device_phone_portrait,
+                icon: BrandIcon(
+                  'app-store',
                   size: 18,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
                 label: const AppText('View on App Store'),
               ),

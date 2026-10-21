@@ -109,12 +109,8 @@ class _ContactFormState extends ConsumerState<ContactForm> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(13),
-                      decoration: BoxDecoration(
-                        color: scheme.primary.withValues(alpha: .1),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
                       child: Icon(
                         CupertinoIcons.bubble_left_bubble_right,
                         color: scheme.primary,
@@ -271,8 +267,7 @@ class _ContactFormState extends ConsumerState<ContactForm> {
                 Center(
                   child: IosButton.plain(
                     onPressed: _sending ? null : () => _send(useGmail: true),
-                    icon: const Icon(CupertinoIcons.arrow_up_right, size: 15),
-                    iconAlignment: IconAlignment.end,
+                    icon: const BrandIcon('gmail', size: 20),
                     label: const AppText('Open in Gmail'),
                   ),
                 ),

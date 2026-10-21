@@ -259,10 +259,9 @@ class _MarqueeRow extends StatelessWidget {
 }
 
 class _Tool {
-  const _Tool(this.name, this.asset, {this.adaptiveColor = false, this.tint});
+  const _Tool(this.name, this.asset, {this.adaptiveColor = false});
   final String name, asset;
   final bool adaptiveColor;
-  final Color? tint;
 }
 
 class _ToolBadge extends StatelessWidget {
@@ -273,7 +272,7 @@ class _ToolBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final tint = tool.adaptiveColor ? theme.colorScheme.onSurface : tool.tint;
+    final tint = tool.adaptiveColor ? theme.colorScheme.onSurface : null;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       child: Row(
