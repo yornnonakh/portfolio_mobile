@@ -12,6 +12,7 @@ import 'package:portfolio_mobile/app/app.dart';
 import 'package:portfolio_mobile/app/router/app_router.dart';
 import 'package:portfolio_mobile/core/services/settings_repository.dart';
 import 'package:portfolio_mobile/core/design_system/components.dart';
+import 'package:portfolio_mobile/core/widgets/app_frame.dart';
 import 'package:portfolio_mobile/features/settings/application/settings_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -314,7 +315,7 @@ void main() {
     );
     expect(opacityFinder, findsOneWidget);
     expect(tester.widget<AnimatedOpacity>(opacityFinder).opacity, 0.0);
-    final navigationPosition = tester.getRect(find.byType(CupertinoTabBar));
+    final navigationPosition = tester.getRect(find.byType(FloatingPillBottomNavBar));
 
     await tester.drag(
       find.byWidgetPredicate(
@@ -326,7 +327,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(tester.widget<AnimatedOpacity>(opacityFinder).opacity, 1.0);
-    expect(tester.getRect(find.byType(CupertinoTabBar)), navigationPosition);
+    expect(tester.getRect(find.byType(FloatingPillBottomNavBar)), navigationPosition);
     container.read(routerProvider).go('/home');
     await tester.pumpAndSettle();
     final navigationBar = tester.widget<CupertinoNavigationBar>(

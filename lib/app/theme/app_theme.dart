@@ -15,7 +15,7 @@ abstract final class AppTheme {
       defaultTargetPlatform == TargetPlatform.iOS ||
           defaultTargetPlatform == TargetPlatform.macOS
       ? 'CupertinoSystemText'
-      : 'Inter';
+      : 'Poppins';
 
   static ThemeData _build(Brightness brightness) {
     final dark = brightness == Brightness.dark;

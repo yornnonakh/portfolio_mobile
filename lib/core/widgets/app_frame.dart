@@ -169,79 +169,35 @@ class _AppFrameState extends State<AppFrame> {
                       minimum: const EdgeInsets.fromLTRB(16, 0, 16, 12),
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(maxWidth: 560),
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(
-                                  alpha:
-                                      Theme.of(context).brightness ==
-                                          Brightness.dark
-                                      ? .35
-                                      : .12,
-                                ),
-                                blurRadius: 24,
-                                offset: const Offset(0, 8),
+                        child: MediaQuery.withNoTextScaling(
+                          child: FloatingPillBottomNavBar(
+                            currentIndex: shell.currentIndex,
+                            onTap: (index) => shell.goBranch(
+                              index,
+                              initialLocation: index == shell.currentIndex,
+                            ),
+                            items: [
+                              _NavBarItem(
+                                icon: CupertinoIcons.house,
+                                activeIcon: CupertinoIcons.house_fill,
+                                label: context.tr('Home'),
+                              ),
+                              _NavBarItem(
+                                icon: CupertinoIcons.square_stack,
+                                activeIcon: CupertinoIcons.square_stack_fill,
+                                label: context.tr('Projects'),
+                              ),
+                              _NavBarItem(
+                                icon: CupertinoIcons.person_crop_circle,
+                                activeIcon: CupertinoIcons.person_crop_circle_fill,
+                                label: context.tr('About'),
+                              ),
+                              _NavBarItem(
+                                icon: CupertinoIcons.bubble_left,
+                                activeIcon: CupertinoIcons.bubble_left_fill,
+                                label: context.tr('Contact'),
                               ),
                             ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(30),
-                            child: MediaQuery.removeViewPadding(
-                              context: context,
-                              removeBottom: true,
-                              child: MediaQuery.withNoTextScaling(
-                                child: CupertinoTabBar(
-                                  currentIndex: shell.currentIndex,
-                                  onTap: (index) => shell.goBranch(
-                                    index,
-                                    initialLocation:
-                                        index == shell.currentIndex,
-                                  ),
-                                  backgroundColor: scheme.surface.withValues(
-                                    alpha: .86,
-                                  ),
-                                  activeColor: scheme.primary,
-                                  inactiveColor: scheme.onSurfaceVariant,
-                                  iconSize: 24,
-                                  height: 64,
-                                  border: null,
-                                  items: [
-                                    BottomNavigationBarItem(
-                                      icon: Icon(CupertinoIcons.house),
-                                      activeIcon: Icon(
-                                        CupertinoIcons.house_fill,
-                                      ),
-                                      label: context.tr('Home'),
-                                    ),
-                                    BottomNavigationBarItem(
-                                      icon: Icon(CupertinoIcons.square_stack),
-                                      activeIcon: Icon(
-                                        CupertinoIcons.square_stack_fill,
-                                      ),
-                                      label: context.tr('Projects'),
-                                    ),
-                                    BottomNavigationBarItem(
-                                      icon: Icon(
-                                        CupertinoIcons.person_crop_circle,
-                                      ),
-                                      activeIcon: Icon(
-                                        CupertinoIcons.person_crop_circle_fill,
-                                      ),
-                                      label: context.tr('About'),
-                                    ),
-                                    BottomNavigationBarItem(
-                                      icon: Icon(CupertinoIcons.bubble_left),
-                                      activeIcon: Icon(
-                                        CupertinoIcons.bubble_left_fill,
-                                      ),
-                                      label: context.tr('Contact'),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
                           ),
                         ),
                       ),
@@ -250,6 +206,141 @@ class _AppFrameState extends State<AppFrame> {
               ],
             );
           },
+        ),
+      ),
+    );
+  }
+}
+
+class FloatingPillBottomNavBar extends StatelessWidget {
+  const FloatingPillBottomNavBar({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+    required this.items,
+  });
+
+  final int currentIndex;
+  final ValueChanged<int> onTap;
+  final List<_NavBarItem> items;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    return Container(
+      height: 64,
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface.withValues(alpha: .9),
+        borderRadius: BorderRadius.circular(36),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: isDark ? .35 : .12),
+            blurRadius: 24,
+            offset: const Offset(0, 8),
+          ),
+        ],
+        border: Border.all(
+          color: theme.colorScheme.outlineVariant.withValues(alpha: .3),
+          width: 0.5,
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          for (var i = 0; i < items.length; i++)
+            Expanded(
+              child: Center(
+                child: _NavBarTab(
+                  item: items[i],
+                  isSelected: i == currentIndex,
+                  onTap: () => onTap(i),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _NavBarItem {
+  const _NavBarItem({
+    required this.icon,
+    required this.activeIcon,
+    required this.label,
+  });
+  final IconData icon;
+  final IconData activeIcon;
+  final String label;
+}
+
+class _NavBarTab extends StatelessWidget {
+  const _NavBarTab({
+    required this.item,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final _NavBarItem item;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    return Semantics(
+      label: item.label,
+      selected: isSelected,
+      button: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+          padding: EdgeInsets.symmetric(
+            horizontal: isSelected ? 12 : 8,
+            vertical: 8,
+          ),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? (isDark ? Colors.white : Colors.black)
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                isSelected ? item.activeIcon : item.icon,
+                size: 20,
+                color: isSelected
+                    ? (isDark ? Colors.black : Colors.white)
+                    : theme.colorScheme.onSurfaceVariant,
+              ),
+              if (isSelected) ...[
+                const SizedBox(width: 6),
+                Flexible(
+                  child: AppText(
+                    item.label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: isDark ? Colors.black : Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ],
+          ),
         ),
       ),
     );
