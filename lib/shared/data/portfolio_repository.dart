@@ -22,6 +22,8 @@ class LocalPortfolioRepository implements PortfolioRepository {
       phoneUri: '+855968093758',
       telegramNumber: '0968093758',
       github: 'https://github.com/yornnona',
+      linkedIn: 'https://www.linkedin.com/in/yorn-nona-69a90a345',
+      telegramUrl: 'https://t.me/YornNona',
       portraitAsset: 'assets/images/yorn_nona_portrait.jpg',
       cvAsset: 'assets/documents/yorn_nona_cv.pdf',
       // Add verified linkedIn and telegramUrl here when supplied.
@@ -173,24 +175,29 @@ class LocalPortfolioRepository implements PortfolioRepository {
         'Software Development',
         '3 Years',
         'Completed',
+        logoAsset: 'assets/images/education_norton.png',
       ),
       Education(
         'Institute of Science and Technology Advanced Development (ISTAD)',
         'Web Development',
         '2 Years',
         'Completed',
+        logoAsset: 'assets/images/education_cstad.png',
       ),
       Education(
         'ETEC Computer Center',
         'Mobile Development',
         'Short Course',
         'Completed',
+        logoAsset: 'assets/images/education_etec.png',
       ),
       Education(
         'Sastra Digital Solution',
         'Flutter Development',
         'Short Course',
         'Completed',
+        logoAsset: 'assets/images/education_sastra.png',
+        monochromeLogo: true,
       ),
     ],
     languages: [

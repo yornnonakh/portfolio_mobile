@@ -73,8 +73,17 @@ class WorkExperience {
 }
 
 class Education {
-  const Education(this.institute, this.program, this.period, this.status);
+  const Education(
+    this.institute,
+    this.program,
+    this.period,
+    this.status, {
+    this.logoAsset,
+    this.monochromeLogo = false,
+  });
   final String institute, program, period, status;
+  final String? logoAsset;
+  final bool monochromeLogo;
 }
 
 class SpokenLanguage {

@@ -60,7 +60,7 @@ class ResumeScreen extends ConsumerWidget {
                         context,
                         () => ref.read(cvServiceProvider).save(bytes),
                       ),
-                      icon: const LiquidGlassIcon(
+                      icon: const Icon(
                         CupertinoIcons.arrow_down_doc_fill,
                         size: 18,
                       ),
@@ -81,7 +81,7 @@ class ResumeScreen extends ConsumerWidget {
                                 .share(bytes, bounds),
                           );
                         },
-                        icon: const LiquidGlassIcon(
+                        icon: const Icon(
                           CupertinoIcons.square_arrow_up_fill,
                           size: 18,
                         ),
@@ -157,9 +157,7 @@ class ResumeScreen extends ConsumerWidget {
                   edu.institute,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                MutedText(
-                  '${edu.program} · ${edu.period} · ${edu.status}',
-                ),
+                MutedText('${edu.program} · ${edu.period} · ${edu.status}'),
                 if (edu != data.educations.last) const SizedBox(height: 12),
               ],
             ],

@@ -24,6 +24,10 @@ const khmerTranslations = <String, String>{
   "Back to home": "ត្រឡប់ទៅទំព័រដើម",
   "Done": "រួចរាល់",
   "OK": "យល់ព្រម",
+  "Portfolio": "ស្នាដៃ",
+  "Welcome!": "សូមស្វាគមន៍!",
+  "A friendly robot holding a phone and waving":
+      "រ៉ូបូតរួសរាយរាក់ទាក់កំពុងកាន់ទូរសព្ទ និងបក់ដៃស្វាគមន៍",
 
   // ---------------------------------------------------------------------------
   // SETTINGS - Language, appearance, motion, and storage
@@ -82,6 +86,8 @@ const khmerTranslations = <String, String>{
   "View projects": "មើលគម្រោង",
   "View resume": "មើលប្រវត្តិរូប",
   "Flutter experience": "បទពិសោធន៍ Flutter",
+  "Development journey": "ដំណើរនៃការអភិវឌ្ឍ",
+  "From learning to launch": "ពីការសិក្សាដល់ការដាក់ឱ្យប្រើប្រាស់",
   "Mobile development": "ការអភិវឌ្ឍកម្មវិធីទូរសព្ទ",
   "Deployment experience": "បទពិសោធន៍ដាក់ឱ្យប្រើប្រាស់",
   "Selected work": "ស្នាដៃដែលបានជ្រើសរើស",

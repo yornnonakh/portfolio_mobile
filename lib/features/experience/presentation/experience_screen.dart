@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/localization/app_localizations.dart';
 import '../../../core/design_system/components.dart';
 import '../../../shared/providers/portfolio_providers.dart';
+import '../../../core/widgets/education_timeline.dart';
 import '../../home/presentation/home_screen.dart';
 
 class ExperienceScreen extends ConsumerWidget {
@@ -46,26 +47,7 @@ class ExperienceScreen extends ConsumerWidget {
         DeploymentCard(text: data.deployment),
         const SizedBox(height: 32),
         const SectionHeading('Education & Training'),
-        for (final edu in data.educations) ...[
-          SurfaceCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Eyebrow(edu.period),
-                const SizedBox(height: 12),
-                AppText(
-                  edu.program,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 8),
-                MutedText(edu.institute),
-                const SizedBox(height: 16),
-                TechBadge(edu.status, accent: true),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-        ],
+        EducationTimeline(educations: data.educations),
       ],
     );
   }

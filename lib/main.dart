@@ -24,6 +24,10 @@ Future<void> main() async {
   });
   LicenseRegistry.addLicense(() async* {
     yield LicenseEntryWithLineBreaks([
+    ], await rootBundle.loadString('assets/fonts/Poppins-OFL.txt'));
+  });
+  LicenseRegistry.addLicense(() async* {
+    yield LicenseEntryWithLineBreaks([
       'Noto Sans Khmer',
     ], await rootBundle.loadString('assets/fonts/NotoSansKhmer-OFL.txt'));
   });

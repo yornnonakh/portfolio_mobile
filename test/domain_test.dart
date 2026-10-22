@@ -27,8 +27,8 @@ void main() {
     expect(data.profile.name, 'Yorn Nona');
     expect(data.profile.experience, '6 months');
     expect(data.projects, hasLength(2));
-    expect(data.profile.linkedIn, isNull);
-    expect(data.profile.telegramUrl, isNull);
+    expect(data.profile.linkedIn, 'https://www.linkedin.com/in/yorn-nona-69a90a345');
+    expect(data.profile.telegramUrl, 'https://t.me/YornNona');
     expect(
       data.projects.every(
         (p) =>
