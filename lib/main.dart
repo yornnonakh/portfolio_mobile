@@ -24,7 +24,6 @@ Future<void> main() async {
   });
   LicenseRegistry.addLicense(() async* {
     yield LicenseEntryWithLineBreaks([
-//www.pinterest.com/pin/472737292154502425/      'Poppins',
     ], await rootBundle.loadString('assets/fonts/Poppins-OFL.txt'));
   });
   LicenseRegistry.addLicense(() async* {

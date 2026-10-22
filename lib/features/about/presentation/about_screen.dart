@@ -6,6 +6,7 @@ import '../../../core/localization/app_localizations.dart';
 import '../../../core/design_system/components.dart';
 import '../../../core/services/analytics_service.dart';
 import '../../../core/widgets/profile_avatar.dart';
+import '../../../core/widgets/education_timeline.dart';
 import '../../../shared/models/portfolio.dart';
 import '../../../shared/providers/portfolio_providers.dart';
 
@@ -55,42 +56,8 @@ class AboutScreen extends ConsumerWidget {
         const SectionHeading('How I got here'),
         MutedText(data.journey, large: true),
         const SizedBox(height: 26),
-        SurfaceCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(
-                CupertinoIcons.book_fill,
-                color: Theme.of(context).colorScheme.primary,
-                size: 24,
-              ),
-              const SizedBox(height: 12),
-              AppText(
-                'Education & Training',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 16),
-              for (final edu in data.educations) ...[
-                AppText(
-                  edu.program,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 4),
-                MutedText(edu.institute),
-                const SizedBox(height: 8),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    TechBadge(edu.period),
-                    TechBadge(edu.status, accent: true),
-                  ],
-                ),
-                if (edu != data.educations.last) const Divider(height: 24),
-              ],
-            ],
-          ),
-        ),
+        const SectionHeading('Education & Training'),
+        EducationTimeline(educations: data.educations),
         if (data.programmingLanguages.isNotEmpty) ...[
           const SizedBox(height: 36),
           const SectionHeading('Programming Languages'),

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -86,71 +85,75 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
         child: SafeArea(
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final heroSize = math.min(
-                360.0,
-                math.min(
-                  constraints.maxWidth - 48,
-                  math.max(180.0, constraints.maxHeight * .43),
-                ),
+              final padding = (constraints.biggest.shortestSide * .05).clamp(
+                8.0,
+                32.0,
               );
-              return AnimatedBuilder(
-                animation: _animation,
-                builder: (context, _) {
-                  final progress = _animation.value;
-                  final arrival = animate
-                      ? Curves.easeOutCubic.transform(
-                          (progress / .28).clamp(0.0, 1.0),
-                        )
-                      : 1.0;
-                  return SingleChildScrollView(
-                    key: const ValueKey('splash-scroll'),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: constraints.maxHeight,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 24,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Opacity(
-                              opacity: arrival,
-                              child: Transform.translate(
-                                offset: Offset(0, (1 - arrival) * 24),
-                                child: SplashRobotScene(
-                                  size: heroSize,
-                                  progress: progress,
-                                  animate: animate,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 32),
-                            ExcludeSemantics(
-                              child: SizedBox(
-                                width: 112,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(4),
-                                  child: LinearProgressIndicator(
-                                    key: const ValueKey('splash-progress'),
-                                    value: progress,
-                                    minHeight: 3,
-                                    color: scheme.primary,
-                                    backgroundColor: scheme.primary.withValues(
-                                      alpha: .12,
+              // Keep a readable composition, then scale it as a whole when
+              // either dimension is tight (landscape or split-screen).
+              final heroSize = (constraints.maxWidth - padding * 2).clamp(
+                280.0,
+                480.0,
+              );
+              return Padding(
+                padding: EdgeInsets.all(padding),
+                child: Center(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: AnimatedBuilder(
+                      animation: _animation,
+                      builder: (context, _) {
+                        final progress = _animation.value;
+                        final arrival = animate
+                            ? Curves.easeOutCubic.transform(
+                                (progress / .28).clamp(0.0, 1.0),
+                              )
+                            : 1.0;
+                        return SizedBox(
+                          key: const ValueKey('splash-content'),
+                          width: heroSize,
+                          child: Padding(
+                            // Leave room for the arrival and floating animations.
+                            padding: const EdgeInsets.symmetric(vertical: 24),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Opacity(
+                                  opacity: arrival,
+                                  child: Transform.translate(
+                                    offset: Offset(0, (1 - arrival) * 24),
+                                    child: SplashRobotScene(
+                                      size: heroSize,
+                                      progress: progress,
+                                      animate: animate,
                                     ),
                                   ),
                                 ),
-                              ),
+                                const SizedBox(height: 32),
+                                ExcludeSemantics(
+                                  child: SizedBox(
+                                    width: heroSize * .32,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(4),
+                                      child: LinearProgressIndicator(
+                                        key: const ValueKey('splash-progress'),
+                                        value: progress,
+                                        minHeight: 3,
+                                        color: scheme.primary,
+                                        backgroundColor: scheme.primary
+                                            .withValues(alpha: .12),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
+                  ),
+                ),
               );
             },
           ),

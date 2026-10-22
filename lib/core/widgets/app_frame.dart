@@ -9,6 +9,7 @@ import '../../shared/providers/portfolio_providers.dart';
 import '../localization/app_localizations.dart';
 import '../design_system/components.dart';
 import 'language_button.dart';
+import 'liquid_glass_container.dart';
 import 'profile_avatar.dart';
 
 class AppFrame extends StatefulWidget {
@@ -61,21 +62,18 @@ class _AppFrameState extends State<AppFrame> {
     final navigationTitle =
         widget.title ??
         (shell == null ? 'Home' : AppFrame._tabTitles[shell.currentIndex]);
-    final scheme = Theme.of(context).colorScheme;
-    final safeBottom = MediaQuery.viewPaddingOf(context).bottom;
-    final bottomInset = shell == null
-        ? 0.0
-        : 64.0 + (safeBottom > 12 ? safeBottom : 12);
+    // Tab screens have no footer, so their navigation handles the safe area.
+    final safeBottom = MediaQuery.paddingOf(context).bottom;
+    final navigationBottomGap = safeBottom > 12 ? safeBottom : 12.0;
+    final bottomInset = shell == null ? 0.0 : 64.0 + navigationBottomGap;
     return CupertinoPageScaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       navigationBar: CupertinoNavigationBar(
-        backgroundColor: scheme.surface.withValues(alpha: .86),
-        border: Border(
-          bottom: BorderSide(
-            color: scheme.outlineVariant.withValues(alpha: .5),
-            width: .5,
-          ),
-        ),
+        backgroundColor: Colors.transparent,
+        brightness: Theme.of(context).brightness,
+        automaticBackgroundVisibility: false,
+        enableBackgroundFilterBlur: false,
+        border: null,
         automaticallyImplyLeading: false,
         middle: isHome
             ? null
@@ -103,10 +101,16 @@ class _AppFrameState extends State<AppFrame> {
                   excluding: !_isScrolled,
                   child: Semantics(
                     header: true,
-                    child: Consumer(
-                      builder: (context, ref, child) => ProfileAvatar(
-                        profile: ref.watch(portfolioProvider).profile,
-                        size: 32,
+                    child: LiquidGlassContainer(
+                      key: const ValueKey('profile-navigation-glass'),
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: Consumer(
+                          builder: (context, ref, child) => ProfileAvatar(
+                            profile: ref.watch(portfolioProvider).profile,
+                            size: 32,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -123,12 +127,21 @@ class _AppFrameState extends State<AppFrame> {
             ? Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const LanguageButton(),
-                  const SizedBox(width: 4),
-                  IosIconButton(
-                    label: 'Settings',
-                    onPressed: () => context.push('/settings'),
-                    icon: CupertinoIcons.gear_alt_fill,
+                  const LiquidGlassContainer(
+                    key: ValueKey('language-navigation-glass'),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: LanguageButton(),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  LiquidGlassContainer(
+                    key: const ValueKey('settings-navigation-glass'),
+                    child: IosIconButton(
+                      label: 'Settings',
+                      onPressed: () => context.push('/settings'),
+                      icon: CupertinoIcons.gear_alt_fill,
+                    ),
                   ),
                 ],
               )
@@ -139,75 +152,73 @@ class _AppFrameState extends State<AppFrame> {
         child: Builder(
           builder: (context) {
             final data = MediaQuery.of(context);
-            return Stack(
+            return Column(
               children: [
-                Positioned.fill(
-                  child: Column(
+                Expanded(
+                  child: Stack(
                     children: [
-                      Expanded(
+                      Positioned.fill(
                         child: MediaQuery(
                           data: data.copyWith(
-                            padding: data.padding.copyWith(
-                              bottom: shell == null ? 0 : bottomInset,
-                            ),
+                            padding: data.padding.copyWith(bottom: bottomInset),
                           ),
                           child: SafeArea(
                             top: false,
                             bottom: false,
-                            child: PageFooterScope(
-                              showInlineFooter: shell != null,
-                              child: widget.child,
-                            ),
+                            child: widget.child,
                           ),
                         ),
                       ),
-                      if (shell == null) const Footer(pinned: true),
+                      if (shell != null)
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: SafeArea(
+                            top: false,
+                            minimum: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 560),
+                              child: MediaQuery.withNoTextScaling(
+                                child: FloatingPillBottomNavBar(
+                                  currentIndex: shell.currentIndex,
+                                  onTap: (index) => shell.goBranch(
+                                    index,
+                                    initialLocation:
+                                        index == shell.currentIndex,
+                                  ),
+                                  items: [
+                                    NavBarItem(
+                                      icon: CupertinoIcons.house,
+                                      activeIcon: CupertinoIcons.house_fill,
+                                      label: context.tr('Home'),
+                                    ),
+                                    NavBarItem(
+                                      icon: CupertinoIcons.square_stack,
+                                      activeIcon:
+                                          CupertinoIcons.square_stack_fill,
+                                      label: context.tr('Projects'),
+                                    ),
+                                    NavBarItem(
+                                      icon: CupertinoIcons.person_crop_circle,
+                                      activeIcon: CupertinoIcons
+                                          .person_crop_circle_fill,
+                                      label: context.tr('About'),
+                                    ),
+                                    NavBarItem(
+                                      icon: CupertinoIcons.bubble_left,
+                                      activeIcon:
+                                          CupertinoIcons.bubble_left_fill,
+                                      label: context.tr('Contact'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),
-                if (shell != null)
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: SafeArea(
-                      top: false,
-                      minimum: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 560),
-                        child: MediaQuery.withNoTextScaling(
-                          child: FloatingPillBottomNavBar(
-                            currentIndex: shell.currentIndex,
-                            onTap: (index) => shell.goBranch(
-                              index,
-                              initialLocation: index == shell.currentIndex,
-                            ),
-                            items: [
-                              NavBarItem(
-                                icon: CupertinoIcons.house,
-                                activeIcon: CupertinoIcons.house_fill,
-                                label: context.tr('Home'),
-                              ),
-                              NavBarItem(
-                                icon: CupertinoIcons.square_stack,
-                                activeIcon: CupertinoIcons.square_stack_fill,
-                                label: context.tr('Projects'),
-                              ),
-                              NavBarItem(
-                                icon: CupertinoIcons.person_crop_circle,
-                                activeIcon:
-                                    CupertinoIcons.person_crop_circle_fill,
-                                label: context.tr('About'),
-                              ),
-                              NavBarItem(
-                                icon: CupertinoIcons.bubble_left,
-                                activeIcon: CupertinoIcons.bubble_left_fill,
-                                label: context.tr('Contact'),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                if (shell == null) const Footer(),
               ],
             );
           },
@@ -224,9 +235,6 @@ class _GlassBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
-    final dark = theme.brightness == Brightness.dark;
     const radius = BorderRadius.all(Radius.circular(22));
 
     return Semantics(
@@ -238,47 +246,15 @@ class _GlassBackButton extends StatelessWidget {
         borderRadius: radius,
         onPressed: onPressed,
         child: ExcludeSemantics(
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: radius,
-              boxShadow: [
-                BoxShadow(
-                  color: scheme.shadow.withValues(alpha: dark ? .18 : .07),
-                  blurRadius: 10,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: radius,
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-                child: Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    borderRadius: radius,
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Colors.white.withValues(alpha: dark ? .16 : .8),
-                        scheme.surface.withValues(alpha: dark ? .45 : .35),
-                      ],
-                    ),
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: dark ? .22 : .85),
-                      width: .8,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 6),
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      size: 20,
-                      color: scheme.onSurface,
-                    ),
-                  ),
+          child: LiquidGlassContainer(
+            child: SizedBox.square(
+              dimension: 44,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(start: 6),
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ),

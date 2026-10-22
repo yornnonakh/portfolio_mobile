@@ -124,6 +124,7 @@ void main() {
 
   for (final size in [
     const Size(320, 700),
+    const Size(844, 390),
     const Size(834, 1194),
     const Size(1440, 1000),
   ]) {
@@ -155,6 +156,31 @@ void main() {
         container.read(routerProvider).go(route);
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull, reason: 'Route $route at $size');
+        expect(find.byKey(const ValueKey('app-bar-glass')), findsNothing);
+        final footer = find.byKey(const ValueKey('copyright-bottom-bar'));
+        if (const [
+          '/home',
+          '/projects',
+          '/about',
+          '/contact',
+        ].contains(route)) {
+          expect(footer, findsNothing);
+          expect(find.byType(Footer), findsNothing);
+          expect(find.text('c 2026 Yorn Nona'), findsNothing);
+          continue;
+        }
+        expect(footer, findsOneWidget);
+        expect(find.byType(Footer), findsOneWidget);
+        expect(find.text('c 2026 Yorn Nona'), findsOneWidget);
+        final rect = tester.getRect(footer);
+        expect(rect.left, greaterThanOrEqualTo(0));
+        expect(rect.top, greaterThanOrEqualTo(0));
+        expect(rect.right, lessThanOrEqualTo(size.width));
+        expect(rect.bottom, lessThanOrEqualTo(size.height));
+        final tabBar = find.byType(FloatingPillBottomNavBar);
+        if (tabBar.evaluate().isNotEmpty) {
+          expect(tester.getRect(tabBar).bottom, lessThanOrEqualTo(rect.top));
+        }
       }
     });
   }
@@ -336,9 +362,11 @@ void main() {
     },
   );
 
-  testWidgets('AppBar title is hidden at top and appears when scrolled', (
-    tester,
-  ) async {
+  testWidgets('Transparent app bar stays pinned on scroll', (tester) async {
+    tester.view.padding = const FakeViewPadding(bottom: 34);
+    tester.view.viewPadding = const FakeViewPadding(bottom: 34);
+    addTearDown(tester.view.resetPadding);
+    addTearDown(tester.view.resetViewPadding);
     final container = await mountApp(
       tester,
       '/projects',
@@ -351,6 +379,21 @@ void main() {
     );
     expect(opacityFinder, findsOneWidget);
     expect(tester.widget<AnimatedOpacity>(opacityFinder).opacity, 0.0);
+    final appBar = find.byType(CupertinoNavigationBar);
+    final navigationBar = tester.widget<CupertinoNavigationBar>(appBar);
+    expect(navigationBar.backgroundColor, Colors.transparent);
+    expect(navigationBar.border, isNull);
+    expect(navigationBar.automaticBackgroundVisibility, isFalse);
+    expect(navigationBar.enableBackgroundFilterBlur, isFalse);
+    final appBarPosition = tester.getRect(appBar);
+    final footer = find.byKey(const ValueKey('copyright-bottom-bar'));
+    expect(footer, findsNothing);
+    final languageButton = find.byKey(const ValueKey('language-button'));
+    final languagePosition = tester.getRect(languageButton);
+    final settingsGlass = find.byKey(
+      const ValueKey('settings-navigation-glass'),
+    );
+    final settingsPosition = tester.getRect(settingsGlass);
     final navigationPosition = tester.getRect(
       find.byType(FloatingPillBottomNavBar),
     );
@@ -365,16 +408,20 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(tester.widget<AnimatedOpacity>(opacityFinder).opacity, 1.0);
+    expect(tester.getRect(appBar), appBarPosition);
+    expect(footer, findsNothing);
+    expect(tester.getRect(languageButton), languagePosition);
+    expect(tester.getRect(settingsGlass), settingsPosition);
     expect(
       tester.getRect(find.byType(FloatingPillBottomNavBar)),
       navigationPosition,
     );
     container.read(routerProvider).go('/home');
     await tester.pumpAndSettle();
-    final navigationBar = tester.widget<CupertinoNavigationBar>(
+    final homeNavigationBar = tester.widget<CupertinoNavigationBar>(
       find.byType(CupertinoNavigationBar),
     );
-    expect(navigationBar.middle, isNull);
+    expect(homeNavigationBar.middle, isNull);
     expect(
       find.descendant(
         of: find.byType(CupertinoNavigationBar),
@@ -404,10 +451,35 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(tester.widget<AnimatedOpacity>(homeTitle).opacity, 1);
+    expect(footer, findsNothing);
+    expect(
+      tester.getRect(find.byType(FloatingPillBottomNavBar)).bottom,
+      closeTo(
+        tester.view.physicalSize.height / tester.view.devicePixelRatio - 34,
+        .01,
+      ),
+    );
+    expect(
+      tester.getSize(find.byKey(const ValueKey('profile-navigation-glass'))),
+      const Size(44, 44),
+    );
     final scroll = tester.state<ScrollableState>(find.byType(Scrollable).first);
     scroll.position.jumpTo(scroll.position.minScrollExtent);
     await tester.pumpAndSettle();
     expect(tester.widget<AnimatedOpacity>(homeTitle).opacity, 0);
+    await tester.tap(find.bySemanticsLabel('Settings').first);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('settings-system-theme')), findsOneWidget);
+    expect(footer, findsOneWidget);
+    await tester.tap(find.bySemanticsLabel('Back').last);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('settings-system-theme')), findsNothing);
+    expect(footer, findsNothing);
+    expect(
+      container.read(routerProvider).routeInformationProvider.value.uri.path,
+      '/home',
+    );
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets(

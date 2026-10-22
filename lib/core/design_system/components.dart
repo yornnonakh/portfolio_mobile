@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../localization/app_localizations.dart';
 import '../constants/app_constants.dart';
 import '../utils/motion.dart';
+import '../widgets/liquid_glass_container.dart';
 
 enum _IosButtonStyle { filled, tinted, plain }
 
@@ -722,26 +723,6 @@ class EmptyState extends StatelessWidget {
   );
 }
 
-class PageFooterScope extends InheritedWidget {
-  const PageFooterScope({
-    super.key,
-    required this.showInlineFooter,
-    required super.child,
-  });
-
-  final bool showInlineFooter;
-
-  static bool showsInlineFooterOf(BuildContext context) =>
-      context
-          .dependOnInheritedWidgetOfExactType<PageFooterScope>()
-          ?.showInlineFooter ??
-      true;
-
-  @override
-  bool updateShouldNotify(PageFooterScope oldWidget) =>
-      showInlineFooter != oldWidget.showInlineFooter;
-}
-
 class PageContent extends StatelessWidget {
   const PageContent({super.key, required this.children});
   final List<Widget> children;
@@ -766,13 +747,7 @@ class PageContent extends StatelessWidget {
         child: Reveal(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ...children,
-              if (PageFooterScope.showsInlineFooterOf(context)) ...[
-                const SizedBox(height: 45),
-                const Footer(),
-              ],
-            ],
+            children: children,
           ),
         ),
       ),
@@ -781,53 +756,32 @@ class PageContent extends StatelessWidget {
 }
 
 class Footer extends StatelessWidget {
-  const Footer({super.key, this.pinned = false});
-
-  final bool pinned;
+  const Footer({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final notice = AppText(
-      '© ${AppConstants.year} Yorn Nona',
-      textAlign: TextAlign.center,
-      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-        color: Theme.of(context).colorScheme.onSurfaceVariant,
-      ),
-    );
-    if (pinned) {
-      final scheme = Theme.of(context).colorScheme;
-      return DecoratedBox(
-        key: const ValueKey('copyright-bottom-bar'),
-        decoration: BoxDecoration(
-          color: scheme.surface,
-          border: Border(
-            top: BorderSide(
-              color: scheme.outlineVariant.withValues(alpha: .5),
-              width: .5,
-            ),
-          ),
-        ),
-        child: SafeArea(
-          top: false,
+  Widget build(BuildContext context) => SafeArea(
+    top: false,
+    minimum: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+    child: Align(
+      heightFactor: 1,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 560),
+        child: LiquidGlassContainer(
+          key: const ValueKey('copyright-bottom-bar'),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 30),
-              child: Center(heightFactor: 1, child: notice),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: AppText(
+              'c ${AppConstants.year} Yorn Nona',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
           ),
         ),
-      );
-    }
-    return Column(
-      children: [
-        const Divider(),
-        const SizedBox(height: 20),
-        Align(alignment: Alignment.center, child: notice),
-        const SizedBox(height: 8),
-      ],
-    );
-  }
+      ),
+    ),
+  );
 }
 
 class BrandMark extends StatelessWidget {

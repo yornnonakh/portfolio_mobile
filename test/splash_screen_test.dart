@@ -111,9 +111,16 @@ void main() {
   });
 
   for (final size in [
+    const Size(240, 240),
+    const Size(320, 480),
     const Size(320, 700),
     const Size(390, 844),
+    const Size(568, 240),
+    const Size(844, 390),
+    const Size(768, 1024),
+    const Size(1024, 768),
     const Size(1440, 1000),
+    const Size(2560, 1440),
   ]) {
     testWidgets('Splash fits both languages and themes at $size', (
       tester,
@@ -124,21 +131,72 @@ void main() {
             tester,
             '/',
             size: size,
-            scale: size.width == 320 ? 2 : 1,
+            scale: size.shortestSide <= 320 ? 2 : 1,
             settle: false,
             savedPreferences: {'language': language, 'theme': theme},
           );
           await loadRobot(tester);
           await tester.pump(const Duration(milliseconds: 900));
           expect(find.text('Wellcome'), findsOneWidget);
-          final scene = tester.getRect(find.byType(SplashRobotScene));
-          expect(scene.left, greaterThanOrEqualTo(0));
-          expect(scene.right, lessThanOrEqualTo(size.width));
+          for (final finder in [
+            find.byKey(const ValueKey('splash-content')),
+            find.byType(SplashRobotScene),
+            find.text('Wellcome'),
+            find.byKey(const ValueKey('splash-progress')),
+          ]) {
+            final rect = tester.getRect(finder);
+            expect(rect.left, greaterThanOrEqualTo(0));
+            expect(rect.top, greaterThanOrEqualTo(0));
+            expect(rect.right, lessThanOrEqualTo(size.width));
+            expect(rect.bottom, lessThanOrEqualTo(size.height));
+          }
+          expect(find.byType(Scrollable), findsNothing);
           expect(tester.takeException(), isNull);
         }
       }
     });
   }
+
+  testWidgets('Splash respects safe areas and adapts during rotation', (
+    tester,
+  ) async {
+    await harness.mountApp(tester, '/', settle: false, scale: 3);
+    addTearDown(tester.view.resetPadding);
+    addTearDown(tester.view.resetViewPadding);
+    await loadRobot(tester);
+    for (final landscape in [false, true]) {
+      final size = landscape ? const Size(844, 390) : const Size(390, 844);
+      final insets = landscape
+          ? const EdgeInsets.fromLTRB(47, 0, 47, 21)
+          : const EdgeInsets.fromLTRB(0, 47, 0, 34);
+      tester.view.devicePixelRatio = 3;
+      tester.view.physicalSize = size * 3;
+      tester.view.padding = FakeViewPadding(
+        left: insets.left * 3,
+        top: insets.top * 3,
+        right: insets.right * 3,
+        bottom: insets.bottom * 3,
+      );
+      tester.view.viewPadding = tester.view.padding;
+      await tester.pump(const Duration(milliseconds: 700));
+      final content = tester.getRect(
+        find.byKey(const ValueKey('splash-content')),
+      );
+      expect(content.left, greaterThanOrEqualTo(insets.left));
+      expect(content.top, greaterThanOrEqualTo(insets.top));
+      expect(content.right, lessThanOrEqualTo(size.width - insets.right));
+      expect(content.bottom, lessThanOrEqualTo(size.height - insets.bottom));
+      expect(
+        content.center.dx,
+        closeTo((insets.left + size.width - insets.right) / 2, .01),
+      );
+      expect(
+        content.center.dy,
+        closeTo((insets.top + size.height - insets.bottom) / 2, .01),
+      );
+      expect(tester.takeException(), isNull);
+    }
+  });
 
   testWidgets(
     'Capture splash previews',
