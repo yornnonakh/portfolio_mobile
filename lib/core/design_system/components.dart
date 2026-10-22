@@ -10,7 +10,7 @@ import '../constants/app_constants.dart';
 import '../utils/motion.dart';
 import '../widgets/liquid_glass_container.dart';
 
-enum _IosButtonStyle { filled, tinted, plain }
+enum _IosButtonStyle { filled, tinted, glass, plain }
 
 class IosButton extends StatelessWidget {
   const IosButton.filled({
@@ -30,6 +30,15 @@ class IosButton extends StatelessWidget {
     this.icon,
     this.iconAlignment = IconAlignment.start,
   }) : _style = _IosButtonStyle.tinted,
+       assert(child != null || label != null);
+  const IosButton.glass({
+    super.key,
+    required this.onPressed,
+    this.child,
+    this.label,
+    this.icon,
+    this.iconAlignment = IconAlignment.start,
+  }) : _style = _IosButtonStyle.glass,
        assert(child != null || label != null);
   const IosButton.plain({
     super.key,
@@ -88,6 +97,17 @@ class IosButton extends StatelessWidget {
         minimumSize: const Size(48, 50),
         borderRadius: shape,
         child: content,
+      ),
+      _IosButtonStyle.glass => CupertinoButton(
+        onPressed: onPressed,
+        padding: EdgeInsets.zero,
+        minimumSize: const Size(48, 50),
+        child: LiquidGlassContainer(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            child: content,
+          ),
+        ),
       ),
       _IosButtonStyle.plain => CupertinoButton(
         onPressed: onPressed,
@@ -436,10 +456,10 @@ class Eyebrow extends StatelessWidget {
       AppText(
         text,
         style: Theme.of(context).textTheme.labelSmall?.copyWith(
-          fontSize: 13,
-          height: 1.5,
+          fontSize: 18,
+          height: 1.35,
           letterSpacing: .1,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w700,
           color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
       ),
@@ -748,35 +768,6 @@ class PageContent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: children,
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-class Footer extends StatelessWidget {
-  const Footer({super.key});
-
-  @override
-  Widget build(BuildContext context) => SafeArea(
-    top: false,
-    minimum: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-    child: Align(
-      heightFactor: 1,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 560),
-        child: LiquidGlassContainer(
-          key: const ValueKey('copyright-bottom-bar'),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: AppText(
-              'c ${AppConstants.year} Yorn Nona',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-            ),
           ),
         ),
       ),

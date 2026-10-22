@@ -62,10 +62,9 @@ class _AppFrameState extends State<AppFrame> {
     final navigationTitle =
         widget.title ??
         (shell == null ? 'Home' : AppFrame._tabTitles[shell.currentIndex]);
-    // Tab screens have no footer, so their navigation handles the safe area.
     final safeBottom = MediaQuery.paddingOf(context).bottom;
     final navigationBottomGap = safeBottom > 12 ? safeBottom : 12.0;
-    final bottomInset = shell == null ? 0.0 : 64.0 + navigationBottomGap;
+    final bottomInset = shell == null ? safeBottom : 64.0 + navigationBottomGap;
     return CupertinoPageScaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       navigationBar: CupertinoNavigationBar(
@@ -152,73 +151,63 @@ class _AppFrameState extends State<AppFrame> {
         child: Builder(
           builder: (context) {
             final data = MediaQuery.of(context);
-            return Column(
+            return Stack(
               children: [
-                Expanded(
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                        child: MediaQuery(
-                          data: data.copyWith(
-                            padding: data.padding.copyWith(bottom: bottomInset),
-                          ),
-                          child: SafeArea(
-                            top: false,
-                            bottom: false,
-                            child: widget.child,
+                Positioned.fill(
+                  child: MediaQuery(
+                    data: data.copyWith(
+                      padding: data.padding.copyWith(bottom: bottomInset),
+                    ),
+                    child: SafeArea(
+                      top: false,
+                      bottom: false,
+                      child: widget.child,
+                    ),
+                  ),
+                ),
+                if (shell != null)
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: SafeArea(
+                      top: false,
+                      minimum: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 560),
+                        child: MediaQuery.withNoTextScaling(
+                          child: FloatingPillBottomNavBar(
+                            currentIndex: shell.currentIndex,
+                            onTap: (index) => shell.goBranch(
+                              index,
+                              initialLocation: index == shell.currentIndex,
+                            ),
+                            items: [
+                              NavBarItem(
+                                icon: CupertinoIcons.house,
+                                activeIcon: CupertinoIcons.house_fill,
+                                label: context.tr('Home'),
+                              ),
+                              NavBarItem(
+                                icon: CupertinoIcons.square_stack,
+                                activeIcon: CupertinoIcons.square_stack_fill,
+                                label: context.tr('Projects'),
+                              ),
+                              NavBarItem(
+                                icon: CupertinoIcons.person_crop_circle,
+                                activeIcon:
+                                    CupertinoIcons.person_crop_circle_fill,
+                                label: context.tr('About'),
+                              ),
+                              NavBarItem(
+                                icon: CupertinoIcons.bubble_left,
+                                activeIcon: CupertinoIcons.bubble_left_fill,
+                                label: context.tr('Contact'),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      if (shell != null)
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: SafeArea(
-                            top: false,
-                            minimum: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-                            child: ConstrainedBox(
-                              constraints: const BoxConstraints(maxWidth: 560),
-                              child: MediaQuery.withNoTextScaling(
-                                child: FloatingPillBottomNavBar(
-                                  currentIndex: shell.currentIndex,
-                                  onTap: (index) => shell.goBranch(
-                                    index,
-                                    initialLocation:
-                                        index == shell.currentIndex,
-                                  ),
-                                  items: [
-                                    NavBarItem(
-                                      icon: CupertinoIcons.house,
-                                      activeIcon: CupertinoIcons.house_fill,
-                                      label: context.tr('Home'),
-                                    ),
-                                    NavBarItem(
-                                      icon: CupertinoIcons.square_stack,
-                                      activeIcon:
-                                          CupertinoIcons.square_stack_fill,
-                                      label: context.tr('Projects'),
-                                    ),
-                                    NavBarItem(
-                                      icon: CupertinoIcons.person_crop_circle,
-                                      activeIcon: CupertinoIcons
-                                          .person_crop_circle_fill,
-                                      label: context.tr('About'),
-                                    ),
-                                    NavBarItem(
-                                      icon: CupertinoIcons.bubble_left,
-                                      activeIcon:
-                                          CupertinoIcons.bubble_left_fill,
-                                      label: context.tr('Contact'),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                    ],
+                    ),
                   ),
-                ),
-                if (shell == null) const Footer(),
               ],
             );
           },
