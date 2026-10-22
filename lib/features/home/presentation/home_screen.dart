@@ -52,13 +52,13 @@ class HomeScreen extends ConsumerWidget {
                   spacing: 12,
                   runSpacing: 12,
                   children: [
-                    IosButton.filled(
+                    IosButton.glass(
                       onPressed: () => context.go('/projects'),
                       label: const AppText('View projects'),
                       icon: const Icon(CupertinoIcons.arrow_up_right, size: 18),
                       iconAlignment: IconAlignment.end,
                     ),
-                    IosButton.tinted(
+                    IosButton.glass(
                       onPressed: () => context.push('/resume'),
                       label: const AppText('View resume'),
                       icon: const Icon(CupertinoIcons.doc_text, size: 18),

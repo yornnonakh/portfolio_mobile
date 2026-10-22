@@ -100,7 +100,7 @@ void main() {
         }
         final container = await harness.mountApp(
           tester,
-          '/experience',
+          '/about',
           size: const Size(834, 1194),
           savedPreferences: {'animations': systemReducedMotion},
         );

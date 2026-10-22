@@ -64,7 +64,7 @@ class _EducationTimelineState extends ConsumerState<EducationTimeline> {
         media.size.width,
         media.size.height - media.padding.bottom - 12,
       );
-      // Clip to the actual scroll viewport, including pages with pinned footers.
+      // Clip the reveal area to the actual scroll viewport.
       final box = context.findRenderObject();
       if (box != null) {
         final Object? viewport = RenderAbstractViewport.maybeOf(box);

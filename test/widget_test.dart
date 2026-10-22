@@ -156,34 +156,80 @@ void main() {
         container.read(routerProvider).go(route);
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull, reason: 'Route $route at $size');
-        expect(find.byKey(const ValueKey('app-bar-glass')), findsNothing);
-        final footer = find.byKey(const ValueKey('copyright-bottom-bar'));
-        if (const [
-          '/home',
-          '/projects',
-          '/about',
-          '/contact',
-        ].contains(route)) {
-          expect(footer, findsNothing);
-          expect(find.byType(Footer), findsNothing);
-          expect(find.text('c 2026 Yorn Nona'), findsNothing);
-          continue;
+        if (route == '/experience') {
+          expect(find.text('Education & Training'), findsNothing);
         }
-        expect(footer, findsOneWidget);
-        expect(find.byType(Footer), findsOneWidget);
-        expect(find.text('c 2026 Yorn Nona'), findsOneWidget);
-        final rect = tester.getRect(footer);
-        expect(rect.left, greaterThanOrEqualTo(0));
-        expect(rect.top, greaterThanOrEqualTo(0));
-        expect(rect.right, lessThanOrEqualTo(size.width));
-        expect(rect.bottom, lessThanOrEqualTo(size.height));
+        expect(find.byKey(const ValueKey('app-bar-glass')), findsNothing);
+        expect(
+          find.byKey(const ValueKey('copyright-bottom-bar')),
+          findsNothing,
+        );
+        expect(find.text('c 2026 Yorn Nona'), findsNothing);
         final tabBar = find.byType(FloatingPillBottomNavBar);
         if (tabBar.evaluate().isNotEmpty) {
-          expect(tester.getRect(tabBar).bottom, lessThanOrEqualTo(rect.top));
+          final rect = tester.getRect(tabBar);
+          expect(rect.left, greaterThanOrEqualTo(0));
+          expect(rect.right, lessThanOrEqualTo(size.width));
+          expect(rect.bottom, lessThanOrEqualTo(size.height));
         }
       }
     });
   }
+
+  testWidgets('Tab backgrounds match Settings after switching themes', (
+    tester,
+  ) async {
+    final container = await mountApp(
+      tester,
+      '/settings',
+      savedPreferences: {'theme': 'light', 'animations': false},
+    );
+
+    Future<Color> backgroundPixel() async {
+      final boundary = tester.renderObject<RenderRepaintBoundary>(
+        find.byKey(const ValueKey('portfolio-capture')),
+      );
+      return (await tester.runAsync(() async {
+        final image = await boundary.toImage(pixelRatio: 1);
+        try {
+          final pixels = (await image.toByteData(
+            format: ui.ImageByteFormat.rawRgba,
+          ))!;
+          // Sample the page gutter, clear of cards and navigation controls.
+          final offset = (100 * image.width + 2) * 4;
+          return Color.fromARGB(
+            pixels.getUint8(offset + 3),
+            pixels.getUint8(offset),
+            pixels.getUint8(offset + 1),
+            pixels.getUint8(offset + 2),
+          );
+        } finally {
+          image.dispose();
+        }
+      }))!;
+    }
+
+    for (final mode in [ThemeMode.light, ThemeMode.dark]) {
+      await container.read(settingsProvider.notifier).setTheme(mode);
+      container.read(routerProvider).go('/settings');
+      await tester.pumpAndSettle();
+      final settingsBackground = await backgroundPixel();
+      expect(
+        settingsBackground,
+        Theme.of(tester.element(find.byType(AppFrame))).scaffoldBackgroundColor,
+      );
+      for (final route in ['/home', '/projects', '/about', '/contact']) {
+        container.read(routerProvider).go(route);
+        await tester.pumpAndSettle();
+        expect(
+          await backgroundPixel(),
+          settingsBackground,
+          reason: '$route background should match Settings in $mode',
+        );
+      }
+    }
+    expect(tester.takeException(), isNull);
+  });
 
   testWidgets('Home typewriter cycles through both phrases and repeats', (
     tester,
@@ -470,7 +516,7 @@ void main() {
     await tester.tap(find.bySemanticsLabel('Settings').first);
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('settings-system-theme')), findsOneWidget);
-    expect(footer, findsOneWidget);
+    expect(footer, findsNothing);
     await tester.tap(find.bySemanticsLabel('Back').last);
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('settings-system-theme')), findsNothing);

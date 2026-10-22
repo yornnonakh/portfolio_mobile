@@ -15,6 +15,18 @@ class IosPage<T> extends CupertinoPage<T> {
 
 class IosPageRoute<T> extends CupertinoPageRoute<T> {
   IosPageRoute({required super.builder, super.settings});
+
+  @override
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) => ColoredBox(
+    // Paint nested tab pages over Cupertino's navigation scrim.
+    color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+    child: super.buildPage(context, animation, secondaryAnimation),
+  );
+
   @override
   Widget buildTransitions(
     BuildContext context,

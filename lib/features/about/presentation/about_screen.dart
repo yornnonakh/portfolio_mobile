@@ -120,7 +120,7 @@ class AboutScreen extends ConsumerWidget {
             ),
           ),
         const SizedBox(height: 12),
-        IosButton.tinted(
+        IosButton.glass(
           onPressed: () {
             ref
                 .read(analyticsServiceProvider)
