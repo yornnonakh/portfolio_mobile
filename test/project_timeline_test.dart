@@ -2,6 +2,7 @@ import 'dart:ui' show PointerDeviceKind;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:portfolio_mobile/core/services/link_service.dart';
 
 import 'widget_test.dart' as harness;
 
@@ -11,6 +12,58 @@ bool selected(WidgetTester tester, String id) => tester
     .selected!;
 
 void main() {
+  testWidgets(
+    'View project opens the phone screen before launching the web app',
+    (tester) async {
+      final calls = <Uri>[];
+      await harness.mountApp(
+        tester,
+        '/projects',
+        size: const Size(1440, 1400),
+        linkService: LinkService(
+          launcher: (uri) async {
+            calls.add(uri);
+            return true;
+          },
+        ),
+      );
+      expect(find.text('Open app'), findsNothing);
+      await tester.ensureVisible(find.text('View project').last);
+      await tester.tap(find.text('View project').last);
+      await tester.pumpAndSettle();
+      expect(calls, isEmpty);
+      expect(
+        find.byKey(const ValueKey('project-detail-phone')),
+        findsOneWidget,
+      );
+      expect(find.text('Google Play'), findsOneWidget);
+      expect(find.text('App Store'), findsOneWidget);
+      expect(find.text('Coming soon'), findsNWidgets(2));
+      expect(
+        tester
+            .getTopLeft(find.byKey(const ValueKey('project-store-actions')))
+            .dy,
+        greaterThan(
+          tester
+              .getBottomLeft(find.byKey(const ValueKey('project-detail-phone')))
+              .dy,
+        ),
+      );
+      await Scrollable.ensureVisible(
+        tester.element(find.text('Open app')),
+        alignment: .5,
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Open app'));
+      await tester.pumpAndSettle();
+      expect(calls, [
+        Uri.parse('https://expen-tracker-07042.firebaseapp.com/'),
+      ]);
+      expect(find.text('Expense Tracker'), findsWidgets);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
   testWidgets(
     'Timeline markers select one project and retain case-study links',
     (tester) async {
@@ -22,11 +75,11 @@ void main() {
       await tester.pumpAndSettle();
       expect(selected(tester, 'notes'), isFalse);
       expect(selected(tester, 'products'), isTrue);
-      await tester.ensureVisible(find.text('Explore case study').last);
-      await tester.tap(find.text('Explore case study').last);
+      await tester.ensureVisible(find.text('View project').last);
+      await tester.tap(find.text('View project').last);
       await tester.pumpAndSettle();
       expect(find.text('Project overview'), findsOneWidget);
-      expect(find.text('E-commerce App'), findsWidgets);
+      expect(find.text('Expense Tracker'), findsWidgets);
       expect(tester.takeException(), isNull);
     },
   );

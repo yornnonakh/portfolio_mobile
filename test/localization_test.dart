@@ -202,12 +202,12 @@ void main() {
     await tester.tap(find.text('ផលិតភាព').first);
     await tester.pumpAndSettle();
     expect(find.text('កម្មវិធីកំណត់ត្រា'), findsOneWidget);
-    expect(find.text('កម្មវិធីទិញទំនិញ'), findsNothing);
+    expect(find.text('កម្មវិធីតាមដានចំណាយ'), findsNothing);
     expect(find.text('1 គម្រោង'), findsOneWidget);
     await container.read(settingsProvider.notifier).setLanguage('en');
     await tester.pumpAndSettle();
     expect(find.text('Notes App'), findsOneWidget);
-    expect(find.text('E-commerce App'), findsNothing);
+    expect(find.text('Expense Tracker'), findsNothing);
   });
 
   for (final size in [

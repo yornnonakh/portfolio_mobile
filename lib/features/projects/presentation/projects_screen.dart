@@ -16,7 +16,7 @@ class ProjectsScreen extends ConsumerWidget {
           eyebrow: 'Projects',
           title: 'Projects',
           description:
-              'A selection of Flutter apps, from everyday notes to mobile shopping.',
+              'A selection of Flutter apps, from everyday notes to expense tracking.',
         ),
         IosSelectionControl<String>(
           items: {

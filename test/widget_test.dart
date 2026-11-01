@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio_mobile/app/app.dart';
 import 'package:portfolio_mobile/app/router/app_router.dart';
 import 'package:portfolio_mobile/core/services/settings_repository.dart';
+import 'package:portfolio_mobile/core/services/link_service.dart';
 import 'package:portfolio_mobile/core/design_system/components.dart';
 import 'package:portfolio_mobile/core/widgets/app_frame.dart';
 import 'package:portfolio_mobile/core/widgets/profile_avatar.dart';
@@ -24,12 +25,15 @@ Future<ProviderContainer> mountApp(
   double scale = 1,
   Map<String, Object> savedPreferences = const {},
   bool settle = true,
+  LinkService? linkService,
 }) async {
   GoogleFonts.config.allowRuntimeFetching = false;
   SharedPreferences.setMockInitialValues(savedPreferences);
   final preferences = await SharedPreferences.getInstance();
   final container = ProviderContainer(
     overrides: [
+      if (linkService != null)
+        linkServiceProvider.overrideWithValue(linkService),
       settingsRepositoryProvider.overrideWithValue(
         SettingsRepository(preferences),
       ),
@@ -82,9 +86,9 @@ void main() {
     await tester.tap(find.text('Productivity').first);
     await tester.pumpAndSettle();
     expect(find.text('Notes App'), findsOneWidget);
-    expect(find.text('E-commerce App'), findsNothing);
-    await tester.ensureVisible(find.text('Explore case study').last);
-    await tester.tap(find.text('Explore case study').last);
+    expect(find.text('Expense Tracker'), findsNothing);
+    await tester.ensureVisible(find.text('View project').last);
+    await tester.tap(find.text('View project').last);
     await tester.pumpAndSettle();
     expect(find.text('Project overview'), findsOneWidget);
     expect(tester.takeException(), isNull);

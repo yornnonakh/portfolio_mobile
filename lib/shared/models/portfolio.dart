@@ -38,6 +38,8 @@ class PortfolioProject {
     this.screenshots = const [],
     this.repositoryUrl,
     this.appStoreUrl,
+    this.playStoreUrl,
+    this.demoUrl,
   });
   final String id,
       number,
@@ -51,7 +53,7 @@ class PortfolioProject {
       contributions,
       discussionTopics,
       screenshots;
-  final String? repositoryUrl, appStoreUrl;
+  final String? repositoryUrl, appStoreUrl, playStoreUrl, demoUrl;
 }
 
 class SkillCategory {
