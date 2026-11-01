@@ -34,7 +34,7 @@ original license text, and the supplied CV PDF retain their original content.
 | --- | --- | --- |
 | Splash | `/` | Robot holding a phone, floating entrance, “Wellcome” speech bubble, and progress line; opens Home after a 2.8-second greeting, immediately with reduced motion |
 | Home | `/home` | Name, title, location, exact professional summary, six-month experience, both featured projects, deployment experience, CV/contact actions |
-| Projects | `/projects` | Local project gallery with All / Productivity / E-commerce filters |
+| Projects | `/projects` | Local project gallery with All / Productivity / Finance filters |
 | Project details | `/projects/notes`, `/projects/products` | Features, stack, contributions, conceptual architecture, integration notes, screenshot gallery and verified optional links |
 | About | `/about` | Exact summary, CV-based journey, ISTAD education, languages, qualifications, experience preview |
 | Skills | `/skills` | All six CV-based skill categories; no invented proficiency scores |
@@ -112,7 +112,10 @@ Update the typed objects there without changing screen widgets.
 - **Screenshots:** add originals under `assets/projects/` and populate each
   project's `screenshots` list with full asset paths. Missing images have a fallback.
   Existing phone artwork is code-drawn and labeled **ILLUSTRATIVE PREVIEW**.
-- **Project links:** set verified `repositoryUrl` / `appStoreUrl` values per project.
+- **Project links:** set verified `repositoryUrl` / `appStoreUrl` / `playStoreUrl` /
+  `demoUrl` values per project. View project opens a phone preview with store
+  cards underneath. Stores without a link show Coming soon; Expense Tracker also
+  has an Open app action for its live web version.
 - **LinkedIn and Telegram:** add actual HTTPS profile URLs to `linkedIn` /
   `telegramUrl`. A Telegram number alone is shown as contact information; no link
   or username is inferred from it.

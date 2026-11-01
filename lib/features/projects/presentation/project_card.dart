@@ -38,10 +38,10 @@ class ProjectCard extends StatelessWidget {
               const SizedBox(height: 18),
               BadgeList(project.technologies),
               const SizedBox(height: 18),
-              IosButton.plain(
+              IosButton.filled(
                 onPressed: () =>
                     context.push('/projects/${project.id}?from=$heroSource'),
-                label: const AppText('Explore case study'),
+                label: const AppText('View project'),
                 icon: const Icon(CupertinoIcons.chevron_right, size: 15),
                 iconAlignment: IconAlignment.end,
               ),

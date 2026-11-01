@@ -297,10 +297,10 @@ class _TimelineCard extends StatelessWidget {
           const SizedBox(height: 20),
           BadgeList(project.technologies),
           const SizedBox(height: 16),
-          IosButton.plain(
+          IosButton.filled(
             onPressed: () =>
                 context.push('/projects/${project.id}?from=projects'),
-            label: const AppText('Explore case study'),
+            label: const AppText('View project'),
             icon: const Icon(CupertinoIcons.arrow_up_right, size: 16),
             iconAlignment: IconAlignment.end,
           ),

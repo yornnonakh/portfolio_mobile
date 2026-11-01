@@ -48,9 +48,7 @@ class ProjectArt extends StatelessWidget {
                           ),
                           const SizedBox(height: 12),
                           AppText(
-                            notes
-                                ? 'Capture.\nOrganize.'
-                                : 'Browse.\nDiscover.',
+                            notes ? 'Capture.\nOrganize.' : 'Track.\nPlan.',
                             style: Theme.of(
                               context,
                             ).textTheme.titleLarge?.copyWith(height: 1.4),
@@ -118,7 +116,7 @@ class _IllustratedPhone extends StatelessWidget {
               ),
               const SizedBox(height: 17),
               AppText(
-                notes ? 'Notes' : 'Discover',
+                notes ? 'Notes' : 'Expenses',
                 style: const TextStyle(
                   color: Color(0xFF20242C),
                   fontSize: 19,
@@ -148,7 +146,7 @@ class _IllustratedPhone extends StatelessWidget {
                   child: Transform.rotate(
                     angle: -.2,
                     child: const Icon(
-                       CupertinoIcons.headphones,
+                      CupertinoIcons.money_dollar_circle,
                       color: Color(0xFF244E50),
                       size: 64,
                     ),

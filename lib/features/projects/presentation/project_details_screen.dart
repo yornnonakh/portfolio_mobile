@@ -8,7 +8,7 @@ import '../../../core/services/link_service.dart';
 import '../../../core/utils/action_feedback.dart';
 import '../../../shared/models/portfolio.dart';
 import '../application/projects_view_model.dart';
-import 'project_art.dart';
+import 'project_app_showcase.dart';
 
 class ProjectDetailsScreen extends ConsumerWidget {
   const ProjectDetailsScreen({
@@ -46,9 +46,9 @@ class ProjectDetailsScreen extends ConsumerWidget {
         ),
         BadgeList(project.technologies),
         const SizedBox(height: 28),
-        Hero(
-          tag: '$heroSource-${project.id}',
-          child: ProjectArt(project: project, height: 330),
+        ProjectAppShowcase(
+          project: project,
+          heroTag: '$heroSource-${project.id}',
         ),
         const SizedBox(height: 36),
         const SectionHeading('Project overview'),
@@ -103,16 +103,18 @@ class ProjectDetailsScreen extends ConsumerWidget {
                 children: [
                   const TechBadge('Flutter views'),
                   const Icon(CupertinoIcons.arrow_right_arrow_left, size: 18),
-                  TechBadge(project.id == 'notes' ? 'GetX' : 'Provider'),
+                  TechBadge(project.id == 'notes' ? 'GetX' : 'Dart'),
                   const Icon(CupertinoIcons.arrow_right_arrow_left, size: 18),
                   TechBadge(
-                    project.id == 'notes' ? 'Dio / REST API' : 'REST API',
+                    project.id == 'notes'
+                        ? 'Dio / REST API'
+                        : 'Firebase Hosting',
                   ),
                 ],
               ),
               const Divider(height: 40),
               AppText(
-                'API integration',
+                project.id == 'notes' ? 'API integration' : 'Web deployment',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 12),
@@ -160,19 +162,6 @@ class ProjectDetailsScreen extends ConsumerWidget {
                     : 'Repository unavailable',
               ),
             ),
-            if (LinkService.isWebUrl(project.appStoreUrl))
-              IosButton.filled(
-                onPressed: () => performAction(
-                  context,
-                  () => links.website(project.appStoreUrl),
-                ),
-                icon: BrandIcon(
-                  'app-store',
-                  size: 18,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
-                label: const AppText('View on App Store'),
-              ),
             IosButton.plain(
               onPressed: () => context.go('/contact'),
               child: const AppText('Discuss this project'),

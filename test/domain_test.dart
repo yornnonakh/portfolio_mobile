@@ -27,7 +27,15 @@ void main() {
     expect(data.profile.name, 'Yorn Nona');
     expect(data.profile.experience, '6 months');
     expect(data.projects, hasLength(2));
-    expect(data.profile.linkedIn, 'https://www.linkedin.com/in/yorn-nona-69a90a345');
+    expect(data.projects.last.title, 'Expense Tracker');
+    expect(
+      data.projects.last.demoUrl,
+      'https://expen-tracker-07042.firebaseapp.com/',
+    );
+    expect(
+      data.profile.linkedIn,
+      'https://www.linkedin.com/in/yorn-nona-69a90a345',
+    );
     expect(data.profile.telegramUrl, 'https://t.me/YornNona');
     expect(
       data.projects.every(
@@ -38,10 +46,7 @@ void main() {
       ),
       isTrue,
     );
-    expect(
-      data.experiences[0].organization,
-      'OTOKHI Company',
-    );
+    expect(data.experiences[0].organization, 'OTOKHI Company');
     expect(data.experiences[1].organization, 'Addbook Computer Center');
   });
 
@@ -49,10 +54,10 @@ void main() {
     final container = ProviderContainer();
     addTearDown(container.dispose);
     expect(container.read(filteredProjectsProvider), hasLength(2));
-    container.read(projectFilterProvider.notifier).select('E-commerce');
+    container.read(projectFilterProvider.notifier).select('Finance');
     expect(container.read(filteredProjectsProvider).single.id, 'products');
     container.read(projectFilterProvider.notifier).select('Invented');
-    expect(container.read(projectFilterProvider), 'E-commerce');
+    expect(container.read(projectFilterProvider), 'Finance');
     expect(container.read(projectProvider('missing')), isNull);
   });
 

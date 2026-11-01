@@ -132,18 +132,37 @@ const khmerTranslations = <String, String>{
   // ---------------------------------------------------------------------------
   // PROJECTS - Gallery, filters, case-study labels, and actions
   // ---------------------------------------------------------------------------
-  "A selection of Flutter apps, from everyday notes to mobile shopping.":
-      "គម្រោងកម្មវិធី Flutter ដែលបានជ្រើសរើស ចាប់ពីការកត់ត្រាប្រចាំថ្ងៃដល់ការទិញទំនិញតាមទូរសព្ទ។",
+  "A selection of Flutter apps, from everyday notes to expense tracking.":
+      "គម្រោងកម្មវិធី Flutter ដែលបានជ្រើសរើស ចាប់ពីការកត់ត្រាប្រចាំថ្ងៃដល់ការតាមដានចំណាយ។",
   "Previews are illustrations. Original screenshots are not available yet.":
       "រូបភាពទាំងនេះជារូបតំណាង។ រូបថតអេក្រង់ដើមមិនទាន់មាននៅឡើយទេ។",
   "Productivity": "ផលិតភាព",
-  "E-commerce": "ពាណិជ្ជកម្មអេឡិចត្រូនិក",
+  "Finance": "ហិរញ្ញវត្ថុ",
   "Notes App": "កម្មវិធីកំណត់ត្រា",
-  "E-commerce App": "កម្មវិធីទិញទំនិញ",
+  "Expense Tracker": "កម្មវិធីតាមដានចំណាយ",
   "An iOS-style notes app with folders, rich content, and REST API integration.":
       "កម្មវិធីកំណត់ត្រាបែប iOS ដែលមានថតឯកសារ មាតិកាចម្រុះ និងការភ្ជាប់ REST API។",
-  "A mobile shopping app with product discovery, favorites, and a shopping cart.":
-      "កម្មវិធីទិញទំនិញតាមទូរសព្ទ ដែលមានការស្វែងរកផលិតផល បញ្ជីចំណូលចិត្ត និងកន្ត្រកទំនិញ។",
+  "Track spending, plan a budget, and manage money with a Flutter web app.":
+      "តាមដានចំណាយ រៀបចំថវិកា និងគ្រប់គ្រងប្រាក់ជាមួយកម្មវិធីវេប Flutter។",
+  "Open app": "បើកកម្មវិធី",
+  "View project": "មើលគម្រោង",
+  "App preview": "ទិដ្ឋភាពកម្មវិធី",
+  "Illustrative preview": "រូបតំណាងកម្មវិធី",
+  "Get the app": "ទទួលយកកម្មវិធី",
+  "Coming soon": "នឹងមកដល់ឆាប់ៗនេះ",
+  "Download on": "ទាញយកនៅលើ",
+  "Your ideas, organized.": "រៀបចំគំនិតរបស់អ្នក។",
+  "Your money, at a glance.": "មើលទិដ្ឋភាពទូទៅនៃប្រាក់របស់អ្នក។",
+  "Monthly spending": "ចំណាយប្រចាំខែ",
+  "Recent activity": "សកម្មភាពថ្មីៗ",
+  "Recent notes": "កំណត់ត្រាថ្មីៗ",
+  "Ideas": "គំនិត",
+  "Work": "ការងារ",
+  "Personal": "ផ្ទាល់ខ្លួន",
+  "Shopping": "ការទិញទំនិញ",
+  "Transport": "ការធ្វើដំណើរ",
+  "Groceries": "គ្រឿងទេស",
+  "Web deployment": "ការដាក់ឱ្យប្រើប្រាស់លើវេប",
   "Explore case study": "មើលព័ត៌មានគម្រោង",
   "Project overview": "ទិដ្ឋភាពទូទៅនៃគម្រោង",
   "Features": "មុខងារ",
@@ -199,35 +218,27 @@ const khmerTranslations = <String, String>{
   "API errors and loading states": "កំហុស API និងស្ថានភាពកំពុងផ្ទុក",
 
   // ---------------------------------------------------------------------------
-  // PROJECTS - E-commerce app features, contributions, and architecture
+  // PROJECTS - Expense tracker features, contributions, and architecture
   // ---------------------------------------------------------------------------
-  "Product listing": "បញ្ជីផលិតផល",
-  "Product search": "ការស្វែងរកផលិតផល",
-  "Favorites management": "ការគ្រប់គ្រងបញ្ជីចំណូលចិត្ត",
-  "Shopping cart": "កន្ត្រកទំនិញ",
-  "Checkout flow": "ដំណើរការបញ្ជាទិញ",
-  "API-based product data": "ទិន្នន័យផលិតផលពី API",
-  "Reusable widgets": "សមាសធាតុដែលអាចប្រើឡើងវិញបាន",
-  "Responsive mobile layouts": "ប្លង់ទូរសព្ទដែលសម្របតាមអេក្រង់",
-  "Built responsive product browsing and search interfaces.":
-      "បានបង្កើតផ្ទៃប្រើប្រាស់រកមើល និងស្វែងរកផលិតផលដែលសម្របតាមអេក្រង់។",
-  "Implemented favorites, a shopping cart and a checkout flow.":
-      "បានបង្កើតបញ្ជីចំណូលចិត្ត កន្ត្រកទំនិញ និងដំណើរការបញ្ជាទិញ។",
-  "Used Provider for application state management.":
-      "បានប្រើ Provider សម្រាប់គ្រប់គ្រងស្ថានភាពកម្មវិធី។",
-  "Integrated API-based product data.": "បានភ្ជាប់ទិន្នន័យផលិតផលពី API។",
-  "Created reusable widgets for mobile layouts.":
-      "បានបង្កើតសមាសធាតុដែលអាចប្រើឡើងវិញសម្រាប់ប្លង់ទូរសព្ទ។",
-  "Conceptual flow: reusable Flutter views, Provider state, and REST API product data. Based on the listed stack; the source structure is not available.":
-      "លំហូរគំនិត៖ ផ្ទៃប្រើប្រាស់ Flutter ដែលអាចប្រើឡើងវិញ ស្ថានភាព Provider និងទិន្នន័យផលិតផលពី REST API។ ផ្អែកលើបច្ចេកវិទ្យាដែលបានរាយបញ្ជី ហើយមិនមានរចនាសម្ព័ន្ធកូដដើមទេ។",
-  "REST APIs provide product data. Provider manages browsing and shopping state. Payment processing is outside the documented scope.":
-      "REST APIs ផ្ដល់ទិន្នន័យផលិតផល។ Provider គ្រប់គ្រងស្ថានភាពរកមើល និងទិញទំនិញ។ ដំណើរការទូទាត់ប្រាក់មិនស្ថិតក្នុងវិសាលភាពដែលបានកត់ត្រាទេ។",
-  "Keeping cart and favorites state consistent":
-      "រក្សាស្ថានភាពកន្ត្រក និងបញ្ជីចំណូលចិត្តឱ្យស្របគ្នា",
-  "Product search and API loading states":
-      "ការស្វែងរកផលិតផល និងស្ថានភាពផ្ទុក API",
-  "Reusable layouts across screen sizes":
-      "ប្លង់ដែលអាចប្រើឡើងវិញលើទំហំអេក្រង់ផ្សេងៗ",
+  "Spending tracking": "ការតាមដានចំណាយ",
+  "Budget planning": "ការរៀបចំថវិកា",
+  "Personal money management": "ការគ្រប់គ្រងប្រាក់ផ្ទាល់ខ្លួន",
+  "Live web app access": "ការចូលប្រើកម្មវិធីវេបផ្ទាល់",
+  "Built an expense tracking app with Flutter.":
+      "បានបង្កើតកម្មវិធីតាមដានចំណាយជាមួយ Flutter។",
+  "Created an interface for spending and budget planning.":
+      "បានបង្កើតផ្ទៃប្រើប្រាស់សម្រាប់ចំណាយ និងការរៀបចំថវិកា។",
+  "Published the web app with Firebase Hosting.":
+      "បានដាក់កម្មវិធីវេបឱ្យប្រើប្រាស់ជាមួយ Firebase Hosting។",
+  "Flutter web application hosted on Firebase Hosting. Internal state management and data storage details are not documented yet.":
+      "កម្មវិធីវេប Flutter ដែលដាក់ឱ្យប្រើប្រាស់លើ Firebase Hosting។ ព័ត៌មានលម្អិតអំពីការគ្រប់គ្រងស្ថានភាព និងការរក្សាទុកទិន្នន័យមិនទាន់មានឯកសារនៅឡើយទេ។",
+  "The live web app is deployed on Firebase Hosting and can be opened directly in a browser.":
+      "កម្មវិធីវេបត្រូវបានដាក់ឱ្យប្រើប្រាស់លើ Firebase Hosting ហើយអាចបើកដោយផ្ទាល់ក្នុងកម្មវិធីរុករក។",
+  "Organizing spending and budget information": "ការរៀបចំព័ត៌មានចំណាយ និងថវិកា",
+  "Building a clear money management interface":
+      "ការបង្កើតផ្ទៃប្រើប្រាស់គ្រប់គ្រងប្រាក់ឱ្យច្បាស់លាស់",
+  "Deploying Flutter web with Firebase Hosting":
+      "ការដាក់កម្មវិធីវេប Flutter ឱ្យប្រើប្រាស់ជាមួយ Firebase Hosting",
 
   // ---------------------------------------------------------------------------
   // SKILLS - Categories and practical skills
@@ -411,7 +422,7 @@ const khmerTranslations = <String, String>{
   // ---------------------------------------------------------------------------
   "Flutter views": "ផ្ទៃប្រើប្រាស់ Flutter",
   "Notes": "កំណត់ត្រា",
-  "Discover": "ស្វែងរក",
+  "Expenses": "ចំណាយ",
   "Capture.\nOrganize.": "កត់ត្រា។\nរៀបចំ។",
-  "Browse.\nDiscover.": "រកមើល។\nស្វែងរក។",
+  "Track.\nPlan.": "តាមដាន។\nរៀបចំ។",
 };
